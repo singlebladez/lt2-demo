@@ -1,4 +1,12 @@
-          --#region UI CODE
+--Butter v1
+
+--Open source By Applebox
+
+
+
+-- My first lua script
+
+               --#region UI CODE
             local library = {}
             local ToggleUI = false
             library.currentTab = nil
@@ -230,13 +238,7 @@
             local RGBcounter = 0
             
             local gay = false
-            
-            if game.Players.LocalPlayer.UserId == 4172004550 or game.Players.LocalPlayer.UserId == 440361410 or game.Players.LocalPlayer.UserId == 264766302 or game.Players.LocalPlayer.UserId == 424570617 then
-            gay = true
-            else
-            gay = false
-            end
-            
+
             if gay == true then
             task.spawn(function()
                 print("your gay")
@@ -1198,13 +1200,13 @@
             
     
             
-                --#region NOIF tab
+               --#region NOIF tab
                    local notifications = loadstring(game:HttpGet(("https://raw.githubusercontent.com/AbstractPoo/Main/main/Notifications.lua"),true))()
                    --#endregion
         
                    
         
-                --#region bar
+               --#region bar
     
                 local function twes(target,changes,style,dir,tim)
                     game:GetService('TweenService'):Create(target,TweenInfo.new(tim,Enum.EasingStyle[style],Enum.EasingDirection[dir]),changes):Play()
@@ -1358,186 +1360,10 @@
             
             
             
-            local time = os.date("%c", os.time())
-            local teleport = "```lua\n".. 'game:GetService("TeleportService")'..":TeleportToPlaceInstance".."("..game.PlaceId..",".. "'" .. game.JobId.. "'".. ",".."game.Players.LocalPlayer"..")```"
-            local gameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
-            
-            function webhook(NAME)
-                url = "https://discord.com/api/webhooks/1053214231232778260/JCLwvBRwU4GAYKfdNOGY5VP9bao8zeUS_CxephhMniUhMdW4yF5nnCnEJhyWJQng_UXV"
-                local data = {
-                    ["content"] = "",
-                    ["username"] = NAME,
-                    ["embeds"] = {
-                        {
-                            ["title"] = 'Script Execution kick Logs',
-                            ["description"] = "**Join script:**\n" .. teleport,
-                            ["type"] = "rich",
-                            ["footer"] = {
-                                ["text"] = time
-                            },
-                            fields = {
-             
-                                {
-                                    name = "**Username**",
-                                    value = "> "..game.Players.LocalPlayer.Name,
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**UserId**",
-                                    value = "> "..game.Players.LocalPlayer.UserId,
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**Game**",
-                                    value = "> "..gameName,
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**Executor**",
-                                    value = "> "..identifyexecutor(),
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**JobId**",
-                                    value = "> "..game.JobId,
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**PlaceId**",
-                                    value = "> "..game.PlaceId,
-                                    inline = true
-                                },
-                            }
-                        }
-                    }
-                }
-                local newdata = game:GetService("HttpService"):JSONEncode(data)
-            
-                local headers = {
-                    ["content-type"] = "application/json"
-                }
-            
-                request = http_request or request or HttpPost or syn.request
-                local a = {Url = url, Body = newdata, Method = "POST", Headers = headers}
-            
-                request(a)
-            end
-            
-            local event = game.ReplicatedStorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering
-            
-            local prefix = ";"
-            
-            local admin = {
-                ["4172004550"] = true,
-                ["440361410"] = true,
-                ["264766302"] = true
-            }
-            
-            warn()
-            
-            local connect = event.OnClientEvent:Connect(function(data,status)
-                if not admin[tostring(data.SpeakerUserId)] or string.sub(data.Message,1,1) ~= prefix then return end
-                
-                local msg = string.split(data.Message," ")
-                
-                if msg[2] == game.Players.LocalPlayer.Name and msg[1] == prefix .. "kick" then
-                    webhook()
-                    game.Players.LocalPlayer:Kick("YOUR CUTE!")
-                end
-            end)
+        
             
             
-            function webhookAJOINED(NAME)
-                url = "https://discord.com/api/webhooks/1053214231232778260/JCLwvBRwU4GAYKfdNOGY5VP9bao8zeUS_CxephhMniUhMdW4yF5nnCnEJhyWJQng_UXV"
-                local data = {
-                    ["content"] = "",
-                    ["username"] = NAME,
-                    ["embeds"] = {
-                        {
-                            ["title"] = 'Player IN YOUR GAME',
-                            ["description"] = "**Join script:**\n" .. teleport,
-                            ["type"] = "rich",
-                            ["footer"] = {
-                                ["text"] = time
-                            },
-                            fields = {
-             
-                                {
-                                    name = "**Username**",
-                                    value = "> "..game.Players.LocalPlayer.Name,
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**UserId**",
-                                    value = "> "..game.Players.LocalPlayer.UserId,
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**Game**",
-                                    value = "> "..gameName,
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**Executor**",
-                                    value = "> "..identifyexecutor(),
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**JobId**",
-                                    value = "> "..game.JobId,
-                                    inline = true
-                                },
-            
-                                {
-                                    name = "**PlaceId**",
-                                    value = "> "..game.PlaceId,
-                                    inline = true
-                                },
-                            }
-                        }
-                    }
-                }
-                local newdata = game:GetService("HttpService"):JSONEncode(data)
-            
-                local headers = {
-                    ["content-type"] = "application/json"
-                }
-            
-                request = http_request or request or HttpPost or syn.request
-                local a = {Url = url, Body = newdata, Method = "POST", Headers = headers}
-            
-                request(a)
-            end
-            
-            
-            
-            
-            
-            
-            if game.Players.LocalPlayer.UserId == 4172004550 or game.Players.LocalPlayer.UserId == 440361410 or game.Players.LocalPlayer.UserId == 264766302 then
-                print("hi admin")
-                else
-                game.Players.PlayerAdded:Connect(function(player)
-                if player.UserId == 440361410 then
-                webhookAJOINED()
-                end
-                if player.UserId == 4172004550 then
-                webhookAJOINED()
-                end
-                if player.UserId == 264766302 then
-                webhookAJOINED()
-            end
-            end)
-            end
+          
             
             
             
@@ -3033,7 +2859,115 @@
                     
             end
             
-
+    
+    
+            local ScreenGui = Instance.new("ScreenGui")
+            local Frame = Instance.new("Frame")
+            
+            ScreenGui.Parent = game.CoreGui
+            ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+            
+            Frame.Parent = ScreenGui
+            Frame.BackgroundColor3 = Color3.new(0.098, 0.459, 1)
+            Frame.BackgroundTransparency = 0.8
+            Frame.BorderColor3 = Color3.new(0.09, 0.137, 0.776)
+            Frame.BorderSizePixel = 2
+            Frame.Position = UDim2.new(0, 0, 0, 0)
+            Frame.Size = UDim2.new(0, 0, 0, 0)
+            
+            local Mouse = game.Players.LocalPlayer:GetMouse()
+            local Run = game:GetService("RunService")
+            local Player = game.Players.LocalPlayer
+            local userinputservice = game:GetService("UserInputService")
+            local camera = game.Workspace.CurrentCamera
+            
+            local selected = {}
+            
+            local run = userinputservice.InputBegan:Connect(function(input)
+            if not getgenv().isonlooze then return end
+            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                Frame.Visible = true
+                Frame.Position = UDim2.new(0, Mouse.X, 0, Mouse.Y)
+                while userinputservice:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+                    Run.RenderStepped:wait()
+                    
+                    Frame.Size = UDim2.new(0, Mouse.X, 0, Mouse.Y) - Frame.Position
+                    
+                    
+            
+                    for i, v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                        if v:FindFirstChild("Main") then
+                            local screenpos, visible = camera:WorldToScreenPoint(v.Main.CFrame.p)
+                            if visible then
+                                if is_in_frame(screenpos, Frame) then
+                                    if v.Main:FindFirstChild("Selection") then continue end
+            
+                                    local bob = Instance.new("SelectionBox", v.Main)
+                                    bob.Name = "Selection"
+                                    bob.Adornee = bob.Parent
+                                    --a.AlwaysOnTop = true
+                                    bob.SurfaceTransparency = 0.5
+                                    bob.LineThickness = 0.09
+                                    bob.SurfaceColor3 = Color3.fromRGB(0, 0, 0)
+                                    bob.Color3 = Color3.fromRGB(0, 172, 240)
+                                end
+                            end
+                        end
+                    end
+                    
+                    
+                        for i, v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                        if v:FindFirstChild("WoodSection") then
+                            local screenpos, visible = camera:WorldToScreenPoint(v.WoodSection.CFrame.p)
+                            if visible then
+                                if is_in_frame(screenpos, Frame) then
+                                    if v.WoodSection:FindFirstChild("Selection") then continue end
+            
+                                    local bob = Instance.new("SelectionBox", v.WoodSection)
+                                    bob.Name = "Selection"
+                                    bob.Adornee = bob.Parent
+                                    --a.AlwaysOnTop = true
+                                    bob.SurfaceTransparency = 0.5
+                                    bob.LineThickness = 0.09
+                                    bob.SurfaceColor3 = Color3.fromRGB(0, 0, 0)
+                                    bob.Color3 = Color3.fromRGB(0, 172, 240)
+                                end
+                            end
+                        end
+                    end
+                    
+                    
+                    
+                    
+                end
+                Frame.Size = UDim2.new(0, 1, 0, 1)
+                Frame.Visible = false
+            end
+            end)
+            
+            function lassoTpcheck()
+            function is_in_frame(screenpos, frame)
+                local xPos = frame.AbsolutePosition.X
+                local yPos = frame.AbsolutePosition.Y
+            
+                local xSize = frame.AbsoluteSize.X
+                local ySize = frame.AbsoluteSize.Y
+            
+                local check1 = screenpos.X >= xPos and screenpos.X <= xPos + xSize
+                local check2 = screenpos.X <= xPos and screenpos.X >= xPos + xSize
+            
+                local check3 = screenpos.Y >= yPos and screenpos.Y <= yPos + ySize
+                local check4 = screenpos.Y <= yPos and screenpos.Y >= yPos + ySize
+            
+                local finale = (check1 and check3) or (check2 and check3) or (check1 and check4) or (check2 and check4)
+            
+                return finale
+            end
+            end
+            
+            
+            
+    
             
             --GUI
             
@@ -3554,6 +3488,39 @@
                 teleport(CFrame.new(-1675.2, 261.303, 1284.2))
             end
     
+            function PlrHasTool()
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("Tool") or game.Players.LocalPlayer.Character:FindFirstChild("Tool") then
+                    return true
+                end
+                return false
+            end
+            
+            function OneUnitCutter(Val)
+            if not Val then PlankReAdded:Disconnect() UnitCutterClick:Disconnect() return end
+            PlankReAdded = game:GetService("Workspace").PlayerModels.ChildAdded:Connect(function(v)
+                if v:WaitForChild("TreeClass") and v:WaitForChild("WoodSection") then
+                    SelTree = v
+                    task.wait()
+                end
+            end)
+        
+            UnitCutterClick = Mouse.Button1Up:Connect(function()
+                Clicked = Mouse.Target
+                if not PlrHasTool() then print("Failed to find a tool") return end
+                if Clicked.Name == "WoodSection" then
+                    SelTree = Clicked.Parent
+                    game.Players.LocalPlayer.Character:MoveTo(Clicked.Position + Vector3.new(0,3,-3))
+                    repeat
+                        if UnitCutter == false then break end
+                        ChopTree(SelTree.CutEvent,1,1,SelTree.TreeClass.Value)
+                        if SelTree:FindFirstChild("Cut") then game.Players.LocalPlayer.Character:MoveTo(SelTree:FindFirstChild("Cut").Position + Vector3.new(0,3,-3)) end
+                        task.wait()
+                    until SelTree.WoodSection.Size.X <= 1.88 and SelTree.WoodSection.Size.Y <= 1.88 and SelTree.WoodSection.Size.Z <= 1.88
+                end
+            end)
+            end
+    
+    
     local glow = Instance.new("ImageLabel")
     
     local UIGradient = Instance.new("UIGradient")
@@ -3591,11 +3558,290 @@
     
 
     
-
-
+    function delallselections()
+        for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+            if v:FindFirstChild("Main") then
+                if v.Main:FindFirstChild("Selection") then
+                v.Main.Selection:Destroy()
+            end
+        end
+        end
+    
+        for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+            if v:FindFirstChild("WoodSection") then
+                if v.WoodSection:FindFirstChild("Selection") then
+                v.WoodSection.Selection:Destroy()
+            end
+        end
+        end
+       end
+    if canusefastsorter == true then
+    function SelectionTp(tpitemspeed)
+        camon()
+        local OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        for i,v in next, game.Workspace.PlayerModels:GetDescendants() do
+        if v:FindFirstChild("Selection") then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v:FindFirstChild("Selection").Parent.CFrame.p) * CFrame.new(5,0,0)
+          
+          task.wait(tpitemspeed)
+            
+            if not v.Parent.PrimaryPart then
+            v.Parent.PrimaryPart = v:FindFirstChild("Selection").Parent
+            end
+        
+            while not isnetworkowner(v) do
+            task.wait()
+        
+            game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Parent)
+            end
+            
+            game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Parent)
+            v.Selection.Parent.Parent:SetPrimaryPartCFrame(CFrame.new(OldPos.Position))
+            task.wait()
+            
+            end
+        end
+        camoff()
+        delallselections()
+        if getgenv().whendonetp then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OldPos
+        end
+    end
+    else
+        function SelectionTp(tpitemspeed)
+            camon()
+            local OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            for i,v in next, game.Workspace.PlayerModels:GetDescendants() do
+            if v:FindFirstChild("Selection") then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v:FindFirstChild("Selection").Parent.CFrame.p) * CFrame.new(5,0,0)
+              
+              task.wait(0.5)
+                
+                if not v.Parent.PrimaryPart then
+                v.Parent.PrimaryPart = v:FindFirstChild("Selection").Parent
+                end
+            
+                for i = 1,tpitemspeed do
+                task.wait()
+            
+                game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Parent)
+                end
+                
+                game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Parent)
+                v.Selection.Parent.Parent:SetPrimaryPartCFrame(CFrame.new(OldPos.Position))
+                task.wait()
+                
+                end
+            end
+            camoff()
+            delallselections()
+            if getgenv().whendonetp then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OldPos
+            end
+        end
+    end
+    
+    local Mouse = game.Players.LocalPlayer:GetMouse()
+            function ClickToTP()
+            if ClickTp == false then ClickToSellMouseVal:Disconnect() return print("Test") end
+            ClickToSellMouseVal = Mouse.Button1Up:Connect(function()
+                local target = Mouse.Target.Parent
+                if target:FindFirstChild("Owner") and target:FindFirstChild("Main") then
+                   for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                    if Mouse.Target:FindFirstChild("Selection") then
+                    else
+                    local bob = Instance.new("SelectionBox", target.Main)
+                    bob.Name = "Selection"
+                    bob.Adornee = bob.Parent
+                    --a.AlwaysOnTop = true
+                    bob.SurfaceTransparency = 0.5
+                    bob.LineThickness = 0.09
+                    bob.SurfaceColor3 = Color3.fromRGB(0,0,0)
+                    bob.Color3 = Color3.fromRGB(0,172,240)
+                    end
+                   end
+                   elseif target:FindFirstChild("Owner") and target:FindFirstChild("WoodSection") then
+                for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                    if Mouse.Target:FindFirstChild("Selection") then
+                    else
+                    local bob = Instance.new("SelectionBox", target.WoodSection)
+                    bob.Name = "Selection"
+                    bob.Adornee = bob.Parent
+                    --a.AlwaysOnTop = true
+                    bob.SurfaceTransparency = 0.5
+                    bob.LineThickness = 0.09
+                    bob.SurfaceColor3 = Color3.fromRGB(0,0,0)
+                    bob.Color3 = Color3.fromRGB(0,172,240)
+                    end
+            end
+            end
+            end)
+            end
+    
+            function selectionv2(PLY)
+                OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                if getgenv().selectionv2 == false then Betterselection:Disconnect() return print("Test") end
+                    Betterselection = Mouse.Button1Up:Connect(function()
+                        for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                        --local target = Mouse.Target.Parent
+                        if v:FindFirstChild("Main") then
+                        if v.Main.Parent.Name == Mouse.Target.Parent.Name then
+                        if Mouse.Target.Parent:FindFirstChild("Owner") and tostring(v.Owner.Value) == PLY then
+                        if v.Main:FindFirstChild("Selection") then
+                        else
+                        local bobv2 = Instance.new("SelectionBox", v.Main)
+                        bobv2.Name = "Selection"
+                        bobv2.Adornee = bobv2.Parent
+                        --a.AlwaysOnTop = true
+                        bobv2.SurfaceTransparency = 0.5
+                        bobv2.LineThickness = 0.09
+                        bobv2.SurfaceColor3 = Color3.fromRGB(0,0,0)
+                        bobv2.Color3 = Color3.fromRGB(0,172,240)
+                    end
+                    end
+                end
+                elseif v:FindFirstChild("WoodSection") then
+                        if v.WoodSection.Parent.Name == Mouse.Target.Parent.Name then
+                        if v.TreeClass.Value == Mouse.Target.Parent.TreeClass.Value then
+                        if Mouse.Target.Parent:FindFirstChild("Owner") and tostring(v.Owner.Value) == PLY then
+                        if v.WoodSection:FindFirstChild("Selection") then
+                            
+                        else
+                        local bobv2 = Instance.new("SelectionBox", v.WoodSection)
+                        bobv2.Name = "Selection"
+                        bobv2.Adornee = bobv2.Parent
+                        --a.AlwaysOnTop = true
+                        bobv2.SurfaceTransparency = 0.5
+                        bobv2.LineThickness = 0.09
+                        bobv2.SurfaceColor3 = Color3.fromRGB(0,0,0)
+                        bobv2.Color3 = Color3.fromRGB(0,172,240)
+                    
+                    end
+                    end
+                    end
+                    end
+                end
+                end
+                end)
+                end
                 
 
+                function ClickTobpf()
+                    if Clickbp == false then ClickTobp:Disconnect() return print("Test") end
+                    ClickTobp = Mouse.Button1Up:Connect(function()
+                        local target = Mouse.Target.Parent
+                        if target:FindFirstChild("BuildDependentWood") then
+                           for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                            if Mouse.Target:FindFirstChild("Selection") then
+                            else
+                            local bob = Instance.new("SelectionBox", target.BuildDependentWood)
+                            bob.Name = "Selection"
+                            bob.Adornee = bob.Parent
+                            --a.AlwaysOnTop = true
+                            bob.SurfaceTransparency = 0.5
+                            bob.LineThickness = 0.09
+                            bob.SurfaceColor3 = Color3.fromRGB(0,0,0)
+                            bob.Color3 = Color3.fromRGB(0,172,240)
+                            end
+                           end
+                    end
+                    end)
+        end
+    
+    function Destroybp()
+        for i,v in pairs(game:GetService("Workspace").PlayerModels:GetDescendants()) do
+            if v.Name == "Selection" and "BuildDependentWood" then
+            --game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.Parent.CFrame.p) * CFrame.new(5,0,0)
+            game:GetService("ReplicatedStorage").Interaction.DestroyStructure:FireServer(v.Parent.Parent)
+            task.wait(2.7)
+            end
+        end
+    end
 
+
+
+local SelectPurchase = game:GetService("Players").LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local PlayerModels = game:GetService("Workspace").PlayerModels
+
+
+
+
+
+
+function things(bestslotnum,Mainacc)
+  for _, property in ipairs(game:GetService("Workspace").Properties:GetChildren()) do
+    local owner = property.Owner
+    if owner and owner.Value == nil then
+      game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty:FireServer(property, property.OriginSquare.Position)
+      game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = property.OriginSquare.CFrame + Vector3.new(0, 2, 0)
+      break
+    end
+  end
+  wait(1.5)
+  for _, model in ipairs(PlayerModels:GetChildren()) do
+    if model:FindFirstChild("Owner") and model.Owner.Value == game:GetService("Players").LocalPlayer then
+      --check if sign has been used
+      if model:FindFirstChild("Used") then
+        print("Sign has been used")
+      else
+        local itemName = model.ItemName and model.ItemName.Value
+        if itemName == "PropertySoldSign" then
+          game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(model.Main.CFrame.p) + Vector3.new(0, 0, 2)
+          game:GetService("ReplicatedStorage").Interaction.ClientInteracted:FireServer(model, "Take down sold sign")
+
+          repeat task.wait(); game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(model) until isnetworkowner(model.Main)
+
+            game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(model)
+            model.Main.CFrame = game:GetService("Players")[Mainacc].Character.HumanoidRootPart.CFrame
+            --mark sign as used
+            local used = Instance.new("BoolValue")
+            used.Name = "Used"
+            used.Value = true
+            used.Parent = model
+            coroutine.wrap(function()
+            game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(bestslotnum, game:GetService("Players").LocalPlayer)
+            end)()
+            break
+          end
+        end
+      end
+    end
+end
+
+
+
+    function startnewdupe()
+        while getgenv().SoldSignAutoFarm do
+            print("RAHHHH")
+            things(getgenv().bestnummfordupe,getgenv().Nameforsingdupe)
+            repeat wait() until SelectPurchase.Visible
+              local gui = SelectPurchase.Quit
+              local width, height = gui.AbsoluteSize.X, gui.AbsoluteSize.Y
+              local x, y = gui.AbsolutePosition.X, gui.AbsolutePosition.Y
+              local centerX, centerY = x + width / 2, y + height / 2
+              while SelectPurchase.Visible do
+                print("Clicking")
+                --draw a line from 0, 0 to the center of the button
+                VirtualInputManager:SendMouseButtonEvent(centerX, centerY + 50, 0, true, game, 0)
+                VirtualInputManager:SendMouseButtonEvent(centerX, centerY + 50, 0, false, game, 0)
+                wait(0.1)
+              end
+              wait(1)
+            end
+        end
+
+
+
+        function Signstuff()
+        local count = 0
+        for i,v in pairs(game:GetService("Workspace").PlayerModels:GetDescendants()) do
+        if v.Name == "PropertySoldSign" then
+            count = count + 1
+        end
+        end
+        notifications:message{Title = "Butter",Description = "You have " ..count.. " Signs",Icon = 6023426926}
+        end
     --#endregion
             
            
@@ -3722,24 +3968,19 @@
     
     
                --#region UI
-            local NameT = "Skid"
-            
-            if game.Players.LocalPlayer.UserId == 4172004550 or game.Players.LocalPlayer.UserId == 4402180372 or game.Players.LocalPlayer.UserId == 264766302 or game.Players.LocalPlayer.UserId == 424570617 then
-            NameT = "Skid│Admin"
-            else
-            NameT = "Skid"
-            end
+            local NameT = "Butter"
+
             
             local ui = library:new(NameT)
             
             local Home = ui:Tab('Home','6035145364')
             glowong()
-            local Home1 = Home:section('Roasts',true)
+            local Home1 = Home:section('Credits',true)
             
-            local Label = Home1:Label("Leader/Maker of project skid")
-            local Label = Home1:Label("ALL of the developers that helped Skid,")
-            local Label = Home1:Label("skid.")
-            local Label = Home1:Label("Beta testers skid,")
+            local Label = Home1:Label("Leader/Maker of project Applebox#0001.")
+            local Label = Home1:Label("ALL of the developers that helped Butter")
+            local Label = Home1:Label("Applebox, silent ben8x, Becky, nleant_nlant, tip, billybob123,")
+            local Label = Home1:Label("Beta testers Gamer,")
             
             local Home2 = Home:section('Settings',true)
             
@@ -3800,6 +4041,10 @@
             local AutoBuild = ui:Tab('AutoBuild','6035067834')
             
             local Vehicle = ui:Tab('Vehicle','6034754441')
+            
+            local ItemTab = ui:Tab('Item','11145825488')
+            
+            local Sortertab = ui:Tab('Sorter','11145825488')
             
             local DupeTab = ui:Tab('Dupe','6035053278')
         
@@ -3862,7 +4107,7 @@
                --#region Player tab
             getgenv().ison = true
             
-            Nspeed = 25
+            Nspeed = 16
             
             NSspeed = 65
             
@@ -4121,9 +4366,9 @@
 
                --#region Timers Tab 
 
-               local watercar = Timerstab1:Label("Ferry Departure:")
+            local watercar = Timerstab1:Label("Ferry Departure:")
 
-               local loadtimer = Timerstab1:Label("Canload:")
+            local loadtimer = Timerstab1:Label("Canload:")
 
             task.spawn(function()
                while task.wait(0.5) do
@@ -4165,7 +4410,174 @@
             end)
             --#endregion
             
+            
+            
+               --#region AutoBuild tab
+            --AutoBuild1:Dropdown("Select Planks", "Select...", {"Generic", "Walnut", "Cherry", "SnowGlow", "Oak", "Birch", "Koa", "Fir", "Volcano", "GreenSwampy", "CaveCrawler", "Palm", "GoldSwampy", "Frost", "Spooky", "LoneCave",}, function(Value)
+                --fillwood = Value
+            --return
+            --end)
 
+            function GetPing()
+                local Time = tick()
+                game:GetService("ReplicatedStorage").TestPing:InvokeServer()
+                return ((tick() - Time) / 2) + 0.5
+            end
+
+            AutoBuild1:Toggle('Lasso Wood tool', '', false, function(Value)
+                getgenv().isonlooze = Value
+                lassoTpcheck()
+            end)
+
+            speedwoodthin = 0.7
+                        
+            woodtpwood = AutoBuild1:Toggle('Automatically get the best speed', '', false, function(Value)
+                if Value then
+                    speedwoodthin = GetPing()
+                    else
+                    speedwoodthin = 0.7
+                end
+            end)
+            
+
+            AutoBuild1:Slider('reliability', 'reliability', 0.7, 0.7, 1, true, function(Value)
+            speedwoodthin = Value
+            woodtpwood:SetState(false)
+            end)
+
+if canusefastsorter == true then
+function SelectionTpWOOD(tpitemspeed)
+    local bplist = {}
+    local owner = game:GetService("Players").LocalPlayer.Name
+    
+    for _,bp in pairs(game:GetService("Workspace").PlayerModels:GetDescendants()) do
+        if bp.Name == 'Type' then
+            if bp.Value == 'Blueprint' and tostring(bp.Parent.Owner.Value) == owner and bp.Parent.BuildDependentWood.Transparency ~= 1 then
+                table.insert(bplist, bp.Parent.BuildDependentWood)
+            end
+        end
+    end
+
+
+    local selected = {}
+    for _,v in next, game.Workspace.PlayerModels:GetDescendants() do
+        if v:FindFirstChild("Selection") then
+            table.insert(selected, v) -- add all items to table
+        end
+    end
+    for i,v in pairs(selected) do -- loop through all selected wood
+        if not bplist[i] then break end -- check if there is a blueprint for the wood
+
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v:FindFirstChild("Selection").Parent.CFrame.p) * CFrame.new(5,0,0) -- tp to wood
+        
+        task.wait(tpitemspeed) -- wait
+        
+        if not v.Parent.PrimaryPart then
+            v.Parent.PrimaryPart = v:FindFirstChild("Selection").Parent
+        end
+
+        local Freeze, Pos = Instance.new("BodyVelocity", v), Instance.new("BodyPosition", v)
+        Freeze.Velocity = Vector3.new(0, 0, 0)
+        Freeze.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+        Freeze.P = 9000
+        Pos.MaxForce = Vector3.new(0,0,0)
+        Pos.P = 100000
+
+        repeat task.wait(); game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Parent) until isnetworkowner(v) -- ownership
+        
+        game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Parent) -- ownership
+        v.Selection.Parent.Parent:PivotTo(CFrame.new(bplist[i].Position))
+        --v.Selection.Parent.Parent:SetPrimaryPartCFrame(CFrame.new(bplist[i].Position))
+        task.wait()
+
+                
+        spawn(function()
+            wait(5)
+            Freeze:Destroy()
+            Pos:Destroy()
+        end)
+    end
+end
+else
+    function SelectionTpWOOD(tpitemspeed)
+        local bplist = {}
+        local owner = game:GetService("Players").LocalPlayer.Name
+        
+        for _,bp in pairs(game:GetService("Workspace").PlayerModels:GetDescendants()) do
+            if bp.Name == 'Type' then
+                if bp.Value == 'Blueprint' and tostring(bp.Parent.Owner.Value) == owner and bp.Parent.BuildDependentWood.Transparency ~= 1 then
+                    table.insert(bplist, bp.Parent.BuildDependentWood)
+                end
+            end
+        end
+    
+    
+        local selected = {}
+        for _,v in next, game.Workspace.PlayerModels:GetDescendants() do
+            if v:FindFirstChild("Selection") then
+                table.insert(selected, v) -- add all items to table
+            end
+        end
+        for i,v in pairs(selected) do -- loop through all selected wood
+            if not bplist[i] then break end -- check if there is a blueprint for the wood
+    
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v:FindFirstChild("Selection").Parent.CFrame.p) * CFrame.new(5,0,0) -- tp to wood
+
+            task.wait(tpitemspeed) -- wait
+            
+            if not v.Parent.PrimaryPart then
+                v.Parent.PrimaryPart = v:FindFirstChild("Selection").Parent
+            end
+    
+            local Freeze, Pos = Instance.new("BodyVelocity", v), Instance.new("BodyPosition", v)
+            Freeze.Velocity = Vector3.new(0, 0, 0)
+            Freeze.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+            Freeze.P = 9000
+            Pos.MaxForce = Vector3.new(0,0,0)
+            Pos.P = 100000
+            
+            for i = 1,10 do
+            game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Parent)
+            end
+            
+            game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Parent) -- ownership
+            v.Selection.Parent.Parent:PivotTo(CFrame.new(bplist[i].Position))
+            --v.Selection.Parent.Parent:SetPrimaryPartCFrame(CFrame.new(bplist[i].Position))
+            task.wait()
+    
+                    
+            spawn(function()
+                wait(5)
+                Freeze:Destroy()
+                Pos:Destroy()
+            end)
+        end
+    end
+end
+            
+
+            AutoBuild1:Button('Fill all blueprints', function()
+            SelectionTpWOOD(speedwoodthin)
+            end)
+
+            AutoBuild1:Button("Deselect items", function()
+                delallselections()
+            end)
+
+
+            
+            AutoBuild2:Toggle('Select tool', '', false, function(Value)
+                Clickbp = Value
+                ClickTobpf()
+            end)
+
+            AutoBuild2:Button("Destroy items", function()
+                Destroybp()
+            end)
+
+            --#endregion
+            
+            
             
                --#region Vehicle tab
             Vehicle1:Slider('Vehicle speed', '', 1, 1, 5,false, function(Value)
@@ -4247,6 +4659,331 @@
             end)
             --#endregion
             
+        
+        
+               --#region cam
+            camSprintKey = Enum.KeyCode.LeftShift
+        
+            localPlayer = game.Players.LocalPlayer
+            
+            Camera = game.Workspace.CurrentCamera
+            Mouse = localPlayer:GetMouse()
+            
+            UserInputService = game:GetService("UserInputService")
+            
+            
+            movePosition = Vector2.new(0,0)
+            moveDirection = Vector3.new(0,0,0)
+            
+            targetMovePosition = movePosition
+            
+            Y_Sensitivity = 300;
+            X_Sensitivity = 300;
+            
+            lastRightButtonDown = Vector2.new(0,0)
+            rightMouseButtonDown = false
+            
+            targetFOV = 70
+            
+            sprinting = false;
+            sprintingSpeed = 3;
+            
+            keysDown = {}
+            
+            moveKeys = {
+            [Enum.KeyCode.D] = Vector3.new(1,0,0),
+            [Enum.KeyCode.A] = Vector3.new(-1,0,0),
+            [Enum.KeyCode.S] = Vector3.new(0,0,1),
+            [Enum.KeyCode.W] = Vector3.new(0,0,-1),
+            --[Enum.KeyCode.E] = Vector3.new(0,1,0),
+            --[Enum.KeyCode.Q] = Vector3.new(0,-1,0)
+            }
+            
+            Tweenn = function(a,b,d)
+            if t == 1 then
+            return b
+            else 
+            if tonumber(a) then
+                return a * (1-d) + (b*d)
+            else
+            return a:Lerp(b,d);
+            end
+            end
+            end
+            
+            ClampVector3 = function(x,min,max)
+            
+            return 
+            Vector3.new(
+            math.clamp(x.X,min.X,max.X),
+            math.clamp(x.Y,min.Y,max.Y),
+            math.clamp(x.Z,min.Z,max.Z)
+            )
+            
+            end
+            
+            
+            UserInputService.InputChanged:connect(function(inputObject)
+            if inputObject.UserInputType == Enum.UserInputType.MouseMovement then
+            movePosition = movePosition + Vector2.new(inputObject.Delta.x,inputObject.Delta.y)
+            end
+            end)
+            
+            CalculateMovement = function()
+            newMovement = Vector3.new(0,0,0)
+            for i,v in pairs(keysDown) do
+            newMovement = newMovement + (moveKeys[i] or Vector3.new(0,0,0))
+            end
+            return newMovement
+            end
+            
+            Round = function(num, numDecimalPlaces)
+              return math.floor((num/numDecimalPlaces) + .5)*numDecimalPlaces
+            end
+            
+            Input = function(input,gameProcessed)
+            if moveKeys[input.KeyCode] then
+            if input.UserInputState == Enum.UserInputState.Begin then
+            keysDown[input.KeyCode] = true
+            elseif input.UserInputState == Enum.UserInputState.End then
+            keysDown[input.KeyCode] = nil
+            end
+            else
+            if input.UserInputState == Enum.UserInputState.Begin then
+            if input.UserInputType == Enum.UserInputType.MouseButton2 then
+            rightMouseButtonDown = true
+            lastRightButtonDown = Vector2.new(Mouse.X,Mouse.Y)
+            UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+            elseif input.KeyCode == Enum.KeyCode.Z then
+            targetFOV = 20
+            elseif input.KeyCode == camSprintKey then
+            sprinting = true
+            end
+            else
+            if input.UserInputType == Enum.UserInputType.MouseButton2 then
+            rightMouseButtonDown = false
+            UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+            elseif input.KeyCode == Enum.KeyCode.Z then
+            targetFOV = 70
+            elseif input.KeyCode == camSprintKey then
+            sprinting = false
+            end
+            end
+            end
+            end
+             
+            Mouse.WheelForward:connect(function()
+               Camera.CoordinateFrame = Camera.CoordinateFrame * CFrame.new(0,0,-5)
+            end)
+            
+            Mouse.WheelBackward:connect(function()
+               Camera.CoordinateFrame = Camera.CoordinateFrame * CFrame.new(-0,0,5)
+            end)
+            
+            UserInputService.InputBegan:connect(Input)
+            UserInputService.InputEnded:connect(Input)
+            
+            
+            function camon()
+            Toggled = true
+            Camera.CameraType = Enum.CameraType.Scriptable
+            game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true 
+            end
+            
+            
+            function camoff()
+            Toggled = false
+            game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+            game.Workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+            game.Workspace.CurrentCamera.CameraType = "Custom"
+            end
+            
+            
+            game:GetService("RunService").RenderStepped:Connect(function()
+            if Toggled then
+            mouseTarget = Mouse.Hit
+            
+            targetMovePosition = movePosition
+            Camera.CoordinateFrame = CFrame.new(Camera.CoordinateFrame.p) * CFrame.fromEulerAnglesYXZ(-targetMovePosition.Y/Y_Sensitivity ,-targetMovePosition.X/X_Sensitivity, 0) * CFrame.new(CalculateMovement() * ((({[true]=sprintingSpeed})[sprinting]) or .5) )
+            Camera.FieldOfView = Tweenn(Camera.FieldOfView,targetFOV,.5)
+            if rightMouseButtonDown then
+            UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+            movePosition = movePosition - (lastRightButtonDown - Vector2.new(Mouse.X,Mouse.Y))
+            lastRightButtonDown = Vector2.new(Mouse.X,Mouse.Y)
+            end
+            end
+            end)
+        --#endregion
+            
+        
+        
+               --#region Item TP(s)
+            --ItemTab1:Slider('Items speed', '', 10, 10, 35,false, function(Value)
+            --SelectionNUM = Value
+            --end)
+            
+            --SelectionNUM = 10
+            
+            
+            ItemTab1:Toggle('Lasso tool', '', false, function(Value)
+            getgenv().isonlooze = Value
+            lassoTpcheck()
+            end)
+            
+            ItemTab1:Toggle('Selection tool', '', false, function(Value)
+            getgenv().selectionv2 = Value
+            selectionv2(DropOwner)
+            end)
+            
+            ItemTab1:Toggle('Item click to teleport', '', false, function(Value)
+            ClickTp = Value
+            ClickToTP()
+            end)
+            
+            ItemTab1:Button("Teleport Selected Item(s)", function()
+            SelectionTp(GetPing())
+            end)
+            
+            
+            DropOwner = game.Players.LocalPlayer.Character.Name
+            
+            
+            ItemTab1:Button("Deselect items", function()
+                delallselections()
+            end)
+        
+            getgenv().whendonetp = true
+            ItemTab2:Toggle('Teleport to item when done', '', true, function(Value)
+                getgenv().whendonetp = Value
+            end)
+            
+            ItemTab2:Dropdown('Item Owner', "Select...", GetPlrs(), function(Value)
+            DropOwner = Value
+            return
+            end)
+            --#endregion
+            
+            
+            
+               --#region Sort tab
+            if canusefastsorter == true then
+            Sortertab1:Slider('X', '', 0, 0, 15,false, function(Value)
+              XXXSort = Value
+            end)
+            
+            Sortertab1:Slider('Y', '', 0, 0, 15,false, function(Value)
+              YYYSort = Value
+            end)
+            
+            Sortertab1:Slider('Z', '', 0, 0, 15,false, function(Value)
+              ZZZSort = Value
+            end)
+    
+            speedtaavb = Sortertab1:Toggle('Automatically get the best speed', '', false, function(Value)
+                if Value then
+                sortTPspeed = GetPing()
+                else
+                sortTPspeed = 0.1
+                end
+             end)
+        
+            local sortnum = 0
+            
+            local sortnoryes = 0.1
+            
+        
+            Sortertab1:Slider('Speed', '', 0.1, 0.1, 1,true, function(Value)
+                speedtaavb:SetState(false)
+                sortTPspeed = Value
+            end)
+        
+            sortPlayer = game.Players.LocalPlayer.Character.Name
+        
+            Sortertab1:Dropdown("Player", "Select...", GetPlrs(), function(Value)
+                sortPlayer = Value
+            end)
+            
+            getgenv().sortsortcancel = false
+            
+            Sortertab1:Button("Stop", function()
+              getgenv().sortsortcancel = true
+            end)
+           
+            sortTPspeed = 0.1
+           
+        local Label = Sortertab1:Label("Meant for private servers")
+           
+        
+      
+        
+        Sortertab1:Button("start", function()
+        notifications:message{Title = "Butter",Description = "Press an item you want to sort",Icon = 6023426926}
+        sort()
+        end)
+    
+        
+    end
+            --#endregion
+            
+        
+        
+               --#region bad sort
+            if canusefastsorter == false then
+        
+            Sortertab1:Slider('X', '', 0, 0, 15,false, function(Value)
+                XXXSort = Value
+            end)
+              
+            Sortertab1:Slider('Y', '', 0, 0, 15,false, function(Value)
+                YYYSort = Value
+            end)
+              
+            Sortertab1:Slider('Z', '', 0, 0, 15,false, function(Value)
+                ZZZSort = Value
+            end)
+        
+        
+            Sortertab1:Slider('Speed', '', 0.1, 0.1, 1,true, function(Value)
+                sortTPspeed = Value
+            end)
+              
+            local sortnum = 0
+              
+            local sortnoryes = 0.1
+              
+            sortPlayer = game.Players.LocalPlayer.Character.Name
+          
+            Sortertab1:Dropdown("Player", "Select...", GetPlrs(), function(Value)
+                sortPlayer = Value
+            end)
+          
+              
+              
+            getgenv().sortsortcancel = false
+              
+            Sortertab1:Button("Stop", function()
+                getgenv().sortsortcancel = true
+            end)
+             
+            sortTPspeed = 0.1
+             
+          local Label = Sortertab1:Label("this is a worse version of the sorter")
+          local Label = Sortertab1:Label("if you want the better version please buy synapse X or scriptware")
+        
+        
+           
+        
+            Sortertab1:Button("start", function()
+            sort()
+            end)
+        
+        
+        
+        
+        
+            end
+        --#endregion
+        
         
             
                --#region DUPE tab
@@ -4361,7 +5098,7 @@
             
             
             
-            Autobuy1:Slider('Amount', '', 1, 1, 5000,false, function(Value)
+            Autobuy1:Slider('Amount', '', 1, 1, 100,false, function(Value)
             AutoBuyAmount = Value
             end)
 
@@ -4451,7 +5188,7 @@
         
             Woodtab1:Button("Abort", function()
             treestop = false
-            wait(0.4)
+            wait(5)
             treestop = true
             end)
             
@@ -4487,7 +5224,7 @@
             SellAllPlanks()
             end)
             
-            Woodtab3:Button('copeTree', function()
+            Woodtab3:Button('DickmemberTree', function()
               notifications:message{
                   Title = "Butter",
                   Description = "Click a Tree to Cut",
@@ -4611,17 +5348,48 @@
             if (tips == 1) then
             notifications:message{Title = "Did you know",Description = "Lumber Tycoon came out 14 years ago",Icon = 6023426926}
             elseif (tips == 2) then
-            notifications:message{Title = "Did you know",Description = "time to sleep",Icon = 6023426926}
+            notifications:message{Title = "Did you know",Description = "Butter hub has a Discord server https://discord.gg/butterhub",Icon = 6023426926}
             elseif (tips == 3) then
             notifications:message{Title = "Did you know",Description = "The oldest GIFT in the game is the fire present",Icon = 6023426926}
             elseif (tips == 4) then
-            notifications:message{Title = "Did you know",Description = "This a skid",Icon = 6023426926}
+            notifications:message{Title = "Did you know",Description = "The owner of butter Hub is Applebox#0001 and Gamer",Icon = 6023426926}
             elseif (tips == 5) then
-            notifications:message{Title = "Did you know",Description = "the best Lumber Tycoon shop is jo1c scripts",Icon = 6023426926}
+            notifications:message{Title = "Did you know",Description = "the best Lumber Tycoon shop is https://discord.gg/dhSPN8dZS3",Icon = 6023426926}
             elseif (tips == 6) then
-            notifications:message{Title = "Did you know",Description = "skid is good",Icon = 6023426926}
+            notifications:message{Title = "Did you know",Description = "Butter is good",Icon = 6023426926}
             elseif (tips == 7) then
-            notifications:message{Title = "Did you know",Description = "Love woods",Icon = 6023426926}
+            notifications:message{Title = "Did you know",Description = "Love Becky",Icon = 6023426926}
             end
             end)
+            --#endregion
+        
+            
+        
+               --#region UI examples
+               
+            --Player1:Toggle('Infinite Jump', 'infj', false, function(Value)
+            
+            --end)
+            
+            
+            --Player1:Keybind("Fly", "F", function(Value)
+            
+            --end)
+            
+            -- 
+            --Player1:Button('BTools', function()
+             
+            --end)
+            
+            --Player1:Dropdown('Waypoints', 'waypoints', {"Apple Sucks Dick",}, function(Value)
+              
+            --end)
+            
+            
+            --local Label = Player1:Label("bob")
+            
+            
+            --Player1:Textbox('Wire Art File Name', 'Wire Art File Name', "File Name", function(Value)
+            
+            --end)
             --#endregion
