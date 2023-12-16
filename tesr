@@ -1,7 +1,6 @@
-
 repeat task.wait() until game:IsLoaded() and game:GetService"Players".LocalPlayer.Character
-local library = loadstring(game:HttpGet("https://gist.githubusercontent.com/ItsEcstasy/f8acbb072fedcb91e576545ed140de94/raw/870bc0ab2c0a106e9ba9177c09a53c71cc1b9704/UI-Library"))()
-local UI = library:Create("Nightfall", "Lumber Tycoon 2")
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Teh-Silent/ItzYaBoiSilent/main/NightFallLibrary"))()
+local UI = library:Create("Nightfall", "version 1.9.8")
 local Tab, Section
 
 local Requirements = {
@@ -19,14 +18,7 @@ local Requirements = {
         ShopItems = {},
         ItemsToSort = {},
         BPToBuy = {},
-        MainTheme = {},
-        OldConfig = {},
-        AllIDS = {},
-        Music = {},
-        Choices = {"AppleBox More Like SkidBox", "Toads #1", "Defaultio Taking Another Vacation ???", "Belle Delphine Is Qute", "Butter Hub Is Trash", "Spam Defaultio To Release Bamboo Wood",},
-        GetFucked = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ItsEcstasy/Nightfall/main/Assets/GetLostLOL"))(),
-        AutamLeafs = {"Deep orange", "Br. yellowish orange", "CGA brown"},
-        ShopIds = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ItsEcstasy/Nightfall/main/Assets/ShopIds"))() or {["WoodRUs"] = 7, ["CarStore"] = 9, ["FurnitureStore"] = 8, ["ShackShop"] = 10, ["LogicStore"] = 12, ["FineArt"] = 11},
+        ShopIds = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Teh-Silent/TehSilent/main/ShopIds"))() or {["WoodRUs"] = 7, ["CarStore"] = 9, ["FurnitureStore"] = 8, ["ShackShop"] = 10, ["LogicStore"] = 12, ["FineArt"] = 11},
         WaypointsPositions = {["The Den"] = CFrame.new(323, 49, 1930), ["Lighthouse"] = CFrame.new(1464.8, 356.3, 3257.2), ["Safari"] = CFrame.new(111.853, 11.0005, -998.805), ["Bridge"] = CFrame.new(112.308, 11.0005, -782.358), ["Bob's Shack"] = CFrame.new(260, 8, -2542), ["EndTimes Cave"] = CFrame.new(113, -214, -951), ["The Swamp"] = CFrame.new(-1209, 132, -801), ["The Cabin"] = CFrame.new(1244, 66, 2306), ["Volcano"] = CFrame.new(-1585, 625, 1140), ["Boxed Cars"] = CFrame.new(509, 5.2, -1463), ["Tiaga Peak"] = CFrame.new(1560, 410, 3274), ["Land Store"] = CFrame.new(258, 5, -99), ["Link's Logic"] = CFrame.new(4605, 3, -727), ["Palm Island"] = CFrame.new(2549, -5, -42), ["Palm Island 2"] = CFrame.new(1941.58, -5.9, -1494.32), ["Fine Art Shop"] = CFrame.new(5207, -166, 719), ["SnowGlow Biome"] = CFrame.new(-1086.85, -5.89978, -945.316), ["Cave"] = CFrame.new(3581, -179, 430), ["Shrine Of Sight"] = CFrame.new(-1600, 195, 919), ["Fancy Furnishings"] = CFrame.new(491, 13, -1720), ["Docks"] = CFrame.new(1114, 3.2, -197), ["Strange Man"] = CFrame.new(1061, 20, 1131), ["Wood Dropoff"] = CFrame.new(323.406, -2.8, 134.734), ["Snow Biome"] = CFrame.new(889.955, 59.7999, 1195.55), ["Wood RUs"] = CFrame.new(265, 5, 57), ["Green Box"] = CFrame.new(-1668.05, 351.174, 1475.39), ["Spawn"] = CFrame.new(172, 2, 74), ["Cherry Meadow"] = CFrame.new(220.9, 59.8, 1305.8), ["Bird Cave"] = CFrame.new(4813.1, 33.5, -978.8),},
         LandVec = {Vector3.new(-40,0,0),Vector3.new(-40,0,-40),Vector3.new(0,0,-40),Vector3.new(40,0,-40),Vector3.new(40,0,0),Vector3.new(40,0,40),Vector3.new(0,0,40),Vector3.new(-40,0,40),Vector3.new(-80,0,40),Vector3.new(-80,0,0),Vector3.new(-80,0,-40),Vector3.new(-80,0,-80),Vector3.new(-40,0,-80),Vector3.new(0,0,-80),Vector3.new(40,0,-80),Vector3.new(80,0,-80), Vector3.new(80,0,-40),Vector3.new(80,0,0),Vector3.new(80,0,40),Vector3.new(80,0,80),Vector3.new(40,0,80),Vector3.new(0,0,80),Vector3.new(-40,0,80),Vector3.new(-80,0,80)},
     },
@@ -40,7 +32,6 @@ local Requirements = {
         FlyKey = "F",
         NoClip = false,
         FOV = 70,
-        DefaultZoom = 140,
         AntiAFK = false,
         ClickTPKey = "G",
         AlwaysDay = false,
@@ -57,8 +48,6 @@ local Requirements = {
         FastCheckout = false,
         HardDragger = false,
         UIMode = true,
-        RemoveBPPercentage = false,
-        AutoSaveConfig = false,
     },
     Booleans = {
         isFlying = false,
@@ -70,17 +59,13 @@ local Requirements = {
         ClearShopItems = false,
         AbortGetTree = false,
         AutoSellTree = false,
+        IsTryingToDelete = false,
+        TreeGotSold = false,
         IsSpawningVehicle = false,
+        IsSelling = false,
         AbortAxeDupe = false,
         AbortStacker = false,
         IsModdingTree = false,
-        OneUnitCutter = false,
-        VehicleAnnoy = false,
-        MapThemeActive = false,
-        AutoUpdatedConfig = false,
-        JoinAndLeaveNotify = false,
-        IsDuping = false,
-        TreeTeleported = false,
     },
     Strings = {
         Time = 0,
@@ -106,13 +91,7 @@ local Requirements = {
         Temp = nil,
         TreeToMod = "nil",
         SawmillMod = "nil",
-        SelectedBP = nil,
-        SelectedPlank = nil,
-        SelectedSawmill = nil,
-        TreeToJointCut = nil,
-        PowerPlot = nil,
-        PlrsMoney = 20,
-        GameVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsEcstasy/Nightfall/main/Assets/Lt2Version"))(),
+        GameVersion = loadstring(game:HttpGet("https://raw.githubusercontent.com/Teh-Silent/ItzYaBoiSilent/main/Lt2Version"))(),
     },
     Connections = {
         InfJump = nil,
@@ -135,76 +114,14 @@ local Requirements = {
         ToolAdded = nil,
         TreeAdded = nil,
         ClickToSellC = nil,
-        UnitCutter = nil,
-        PlankReAdded = nil,
-        PlankToBP = nil,
-        BPAdded = nil,
-        SawmillSettingsC = nil,
-        PlayerJoined = nil,
-        PlayerLeft = nil,
-        TJC = nil,
-        HardDragger = nil,
-        InfoStats = nil,
-        SoundAdded = nil,
-        Lighting = nil,
     },
     Funcs = {},
 }
 
----~Security~---
-
-for i,v in next, game:GetService"CoreGui":GetChildren() do
-    if v.Name == "LoadingScreen" then
-        game:GetService"Players".LocalPlayer:Kick("Nightfall > Butter")
-        task.wait(2)
-        while true do end
-    end
-end
-
-game:GetService"CoreGui".ChildAdded:Connect(function(v)
-    if v:IsA"ScreenGui" and v.Name == "LoadingScreen" then
-        v:Destroy()
-        game:GetService"Players".LocalPlayer:Kick("Nightfall > Butter")
-        task.wait(2)
-        while true do end
-    end 
-end)
-
 ---~Other~---
-
-if table.find(Requirements.Tables.GetFucked, tostring(game:GetService"Players".LocalPlayer)) then
-    game:GetService"ReplicatedStorage".Interaction.Ban:FireServer("Love From Nightfall", game:GetService"Players".LocalPlayer)
-    task.wait(4)
-    while true do end 
-end
 
 if game.PlaceVersion ~= tonumber(Requirements.Strings.GameVersion) and Requirements.Strings.GameVersion ~= nil then
     library:Notify("Warning","Lt2 has been updated please check the discord server for more information or inform the owner")
-end
-
-Requirements.Tables.OldConfig = Requirements.Config
-Requirements.Config = isfile("NightFallConfig.txt") and game:GetService("HttpService"):JSONDecode(readfile("NightFallConfig.txt")) or Requirements.Config
-
-if not isfile("NightFallConfig.txt") then
-    writefile("NightFallConfig.txt", game:GetService("HttpService"):JSONEncode(Requirements.Config))
-end
-
-for i,v in next, Requirements.Tables.OldConfig do
-    if Requirements.Config[i] == nil then
-        Requirements.Config[i] = v
-        Requirements.Booleans.AutoUpdatedConfig = true 
-    end
-end
-
-if Requirements.Booleans.AutoUpdatedConfig then
-    writefile("NightFallConfig.txt", game:GetService("HttpService"):JSONEncode(Requirements.Config))
-    library:Notify("Nightfall", "Auto Updated Config File")
-end
-
-Requirements.Funcs.SaveConfig = function()
-    if isfile("NightFallConfig.txt") then
-        writefile("NightFallConfig.txt", game:GetService("HttpService"):JSONEncode(Requirements.Config))
-    end
 end
 
 Requirements.Funcs.Teleport = function(Pos)
@@ -283,7 +200,11 @@ Requirements.Funcs.Create = function(ToMake, Parent, Props)
 end
 
 Requirements.Funcs.FireRemote = function(Remote, ...)
-    return Remote:IsA"RemoteEvent" and Remote:FireServer(...) or Remote:IsA"RemoteFunction" and Remote:InvokeServer(...)
+    if Remote.ClassName == "RemoteEvent" then
+        return Remote:FireServer(...)
+    elseif Remote.ClassName == "RemoteFunction" then
+        return Remote:InvokeServer(...)
+    end
 end
 
 Requirements.Funcs.GetFunds = function(Plr)
@@ -333,61 +254,16 @@ Requirements.Funcs.GetShopItems = function()
     return Requirements.Tables.ShopItems
 end
 
-Requirements.Funcs.GetMusic = function()
-    Requirements.Tables.Music = {}
-    for i,v in next, game:GetService"Players".LocalPlayer.PlayerGui.ClientSounds:GetChildren() do
-        if v:IsA"Sound" and v.Name:sub(1, 7) == "Region_" or v.Name:sub(1, 6) == "Store_" then
-            table.insert(Requirements.Tables.Music, v.Name:sub(1, 7) == "Region_" and string.split(v.Name, "Region_")[2] or string.split(v.Name, "Store_")[2])
-        end
-    end
-    return Requirements.Tables.Music
-end
-
-Requirements.Funcs.ClearOrphanedSounds = function()
-    if typeof(Requirements.Connections.SoundAdded) == "connection" then
-        Requirements.Connections.SoundAdded:Disconnect()
-    end
-
-    local AlreadyExists = {}
-
-    for i,v in next, game:GetService"Players".LocalPlayer.PlayerGui.ClientSounds:GetChildren() do
-        if v:IsA"Sound" then
-            if table.find(AlreadyExists, v.Name) then
-                v:Destroy()
-            else
-                table.insert(AlreadyExists, v.Name)
-            end
-        end
-    end
-
-    Requirements.Connections.SoundAdded = game:GetService"Players".LocalPlayer.PlayerGui.ClientSounds.ChildAdded:Connect(function(v)
-        if v:IsA"Sound" then
-            v:Destroy()
-        end
-    end)
-end
-Requirements.Funcs.ClearOrphanedSounds()
-
 Requirements.Funcs.MoveModel = function(Model, Amount, Pos)
-    if not Model.PrimaryPart then
-        Model.PrimaryPart = Model:FindFirstChild"Main" and Model.Main or Model:FindFirstChild"WoodSection" and Model.WoodSection
-    end
-
-    for i,v in next, Model:GetChildren() do
-        if v:IsA"BasePart" then
-            v.Velocity = Vector3.new(0, 0, 0)
-            v.RotVelocity = Vector3.new(0, 0, 0)
+    for i = 1, Amount do
+        game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Model)
+        Model:PivotTo(Pos)
+        if Model.PrimaryPart then
+            Model.PrimaryPart.Velocity = Vector3.new(0, 0, 0)
+            Model.PrimaryPart.RotVelocity = Vector3.new(0, 0, 0)
         end
+        task.wait()
     end
-
-    pcall(function()
-        for i = 1, Amount do
-            game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Model)
-            Model:SetPrimaryPartCFrame(Pos)
-            game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Model)
-            task.wait()
-        end
-    end)
 end
 
 Requirements.Funcs.SetSlotTo = function(Slot)
@@ -497,7 +373,7 @@ Requirements.Funcs.MoveLogs = function(Pos,Value)
             for i = 1,30 do
 				pcall(function()
 					game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v)
-					v:SetPrimaryPartCFrame(Pos)
+					v:PivotTo(Pos)
 					task.wait()
 				end)
             end
@@ -510,34 +386,29 @@ Requirements.Funcs.MoveLogs = function(Pos,Value)
 	end
 end
 
-Requirements.Funcs.CollectMainThemeData = function()
-    for i,v in next, game:GetService("Workspace"):GetDescendants() do
-        if v:IsA"Part" or v:IsA"WedgePart" or v:IsA"UnionOperation" then
-            if not table.find(Requirements.Tables.MainTheme, v) then
-                table.insert(Requirements.Tables.MainTheme, v)
-                Requirements.Tables.MainTheme[v] = {OldColor = v.BrickColor.Name, Trans = v.Transparency, OldMaterial = v.Material}
+Requirements.Funcs.GameMenuTheme = function(BGColor, TxtColor) 
+    for i,v in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
+        if v.Name ~= "Chat" and v.Name ~= "TargetGui" and v.Name ~= "ColdAsIce" then
+            for i,v in next, v:GetDescendants() do
+                if not v:FindFirstChild"UICorner" then
+                    Instance.new("UICorner",v)
+                end
+                if v.Name == "DropShadow" then
+                    v:Destroy()
+                end
+                if v:IsA("TextButton") or v:IsA("Frame") or v:IsA("ScrollingFrame") then
+                    v.BackgroundColor3 = BGColor
+                end
+                if v:IsA("TextLabel") or v:IsA("TextButton") or v:IsA("TextBox") then
+                    v.TextColor3 = TxtColor
+                    v.BackgroundColor3 = BGColor
+                    v.Font = Enum.Font.GothamMedium
+                end
             end
         end
     end
 end
-
-Requirements.Funcs.GetTargetsItems = function(Target)
-   Requirements.Tables.WipeList = {"Tool", "Loose Item", "Gift", "Structure", "Blueprint", "Vehicle", "Vehicle Spot"}
-
-    for i,v in next, game:GetService"Workspace".PlayerModels:GetChildren() do
-        if v:FindFirstChild"Owner" and v.Owner.Value == game:GetService"Players"[Target] then
-            if not table.find(Requirements.Tables.WipeList, v:FindFirstChild"ItemName" and v.ItemName.Value or v:FindFirstChild"PurchasedBoxItemName" and v.PurchasedBoxItemName.Value) then
-                table.insert(Requirements.Tables.WipeList, v:FindFirstChild"ItemName" and v.ItemName.Value or v:FindFirstChild"PurchasedBoxItemName" and v.PurchasedBoxItemName.Value)
-            end
-        end
-    end
-   return Requirements.Tables.WipeList
-end
-
-Requirements.Funcs.PickChoice = function()
-    game:GetService("Workspace").Stores.WoodRUs.Parts.PREMIUMSELECTION.SurfaceGui.TextLabel.Text = Requirements.Tables.Choices[math.random(1, #Requirements.Tables.Choices)]
-end
-Requirements.Funcs.PickChoice()
+Requirements.Funcs.GameMenuTheme(Color3.fromRGB(225, 225, 225), Color3.fromRGB(0, 0, 0))
 
 ---~PlayerFuncs~---
 
@@ -578,7 +449,7 @@ Requirements.Funcs.InfJump = function(Value)
     end)
 end
 
-Requirements.Funcs.PlayerFly = function(Value) -- Yes this is skidded to much effort to make a fly
+Requirements.Funcs.PlayerFly = function(Value)
     repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild('Head') and game.Players.LocalPlayer.Character:FindFirstChild('Humanoid')
     local Steer = {f = 0, b = 0, l = 0, r = 0}
     local BackSteer = {f = 0, b = 0, l = 0, r = 0}
@@ -640,11 +511,11 @@ Requirements.Funcs.PlayerFly = function(Value) -- Yes this is skidded to much ef
             end;
             for i,v in next,game.Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()do
                 if v:IsA('Weld')then 
-                    v:Destroy()
-                end
-            end
+                    v:Destroy();
+                end;
+            end;
             game.Player.LocalPlayer.CharacterHumanoidRootPart.CFrame = CFrame.new(CarFly.CFrame.p)
-        end)
+        end);
         game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
     end
 
@@ -759,7 +630,7 @@ end
 
 ---~GameFuncs~---
 
-Requirements.Connections.Lighting = game:GetService"Lighting".Changed:Connect(function()
+game:GetService"Lighting".Changed:Connect(function()
     if Requirements.Config.AlwaysDay then
         game.Lighting.TimeOfDay = "12:00:00"
     end
@@ -852,16 +723,10 @@ Requirements.Funcs.DisableBPHighlight = function(Value)
 end
 
 Requirements.Funcs.GetGreenBox = function()
-    if not game:GetService("Workspace")["Region_Volcano"]:FindFirstChild"VolcanoWin" then
-        return library:Notify("Error!", "Failed to find the green box")
-    end
     firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,game:GetService("Workspace")["Region_Volcano"].VolcanoWin,0)
 end
 
 Requirements.Funcs.DestroyGreenBox = function()
-    if not game:GetService("Workspace")["Region_Volcano"]:FindFirstChild"VolcanoWin" or game:GetService("Workspace")["Region_Volcano"]:FindFirstChild"VolcanoWin":FindFirstChild"LavaFire" then
-        return library:Notify("Error!", "Failed to find the green box")
-    end
 	Requirements.Vars.OldPos = game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame
 	for i,v in next, game:GetService("Workspace")["Region_Volcano"]:GetChildren() do
 		if v.Name == "VolcanoWin" then
@@ -875,25 +740,7 @@ Requirements.Funcs.DestroyGreenBox = function()
 	game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame = Requirements.Vars.OldPos
 end
 
-Requirements.Funcs.MainTheme = function()
-    for i,v in next, game:GetService("Workspace"):GetDescendants() do
-        if v:IsA"Part" or v:IsA"WedgePart" or v:IsA"UnionOperation" then
-            if table.find(Requirements.Tables.MainTheme, v) then
-                v.BrickColor = BrickColor.new(Requirements.Tables.MainTheme[v].OldColor)
-                v.Transparency = Requirements.Tables.MainTheme[v].Trans
-                v.Material = Requirements.Tables.MainTheme[v].OldMaterial
-            end
-        end
-    end
-    Requirements.Booleans.MapThemeActive = false
-end
-
-Requirements.Funcs.Christmas = function(Value)
-    if Requirements.Booleans.MapThemeActive then
-        Requirements.Funcs.MainTheme()
-        if not Value then return end
-    end
-    Requirements.Funcs.CollectMainThemeData()
+Requirements.Funcs.Christams = function()
     for i,v in next, game:GetService("Workspace"):GetDescendants() do
         if v.Name == "Ground" then
             v.BrickColor = BrickColor.new("White")
@@ -920,15 +767,9 @@ Requirements.Funcs.Christmas = function(Value)
             v.BrickColor = BrickColor.new("White")
         end
     end
-    Requirements.Booleans.MapThemeActive = true
 end
 
-Requirements.Funcs.Autamn = function(Value)
-    if Requirements.Booleans.MapThemeActive then
-        Requirements.Funcs.MainTheme()
-        if not Value then return end
-    end
-    Requirements.Funcs.CollectMainThemeData()
+Requirements.Funcs.Autamn = function()
     for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
         if v.Name == "Ground" then
             v.BrickColor = BrickColor.new("Bright orange")
@@ -942,7 +783,7 @@ Requirements.Funcs.Autamn = function(Value)
             v.BrickColor = BrickColor.new("Fog")
         end
         if v.Name == "LeafPart" then
-            v.BrickColor = BrickColor.new(Requirements.Tables.AutamLeafs[math.random(1, #Requirements.Tables.AutamLeafs)] )
+            v.BrickColor = BrickColor.new(DropDownList.AutamLeafs[math.random(1, #DropDownList.AutamLeafs)] )
             v.Material = "Grass"
         end
         if v:IsA "Part" and v.Name == "Water" then
@@ -952,17 +793,13 @@ Requirements.Funcs.Autamn = function(Value)
             v.BrickColor = BrickColor.new("Nougat")
         end
     end
-    Requirements.Booleans.MapThemeActive = true
 end
 
 ---SlotFuncs~---
 
 Requirements.Funcs.LoadSlot = function(Slot)
-    if game:GetService"Players".LocalPlayer.CurrentlySavingOrLoading.Value then
-        return library:Notify("Nightfall", "You are currently loading please wait")
-    end
-    if Slot == math.huge then
-        if game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value == -1 then
+    if Slot == -1 then
+        if game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value <= 0 then
             return library:Notify("Error", "No Slot Loaded")
         end
     end
@@ -980,7 +817,7 @@ Requirements.Funcs.LoadSlot = function(Slot)
     if game.Players.LocalPlayer.OwnsProperty.Value == true then
         Requirements.Funcs.SetSlotTo(Slot)
     end
-    library:Notify("Nightfall", game:GetService"Players".LocalPlayer.OwnsProperty.Value and "Slot Loaded Successfully" or "Slot Deloaded Successfully")
+    library:Notify("NightFall", game:GetService"Players".LocalPlayer.OwnsProperty.Value and "Slot Loaded Successfully" or "Slot Deloaded Successfully")
 end
 
 Requirements.Funcs.ForceSave = function(Slot)
@@ -991,61 +828,37 @@ Requirements.Funcs.ForceSave = function(Slot)
         return library:Notify("Error!", "Failed to save slot please wait until the base is loaded")
     end
     Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").LoadSaveRequests.RequestSave, Slot, game:GetService"Players".LocalPlayer)
-    library:Notify("Nightfall", string.format("Saved Slot %s Successfully", tostring(Slot)))
 end
 
 Requirements.Funcs.FastLoad = function()
     getsenv(game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("PropertyPurchasingGUI"):WaitForChild("PropertyPurchasingClient")).enterPurchaseMode = function(...)
-        if Requirements.Config.FastLoad == false or library.destroyed then
+        if Requirements.Config.FastLoad == false then
             return Requirements.Vars.OldPurchase(...)
         end
         setupvalue(getsenv(game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("PropertyPurchasingGUI"):WaitForChild("PropertyPurchasingClient")).rotate, 3, 0)
         setupvalue(Requirements.Vars.OldPurchase, 10, Requirements.Funcs.GetEmptPlots()[#Requirements.Funcs.GetEmptPlots()])
+        return
     end
 end
 Requirements.Funcs.FastLoad()
 
 Requirements.Funcs.FreeLand = function()
-    if game:GetService"Players".LocalPlayer.OwnsProperty.Value then
-        return library:Notify("Error!", "You already own a plot")
+    if game:GetService"Players".LocalPlayer.OwnsProperty.Value == true then
+        return library:Notify("Error", "You Already Own Land")
     end
-    local ToClaim, Dis, ToClaim2, Dis2 = nil, 9e9, nil, 0
-    for i,v in next, game:GetService"Workspace".Properties:GetChildren() do
-        if v:FindFirstChild"Owner" and v.Owner.Value == nil then
-            local Distance = (game.Players.LocalPlayer.Character.Torso.CFrame.p - v.OriginSquare.CFrame.p).Magnitude
-            if Dis > Distance then
-                ToClaim,Dis = v,Distance
-            end
-            if Dis2 < Distance then 
-                ToClaim2, Dis2 = v, Distance
-            end
-        end
-    end
-    Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty, ToClaim2, ToClaim2.OriginSquare.Position)
-    Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad, math.huge, game:GetService"Players".LocalPlayer)
-    Requirements.Strings.PlrsMoney = Requirements.Funcs.GetFunds(game:GetService"Players".LocalPlayer)
-    repeat
-        Requirements.Funcs.SellSoldSign()
-        task.wait()
-    until Requirements.Funcs.GetFunds(game:GetService"Players".LocalPlayer) ~= Requirements.Strings.PlrsMoney
-    Requirements.Funcs.Teleport(ToClaim.OriginSquare.CFrame + Vector3.new(0,2,0))
-    Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty, ToClaim, ToClaim.OriginSquare.Position)
+    Requirements.Funcs.Teleport(Requirements.Funcs.GetCurrentPlot(nil).OriginSquare.CFrame + Vector3.new(0,5,0))
+    Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty, Requirements.Funcs.GetCurrentPlot(nil), Requirements.Funcs.GetCurrentPlot(nil).OriginSquare.Position)
 end
 
 Requirements.Funcs.MaxLand = function()
-    if Requirements.Funcs.GetCurrentPlot(game:GetService"Players".LocalPlayer) and #Requirements.Funcs.GetCurrentPlot(game:GetService"Players".LocalPlayer):GetChildren() >= 25 then
-        return library:Notify("Error!", "You already have max land")
-    end
     if game:GetService("Players").LocalPlayer.OwnsProperty.Value ~= true then 
         library:Notify("Error!","You Do Not Own A Plot Would You Like To Get Some Free Land",true,function(Value)
             if Value then 
                 Requirements.Funcs.FreeLand()
-            else
-                return "Canceled"
             end
         end)
+        return
     end
-    repeat task.wait() until game:GetService("Players").LocalPlayer.OwnsProperty.Value
     for i,v in next, Requirements.Tables.LandVec do
         Requirements.Funcs.FireRemote(game.ReplicatedStorage.PropertyPurchasing.ClientExpandedProperty, Requirements.Funcs.GetCurrentPlot(game:GetService"Players".LocalPlayer), CFrame.new(Requirements.Funcs.GetCurrentPlot(game:GetService"Players".LocalPlayer).OriginSquare.Position + v))
     end
@@ -1062,11 +875,17 @@ Requirements.Funcs.LandArt = function(Value)
         return library:Notify("Error", "You need to get some free land before using this feature")
     end
     Requirements.Tables.LandVec = {Vector3.new(40, 0, 0),Vector3.new(-40, 0, 0),Vector3.new(0, 0, 40),Vector3.new(0, 0, -40),Vector3.new(40, 0, 40),Vector3.new(40, 0, -40),Vector3.new(-40, 0, 40),Vector3.new(-40, 0, -40),Vector3.new(80, 0, 0),Vector3.new(-80, 0, 0),Vector3.new(0, 0, 80),Vector3.new(0, 0, -80),Vector3.new(80, 0, 80),Vector3.new(80, 0, -80),Vector3.new(-80, 0, 80),Vector3.new(-80, 0, -80),Vector3.new(40, 0, 80),Vector3.new(-40, 0, 80),Vector3.new(80, 0, 40),Vector3.new(80, 0, -40),Vector3.new(-80, 0, 40),Vector3.new(-80, 0, -40),Vector3.new(40, 0, -80),Vector3.new(-40, 0, -80)}
-    
     Requirements.Vars.Mouse = game:GetService"Players".LocalPlayer:GetMouse()
-    local PlayersPlot = Requirements.Funcs.GetCurrentPlot(game:GetService"Players".LocalPlayer)
-    
     Requirements.Funcs.Create("Folder", game:GetService"Workspace", {Name = "PlotFolder"})
+    local PlayersPlot = Requirements.Funcs.GetCurrentPlot(game:GetService"Players".LocalPlayer)
+    for i,v in next, PlayersPlot:GetChildren() do
+        if v.Name == "Square" or v.Name == "OriginSquare" then
+            local Prop = table.find(Requirements.Tables.LandVec, PlayersPlot.OriginSquare.Position - v.Position) or nil
+            if Prop then
+                --table.remove(Requirements.Tables.LandVec, Prop)
+            end
+        end
+    end
 
     for i,v in next, Requirements.Tables.LandVec do
         Requirements.Funcs.Create("Part", game:GetService"Workspace".PlotFolder, {Name = "LandPreview", Transparency = 0.5, CFrame =  CFrame.new(PlayersPlot.OriginSquare.Position + v), Size = PlayersPlot.OriginSquare.Size, Color = Color3.fromRGB(124, 92, 70), Material = Enum.Material.Concrete, Anchored = true, CanCollide = false})
@@ -1100,7 +919,7 @@ Requirements.Funcs.SellSoldSign = function()
                     Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").Interaction.ClientInteracted, v, "Take down sold sign")
                     task.wait()
                 until v.Main.Anchored ~= true
-                Requirements.Funcs.MoveModel(v, 35, CFrame.new(315.016, 2.57965, 84.7445))
+                Requirements.Funcs.MoveModel(v, 25, CFrame.new(315.016, 2.57965, 84.7445))
             end
         end
     end
@@ -1172,158 +991,68 @@ Requirements.Funcs.DropAxes = function(Amount)
     if not Requirements.Booleans.ToolFound then
         library:Notify("Error!", "No tools found")
     end
-end
+end 
 
 Requirements.Funcs.DupeAxes = function(Amount)
     Requirements.Booleans.AbortAxeDupe = false
-    if Requirements.Booleans.IsDuping then
-        return library:Notify("Error!", "You are currently duping please wait")
-    end
     if game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value <= -1 then
         return library:Notify("Error!", "No slot loaded")
     end
     if not game:GetService"Players".LocalPlayer.OwnsProperty.Value then
         return library:Notify("Error!", "You need to own land to dupelicate axes")
     end
-    Requirements.Booleans.IsDuping = true
     if not Requirements.Config.FastLoad and Requirements.Booleans.WasOn == nil then
         Requirements.Booleans.WasOn = Requirements.Config.FastLoad
         Requirements.Config.FastLoad = true
     end
-    for i = 1, Amount do
-        if Requirements.Booleans.AbortAxeDupe then break end
-        if not Requirements.Funcs.FireRemote(game:GetService"ReplicatedStorage".LoadSaveRequests.ClientMayLoad, game:GetService"Players".LocalPlayer) then
-            library:Notify("Nightfall", "Load on cooldown please wait")
-            repeat
-                task.wait(.1)
-            until Requirements.Funcs.FireRemote(game:GetService"ReplicatedStorage".LoadSaveRequests.ClientMayLoad, game:GetService"Players".LocalPlayer)
-        end
-        task.spawn(function()
-            Requirements.Funcs.SafeDeath()
-        end)
-        repeat task.wait() until not game:GetService"Players".LocalPlayer.Character:FindFirstChild"Head"
-        task.wait(3.2)
-        Requirements.Funcs.FireRemote(game:GetService"ReplicatedStorage".LoadSaveRequests.RequestLoad, game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value, game:GetService"Players".LocalPlayer)
-        repeat task.wait() until game:GetService"Players".LocalPlayer.CurrentlySavingOrLoading.Value == false and game:GetService"Players".LocalPlayer.OwnsProperty.Value == true
-        if Requirements.Funcs.CountAxes() > 4 then
-            Requirements.Funcs.DropAxes(Requirements.Funcs.CountAxes() / 2)
-        end
-        task.wait()
-    end
-    Requirements.Booleans.IsDuping = false
-    library:Notify("Nightfall",Requirements.Booleans.AbortAxeDupe and "Inventory Dupe Aborted" or string.format("Duplicated Inventory %s Time(s)", tostring(Amount)))
-    Requirements.Config.FastLoad = Requirements.Booleans.WasOn
-    Requirements.Booleans.WasOn = nil
-end
-
-Requirements.Funcs.TransferPower = function(ToSlot)
-    if Requirements.Booleans.IsDuping then
-        return library:Notify("Error!", "You are currently duping please wait")
-    end
-
-    if game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value == -1 then
-        return library:Notify("Error!", "You need to load a slot with the power")
-    end
-
-    if game:GetService"Players".LocalPlayer.CurrentlySavingOrLoading.Value then
-        return library:Notify("Error!", "You are currently loading please wait")
-    end
-
-    if game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value == ToSlot then
-        return library:Notify("Error!", "You can not Transfer the power to the current slot")
-    end
-
-    if not game:GetService"Players".LocalPlayer.SuperBlueprint.Value then
-        return library:Notify("Error!", "You do not own the power on this slot")
-    end
-
-    Requirements.Booleans.IsDuping = true
-
     if not Requirements.Funcs.FireRemote(game:GetService"ReplicatedStorage".LoadSaveRequests.ClientMayLoad, game:GetService"Players".LocalPlayer) then
-        library:Notify("Nightfall", "Load on cooldown please wait")
+        library:Notify("NightFall", "Load on cooldown please wait")
         repeat
             task.wait(.1)
         until Requirements.Funcs.FireRemote(game:GetService"ReplicatedStorage".LoadSaveRequests.ClientMayLoad, game:GetService"Players".LocalPlayer)
     end
-
-    Requirements.Strings.PowerPlot = Requirements.Funcs.GetCurrentPlot(game:GetService"Players".LocalPlayer)
-
-    Requirements.Funcs.FireRemote(game:GetService"ReplicatedStorage".LoadSaveRequests.RequestLoad, math.huge, game:GetService"Players".LocalPlayer)
-
-    library:Notify("Nightfall", "Waiting For Plot To Be Claimable Again")
-
-    repeat task.wait() until Requirements.Strings.PowerPlot.Owner.Value == nil
-
-    task.wait(1) -- does not affect speed 
-    
-    Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty, Requirements.Strings.PowerPlot, Requirements.Strings.PowerPlot.OriginSquare.Position)
-
-    Requirements.Funcs.Teleport(Requirements.Strings.PowerPlot.OriginSquare.CFrame + Vector3.new(0, 3, 0))
-
-    Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").LoadSaveRequests.RequestSave, ToSlot, game:GetService"Players".LocalPlayer)
-    
-    Requirements.Funcs.SetSlotTo(ToSlot)
-
-    Requirements.Booleans.IsDuping = false
-
-    library:Notify("Nightfall", "Power Duped Successfully")
+    task.spawn(function()
+        Requirements.Funcs.SafeDeath()
+    end)
+    repeat task.wait() until not game:GetService"Players".LocalPlayer.Character:FindFirstChild"Head"
+    task.wait(3.2)
+    Requirements.Funcs.FireRemote(game:GetService"ReplicatedStorage".LoadSaveRequests.RequestLoad, game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value, game:GetService"Players".LocalPlayer)
+    repeat task.wait() until game:GetService"Players".LocalPlayer.CurrentlySavingOrLoading.Value == false and game:GetService"Players".LocalPlayer.OwnsProperty.Value == true
+    if Requirements.Funcs.CountAxes() >= 4 then
+        Requirements.Funcs.DropAxes(Requirements.Funcs.CountAxes() / 2)
+    end
+    Amount = Amount - 1
+    if Amount >= 1 and not Requirements.Booleans.AbortAxeDupe then
+        return Requirements.Funcs.DupeAxes(Amount)
+    end
+    library:Notify("NightFall",Requirements.Booleans.AbortAxeDupe and "Aborted" or string.format("Duplicated inventory %s Time(s)", tostring(Requirements.Strings.DupeAmount)))
+    Requirements.Config.FastLoad = Requirements.Booleans.WasOn
+    Requirements.Booleans.WasOn = nil
 end
 
 Requirements.Funcs.DupePlot = function(DupeSlot, EntireBase)
-    if Requirements.Booleans.IsDuping then
-        return library:Notify("Error!", "You are currently duping please wait")
+    if not Requirements.Config.FastLoad and Requirements.Booleans.WasOn == nil then -- not need to change back to nil due to game shutdown
+        Requirements.Booleans.WasOn = Requirements.Config.FastLoad
+        Requirements.Config.FastLoad = true
     end
-
-    if game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value > -1 then
-        return library:Notify("Error!", "You can not have a base loaded")
+    if game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value ~= -1 then
+        library:Notify("NightFall", "Deloading Current Base")
+        Requirements.Funcs.LoadSlot(math.huge)
+        repeat task.wait() until game:GetService"Players".LocalPlayer.CurrentlySavingOrLoading.Value ~= true
     end
-
-    if game:GetService"Players".LocalPlayer.CurrentlySavingOrLoading.Value then
-        return library:Notify("Error!", "You are currently loading")
-    end
-
-    if Requirements.Funcs.GetPing() >= 500 then
-        return library:Notify("Error!", "Ping is to high to attempt a base dupe")
-    end
-
-    if #game:GetService"Players":GetChildren() < 2 then
-        return library:Notify("Error!", "There needs to be 2 people in the server to dupe")
-    end
-
-    Requirements.Booleans.IsDuping = true
-
-    local StartLoadTime, EndLoadTime = 0, 0
-
     task.spawn(function()
-        StartLoadTime = tick() --DateTime.now().UnixTimestamp
-        Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad, DupeSlot, game:GetService"Players".LocalPlayer)
+        Requirements.Funcs.FireRemote(game:GetService"ReplicatedStorage".LoadSaveRequests.RequestLoad, DupeSlot, game:GetService"Players".LocalPlayer)
     end)
-
-    local FreePlot = Requirements.Funcs.GetCurrentPlot(nil)
-
+    task.spawn(function()
+        repeat task.wait() until game:GetService"Players".LocalPlayer.OwnsProperty.Value == true
+        task.wait(.3)
+        game:Shutdown()
+    end)
     if EntireBase then
-        task.spawn(function()
-            Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").PropertyPurchasing.ClientPurchasedProperty, FreePlot, FreePlot.OriginSquare.Position)
-        end)
+        task.wait()
+        local EmptyPlot = Requirements.Funcs.GetCurrentPlot(nil)
+        game:GetService"ReplicatedStorage".PropertyPurchasing.ClientPurchasedProperty:FireServer(EmptyPlot, EmptyPlot.OriginSquare.Position)
     end
-
-    repeat task.wait() until game:GetService"Players".LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
-
-    EndLoadTime = tick() - StartLoadTime --DateTime.now().UnixTimestamp - StartLoadTime
-
-    if EntireBase then
-        FreePlot.OriginSquare.Color = Color3.fromRGB(225, 0, 0)
-
-        library:Notify("Nightfall", "Do not load on the red plot")
-    end
-
-    repeat task.wait() until game:GetService"Workspace".Effects:FindFirstChild"StructureModel"
-
-    repeat task.wait() until not game:GetService"Workspace".Effects:FindFirstChild"StructureModel"
-
-    task.wait(math.round(EndLoadTime))
-
-    game:Shutdown()
 end
 
 Requirements.Funcs.ChangeVehicleState = function(Type, Value)
@@ -1348,7 +1077,7 @@ Requirements.Funcs.VehicleSpawner = function(CarColor, StopOnPink)
         return library:Notify("Error!", "You alre currently spawning a vehicle please wait or abort")
     end
     if CarColor == nil then 
-        return library:Notify("Nightfall", "Error No car color selected")
+        return library:Notify("NightFall", "Error No car color selected")
     end
     library:Notify("Vehicle Spawner", "Select a spawn pad")
     Requirements.Booleans.IsSpawningVehicle = true
@@ -1397,7 +1126,7 @@ Requirements.Funcs.DestroySelectedOption = function(Owner, Type)
     end
     for i,v in next, game:GetService"Workspace".PlayerModels:GetChildren() do
         if v:FindFirstChild"Owner" and v.Owner.Value == game:GetService"Players"[Owner] then
-            if v:FindFirstChild"Type" and v.Type.Value == Type or v:FindFirstChild"ItemName" and v.ItemName.Value == Type or v:FindFirstChild"PurchasedBoxItemName" and v.PurchasedBoxItemName.Value == Type then
+            if v:FindFirstChild"Type" and v.Type.Value == Type then
                 repeat
                     Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").Interaction.DestroyStructure, v)
                     task.wait(.2)
@@ -1405,30 +1134,6 @@ Requirements.Funcs.DestroySelectedOption = function(Owner, Type)
             end
         end
     end
-    library:Notify("Nightfall", "Selected Option Wipes Successfully")
-end
-
-Requirements.Funcs.WipeCurrentSlot = function(Slot)
-    if game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value == -1 then
-        return library:Notify("Error!", "You need to load the base you want to wipe")
-    end
-
-    if game:GetService"Players".LocalPlayer.CurrentlySavingOrLoading.Value then
-        return library:Notify("Error!", "You are currently loading")
-    end
-
-    if not Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").LoadSaveRequests.ClientMayLoad, game:GetService"Players".LocalPlayer) then
-        library:Notify("Nightfall", "Load on cooldown please wait")
-        repeat task.wait(.1) until Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").LoadSaveRequests.ClientMayLoad, game:GetService"Players".LocalPlayer)
-    end
-
-    Requirements.Funcs.LoadSlot(math.huge)
-
-    repeat task.wait() until not game:GetService"Players".LocalPlayer.CurrentlySavingOrLoading.Value 
-
-    Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").LoadSaveRequests.RequestSave, Slot, game:GetService"Players".LocalPlayer)
-
-    library:Notify("Nightfall", string.format("Wipes Slot %s Successfully", tostring(Slot)))
 end
 
 Requirements.Funcs.ClickToDelete = function(Value)
@@ -1437,13 +1142,24 @@ Requirements.Funcs.ClickToDelete = function(Value)
     end
     Requirements.Vars.Mouse = game:GetService"Players".LocalPlayer:GetMouse()
     Requirements.Connections.ClickToDelete = Requirements.Vars.Mouse.Button1Down:Connect(function()
-        local Target = Requirements.Vars.Mouse.Target.Parent
-        if tostring(Target.Parent.Name):match("PlayerModels") and not Target:FindFirstChild"TreeClass" then
-            if Requirements.Funcs.CheckPerm("Destroy", tostring(Target.Owner.Value)) then
+        if Requirements.Booleans.IsTryingToDelete then
+            return
+        end
+        Requirements.Strings.Target = Requirements.Vars.Mouse.Target.Parent
+        if Requirements.Strings.Target.Parent.Name ~= "PlayerModels" then
+            return
+        end
+        if Requirements.Strings.Target:FindFirstChild"Owner" and Requirements.Strings.Target.Owner.Value == game:GetService"Players".LocalPlayer or Requirements.Strings.Target.Owner.Value == Requirements.Strings.WipeTarget then
+            if not Requirements.Funcs.CheckPerm("Destroy", tostring(Requirements.Strings.Target.Owner.Value)) then
+                return library:Notify("Error!", "You need the destroy permission to delete this persons item(s)")
+            end
+            if not Requirements.Strings.Target:FindFirstChild"WoodSection" then
+                Requirements.Booleans.IsTryingToDelete = true
                 repeat
-                    Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").Interaction.DestroyStructure, Target)
-                    task.wait(.1)
-                until not Target.Parent 
+                    game:GetService("ReplicatedStorage").Interaction.DestroyStructure:FireServer(Requirements.Strings.Target)
+                    task.wait()
+                until not Requirements.Strings.Target.Parent
+                Requirements.Booleans.IsTryingToDelete = false
             end
         end
     end)
@@ -1451,25 +1167,18 @@ end
 
 ---~ItemFuncs~---
 
-Requirements.Funcs.SortItems = function(SelectedItem, Owner, StringValName, XS, ZS)
+Requirements.Funcs.SortItems = function(SelectedItem, StringValName, XS, ZS)
     if Requirements.Booleans.IsSorting then
         return library:Notify("Error", "You are currently sorting items please wait")
     end
-    
-    if not Requirements.Funcs.CheckPerm("All", Owner) then
-        return library:Notify("Error!", "Make sure you have all permissions")
-    end
-
     Requirements.Booleans.AbortStacker = false
     Requirements.Booleans.IsSorting = true
     Requirements.Vars.Mouse = game:GetService"Players".LocalPlayer:GetMouse()
     Requirements.Tables.ItemsToSort = {}
 
     for i,v in next, game:GetService("Workspace").PlayerModels:GetChildren() do
-        if v:FindFirstChild"Owner" and v.Owner.Value == game:GetService"Players"[Owner] then
-            if v:FindFirstChild(StringValName) and v[StringValName].Value == SelectedItem then
-                table.insert(Requirements.Tables.ItemsToSort, v)
-            end
+        if v:FindFirstChild(StringValName) and v[StringValName].Value == SelectedItem then
+            table.insert(Requirements.Tables.ItemsToSort, v)
         end
     end
     
@@ -1534,7 +1243,7 @@ Requirements.Funcs.SortItems = function(SelectedItem, Owner, StringValName, XS, 
                         Pos.P = 100000
                         Pos.Position = Vector3.new(X * Requirements.Tables.ItemsToSort[Count].Main.Size.X,Y * Requirements.Tables.ItemsToSort[Count].Main.Size.Y, Z * Requirements.Tables.ItemsToSort[Count].Main.Size.Z) + Player
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Requirements.Tables.ItemsToSort[Count]:WaitForChild"Main".CFrame.p) + Vector3.new(Requirements.Tables.ItemsToSort[Count].Main.Size.Z + 3, 1, 0)
-                        if Current ~= "Krnl" and not Requirements.Funcs.CheckOwnerShip(Requirements.Tables.ItemsToSort[Count].Main) then
+                        if not Requirements.Funcs.CheckOwnerShip(Requirements.Tables.ItemsToSort[Count].Main) then
                             repeat 
                                 if Requirements.Booleans.AbortStacker then break end
                                 game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Requirements.Tables.ItemsToSort[Count])
@@ -1567,37 +1276,23 @@ Requirements.Funcs.SortItems = function(SelectedItem, Owner, StringValName, XS, 
     end)
 end
 
-Requirements.Funcs.HardDragger = function(Value)
-    Requirements.Config.HardDragger = Value
-    if not Value then
-        return Requirements.Connections.HardDragger:Disconnect()
-    end
-
-    Requirements.Connections.HardDragger = game:GetService"Workspace".ChildAdded:Connect(function(v)
-        if v.Name == "Dragger" then
-            local BG, BP = v:WaitForChild"BodyGyro", v:WaitForChild"BodyPosition"
-            v.BrickColor = BrickColor.new("Hot pink")
-            
-            repeat
-                BP.P = 10000 * 8
-                BP.D = 1000
-                BP.MaxForce = Vector3.new(1, 1, 1) * 1000000
-                BG.MaxTorque = Vector3.new(1, 1, 1) * 200
-                BG.P = 1200
-                BG.D = 140
-                task.wait()
-            until not game:GetService"Workspace":FindFirstChild"Dragger"
-
-            v.BrickColor = BrickColor.new("Deep blue")
-            BP.P = 10000
-            BP.D = 800
-            BP.maxForce = Vector3.new(17000, 17000, 17000)
-            BG.maxTorque = Vector3.new(200, 200, 200)
-            BG.P = 1200
-            BG.D = 140
+Requirements.Funcs.HardDragger = function()
+    game:GetService"Workspace".ChildAdded:Connect(function(v)
+        if v:IsA"Part" and v.Name == "Dragger" then
+            local BP, BG = v:WaitForChild"BodyPosition", v:WaitForChild"BodyGyro"
+            if BP and BG then 
+                v.BrickColor = Requirements.Config.HardDragger and BrickColor.new("Pink") or BrickColor.new("Deep blue")
+                BP.P = Requirements.Config.HardDragger and 100500 or 10000
+                BP.D = Requirements.Config.HardDragger and 1040 or 800
+                BP.MaxForce = Requirements.Config.HardDragger and Vector3.new(90000,90000,90000) * math.huge or Vector3.new(1, 1, 1) * 17000
+                BG.P = Requirements.Config.HardDragger and 1400 or 1200
+                BG.D = Requirements.Config.HardDragger and 1040 or 140
+                BG.MaxTorque = Requirements.Config.HardDragger and Vector3.new(9000,9000,9000) * math.huge or Vector3.new(1,1,1) * 200
+            end
         end
     end)
 end
+Requirements.Funcs.HardDragger()
 
 Requirements.Funcs.CountSelectedItem = function(Plr, Item)
     Requirements.Strings.Count = 0
@@ -1620,7 +1315,7 @@ Requirements.Funcs.ClickToCount = function(Value)
         Requirements.Strings.Target = Requirements.Vars.Mouse.Target.Parent
         if Requirements.Strings.Target.Parent.Name ~= "PlayerModels" then return end
         if Requirements.Strings.Target:FindFirstChild"Owner" and Requirements.Strings.Target.Owner.Value == game:GetService"Players".LocalPlayer then
-            library:Notify("Nightfall", Requirements.Funcs.CountSelectedItem(Requirements.Strings.Target.Owner.Value, Requirements.Strings.Target:FindFirstChild"ItemName" and Requirements.Strings.Target.ItemName.Value or Requirements.Strings.Target:FindFirstChild"PurchasedBoxItemName" and Requirements.Strings.Target.PurchasedBoxItemName.Value or Requirements.Strings.Target:FindFirstChild"TreeClass" and Requirements.Strings.Target.TreeClass.Value))
+            library:Notify("NightFall", Requirements.Funcs.CountSelectedItem(Requirements.Strings.Target.Owner.Value, Requirements.Strings.Target:FindFirstChild"ItemName" and Requirements.Strings.Target.ItemName.Value or Requirements.Strings.Target:FindFirstChild"PurchasedBoxItemName" and Requirements.Strings.Target.PurchasedBoxItemName.Value or Requirements.Strings.Target:FindFirstChild"TreeClass" and Requirements.Strings.Target.TreeClass.Value))
         end
     end)
 end
@@ -1659,63 +1354,8 @@ Requirements.Funcs.FarAxeEquip = function(Value)
     end)
 end
 
-Requirements.Funcs.HideBPUI = function(Value)
-    for i,v in next, game:GetService"Workspace".PlayerModels:GetChildren() do
-        if v:FindFirstChild"Type" and v.Type.Value == "Blueprint" then
-            if v:FindFirstChild"Main" and v.Main:FindFirstChild"ProgressBillboard" then
-                v.Main.ProgressBillboard.Enabled = Value
-            end
-        end
-    end
-end
-
-Requirements.Funcs.RemoveBPPercentage = function(Value)
-    Requirements.Config.RemoveBPPercentage = Value
-    if not Value then
-        Requirements.Funcs.HideBPUI(true)
-        return Requirements.Connections.BPAdded:Disconnect()
-    end
-
-    Requirements.Connections.BPAdded = game:GetService"Workspace".PlayerModels.ChildAdded:Connect(function(v)
-        if v:WaitForChild"Type" and v.Type.Value == "Blueprint" then
-            if v:WaitForChild"Main" and v.Main:WaitForChild"ProgressBillboard" then
-                Requirements.Funcs.HideBPUI(false)
-            end
-        end
-    end)
-
-    Requirements.Funcs.HideBPUI(false)
-end
-
-Requirements.Funcs.SetSawmillState = function(Value)
-    library:Notify("Nightfall", "Select A Sawmill")
-	Requirements.Vars.Mouse = game:GetService'Players'.LocalPlayer:GetMouse()
-	Requirements.Strings.SelectedSawmill = nil
-    Requirements.Connections.SawmillSettingsC = Requirements.Vars.Mouse.Button1Down:Connect(function()
-        local Target = Requirements.Vars.Mouse.Target
-        if Target.Parent.Name == 'PlayerModels' and Target.Parent:FindFirstChild"ItemName" and Target.Parent.ItemName.Value:sub(1,7) == "Sawmill" then
-            Requirements.Strings.SelectedSawmill = Target.Parent
-        elseif Target.Parent.Name == 'Parts' and Target.Parent.Parent:FindFirstChild"ItemName" and Target.Parent.Parent.ItemName.Value:sub(1,7) == "Sawmill" then
-            Requirements.Strings.SelectedSawmill = Target.Parent.Parent
-        end
-    end)
-    repeat task.wait() until tostring(Requirements.Strings.SelectedSawmill) ~= "nil"
-    if Requirements.Strings.SelectedSawmill:FindFirstChild("ItemName") and Requirements.Strings.SelectedSawmill.ItemName.Value:sub(1,7) == "Sawmill" then
-        for i = 1,20 do
-            if not Value then
-                game:GetService("ReplicatedStorage").Interaction.RemoteProxy:FireServer(Requirements.Strings.SelectedSawmill.ButtonRemote_XDown)
-                task.wait(1)
-                game:GetService("ReplicatedStorage").Interaction.RemoteProxy:FireServer(Requirements.Strings.SelectedSawmill.ButtonRemote_YDown)
-            else
-                game:GetService("ReplicatedStorage").Interaction.RemoteProxy:FireServer(Requirements.Strings.SelectedSawmill.ButtonRemote_XUp)
-                task.wait(1)
-                game:GetService("ReplicatedStorage").Interaction.RemoteProxy:FireServer(Requirements.Strings.SelectedSawmill.ButtonRemote_YUp)
-            end
-            task.wait(1)
-        end
-    end
-	library:Notify("Nightfall","Finished maxing/decreasing settings")
-	Requirements.Connections.SawmillSettingsC:Disconnect()
+Requirements.Funcs.HighlightRareCandy = function(Value)
+    
 end
 
 ---~AutoBuyFuncs~---
@@ -1766,7 +1406,7 @@ Requirements.Funcs.AutoBuy = function(Items,Amount,OpenBox)
 		return library:Notify("Error!", "No item(s) selected")
 	end
     if game:GetService"Players".LocalPlayer.leaderstats.Money.Value < Requirements.Funcs.GetItemInfo(Items, "Price", Amount) then
-        return library:Notify("Error!", "You do not have enough to purchase the selected item(s)")
+        return library:Notify("Error!", "You do not have the efficient funds to purchase the selected item(s)")
     end
     Requirements.Vars.OldPos = OpenBox and Requirements.Vars.OldPos or game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame
 	Requirements.Booleans.IsBuying = true
@@ -1777,12 +1417,12 @@ Requirements.Funcs.AutoBuy = function(Items,Amount,OpenBox)
             if (game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame.p - Requirements.Strings.ItemToBuy:FindFirstChild"Main".CFrame.p).Magnitude > 25 then
 				Requirements.Funcs.Teleport(CFrame.new(Requirements.Strings.ItemToBuy:FindFirstChild("Main").CFrame.p) + Vector3.new(5,1,5))
             end
-		    if not Requirements.Strings.ItemToBuy.Owner.Value == game:GetService"Players".LocalPlayer then
+		    if not Requirements.Funcs.CheckOwnerShip(Requirements.Strings.ItemToBuy["Main"]) then
 		        repeat
 					if Requirements.Booleans.AbortAutoBuy then break end
 		            game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Requirements.Strings.ItemToBuy)
 		            task.wait()
-		        until Requirements.Strings.ItemToBuy.Owner.Value == game:GetService"Players".LocalPlayer
+		        until Requirements.Funcs.CheckOwnerShip(Requirements.Strings.ItemToBuy["Main"])
 		    end
 		    Requirements.Strings.StoreCounter = Requirements.Funcs.GetStoreCounter()
 		    for i = 1,25 do
@@ -1790,7 +1430,7 @@ Requirements.Funcs.AutoBuy = function(Items,Amount,OpenBox)
 		        Requirements.Strings.ItemToBuy:PivotTo(Requirements.Strings.StoreCounter.CFrame + Vector3.new(0,Requirements.Strings.StoreCounter.Size.Y * Requirements.Strings.ItemToBuy.Main.Size.Y/2,0))
 		        task.wait()
 		    end
-		    --Requirements.Funcs.Teleport(Requirements.Strings.StoreCounter.CFrame + Vector3.new(5,0,5))
+		    Requirements.Funcs.Teleport(Requirements.Strings.StoreCounter.CFrame + Vector3.new(5,0,5))
 		    repeat
 				if Requirements.Booleans.AbortAutoBuy then break end
 		        game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Requirements.Strings.ItemToBuy)
@@ -1855,7 +1495,7 @@ Requirements.Funcs.PurchaseAllBlueprints = function()
         Requirements.Funcs.AutoBuy(Requirements.Tables.BPToBuy[i], 1, true)
         task.wait()
     end
-    library:Notify("Nightfall", "Blueprints bought successfully")
+    library:Notify("NightFall", "Blueprints bought successfully")
     game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame = Requirements.Vars.OldPos
 end
 
@@ -1876,9 +1516,7 @@ Requirements.Funcs.GetAllTreeTypes = function(Type)
             for i,v in next, v:GetChildren() do
                 if v:FindFirstChild("Owner") and v.Owner.Value == nil then
                     if v:FindFirstChild("TreeClass") and v.TreeClass.Value == Type then
-                        if not v:FindFirstChild"Inner" then
-                            table.insert(Requirements.Tables.AvailableTrees,v)
-                        end
+                        table.insert(Requirements.Tables.AvailableTrees,v)
                     end
                 end
             end
@@ -1920,173 +1558,109 @@ Requirements.Funcs.GetTreesLowID = function(Type)
     end
 end
 
-Requirements.Funcs.GetTree = function(Tree, Amount, Sell)
-    if Requirements.Booleans.IsChopping then
-        return library:Notify("Error!", "You are already cutting a Tree or Plank please wait")
+Requirements.Funcs.GetAllIDs = function(Tree)
+    Requirements.Tables.TreesIDs = {}
+    for i,v in next, Tree:GetChildren() do
+        if v.Name == "WoodSection" then
+            if v:FindFirstChild"ID" and v.ID.Value ~= 1 then
+                table.insert(Requirements.Tables.TreesIDs,v.ID.Value)
+            end
+        end
     end
+    for i,v in next, Tree:GetChildren() do
+        if v.Name == "InnerWood" then
+            if table.find(Requirements.Tables.TreesIDs, v.ID.Value) then
+                table.remove(Requirements.Tables.TreesIDs,table.find(Requirements.Tables.TreesIDs, v.ID.Value))
+            end
+        end
+    end
+    table.sort(Requirements.Tables.TreesIDs)
+    return Requirements.Tables.TreesIDs
+end
 
-    if not game:GetService"Players".LocalPlayer.Backpack:FindFirstChild"Tool" or game.Players.LocalPlayer.Character:FindFirstChild"Tool" then
+Requirements.Funcs.GetTree = function(Trees, Amount, Sell)
+	if Requirements.Booleans.IsChopping then
+		return library:Notify("Error!","Get tree in process")
+	end
+	if game.Players.LocalPlayer.Character:FindFirstChild("Tool") then
+		game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
+	end
+	if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tool") or game.Players.LocalPlayer.Character:FindFirstChild("Tool") then
 		return library:Notify("Error!", "You need a tool to use this feature")
 	end
-
-    if Tree == "LoneCave" and Requirements.Funcs.GetBestAxe("LoneCave").BestAxe.ToolName.Value ~= "EndTimesAxe" then
-        return library:Notify("Error!", "You need an endtimes axe to cut the LoneCave tree")
+    if typeof(Trees) ~= "table" then
+        Trees = {Trees}
     end
-
-    Requirements.Booleans.IsChopping = true
-    Requirements.Booleans.AbortGetTree = false
-    Requirements.Vars.OldPos = game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame
-    
-    Requirements.Connections.TreeAdded = game:GetService"Workspace".LogModels.ChildAdded:Connect(function(v)
-        if v:WaitForChild"Owner" and v.Owner.Value == game:GetService"Players".LocalPlayer then
-            Requirements.Booleans.TreeCutDown = true
+	if #Trees < 1 then
+		return library:Notify("Error!", "No tree(s) selected")
+	end
+	Requirements.Booleans.IsChopping = true
+	Requirements.Booleans.AbortGetTree = false
+    if table.find(Trees,"LoneCave") then
+        if not Requirements.Funcs.GetTreesLowID("LoneCave") or Requirements.Funcs.GetBestAxe("LoneCave").BestAxe.ToolName.Value ~= "EndTimesAxe" then
+            table.remove(Trees,table.find(Trees,"LoneCave"))
+            library:Notify("Notice", "LoneCave tree not found")
+			if not #Trees == 0 then return end 
+        end
+    end
+    Requirements.Connections.TreeAdded = game:GetService("Workspace").LogModels.ChildAdded:Connect(function(v)
+        if v:WaitForChild"Owner" and v.Owner.Value == game.Players.LocalPlayer then
             if not Sell then
-                Requirements.Funcs.MoveModel(v, 35, Requirements.Vars.OldPos)
-                Requirements.Booleans.TreeTeleported = true
+                if not v.PrimaryPart then
+                    v.PrimaryPart = v:WaitForChild"WoodSection"
+                end
+                for i = 1,35 do
+                    game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v)
+                    v:SetPrimaryPartCFrame(Requirements.Vars.OldPos)
+                    game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v)
+                    task.wait()
+                end
+                Requirements.Booleans.TreeCutDown = true
             else
-                Requirements.Funcs.MoveLogs(game.workspace.Stores.WoodRUs.Furnace:FindFirstChild("Big", true).Parent.CFrame + Vector3.new(0,8,0), true)
-                Requirements.Booleans.TreeTeleported = true
+                Requirements.Funcs.MoveLogs(game.workspace.Stores.WoodRUs.Furnace:FindFirstChild("Big", true).Parent.CFrame + Vector3.new(0,8,0),true)
+                Requirements.Booleans.TreeGotSold = true
             end
         end
     end)
-
-    for i = 1, Amount do
-        if Requirements.Booleans.AbortGetTree then 
-            break 
-        end
-
-        Requirements.Strings.TreeToGet = Requirements.Funcs.GetTreesLowID(Tree)
-
-        if not Requirements.Strings.TreeToGet then
-            library:Notify("Error!", "Selected Tree Not Found")
-            break
-        end
-
-        if Tree == "LoneCave" then
-            Requirements.Funcs.GodMode()
-        end
-
-        Requirements.Funcs.Teleport(CFrame.new(Requirements.Strings.TreeToGet.CFrame.p + Vector3.new(0, 0, 5)))
-
-        repeat
-            if Requirements.Booleans.AbortGetTree then 
-                break 
+    for i,v in next,Trees do
+		if Requirements.Booleans.AbortGetTree then break end
+        for i2 = 1,Amount do
+			if Requirements.Booleans.AbortGetTree then break end
+            Requirements.Strings.TreeToGet = Requirements.Funcs.GetTreesLowID(v)
+			if Requirements.Strings.TreeToGet == false then break end
+            if v == "LoneCave" then
+				Requirements.Funcs.GodMode()
             end
-
-            Requirements.Funcs.Teleport(CFrame.new(Requirements.Strings.TreeToGet.CFrame.p + Vector3.new(0, 0, 5)))
-
-            pcall(function()
-                Requirements.Funcs.ChopTree(Requirements.Strings.TreeToGet.Parent.CutEvent, 1, 0.32, Requirements.Strings.TreeToGet.Parent.TreeClass.Value)
-            end)
-            task.wait()
-        until Requirements.Booleans.TreeCutDown
-        Requirements.Booleans.TreeCutDown = false
-
-        repeat task.wait() until Requirements.Booleans.TreeTeleported
-
-        Requirements.Booleans.TreeTeleported = false
-
-        if Tree == "LoneCave" then
-            Requirements.Funcs.SafeDeath()
-            repeat task.wait() until game:GetService"Players".LocalPlayer.Character:FindFirstChild"Head" and game:GetService"Players".LocalPlayer.Character:FindFirstChild"HumanoidRootPart"
-            break
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Requirements.Strings.TreeToGet.CFrame.p) + Vector3.new(0,0,5)
+            repeat
+				if Requirements.Booleans.AbortGetTree then break end
+                if game:GetService"Players".LocalPlayer.Backpack:FindFirstChild"Tool" then
+                    pcall(function ()
+                        Requirements.Funcs.ChopTree(Requirements.Strings.TreeToGet.Parent.CutEvent,1,0.32,v)
+                    end)
+                end
+                task.wait()
+            until Requirements.Booleans.TreeCutDown
+            Requirements.Booleans.TreeCutDown = false
+            if v == "LoneCave" then
+                task.wait(5)
+                game:GetService"Players".LocalPlayer.Character.Head:Destroy()
+                game:GetService"Players".LocalPlayer.CharacterAdded:Wait()
+            end
+            if v == "LoneCave" then break end
+            if Sell then
+                repeat 
+                    task.wait(1)
+                until Requirements.Booleans.TreeGotSold
+                Requirements.Booleans.TreeGotSold = false
+            end
+            task.wait(1)
         end
-        task.wait(.1)
     end
     Requirements.Connections.TreeAdded:Disconnect()
-    Requirements.Booleans.IsChopping = false
-    Requirements.Funcs.Teleport(Requirements.Vars.OldPos)
-    library:Notify("Nightfall", Requirements.Booleans.AbortGetTree and "Aborted" or not Requirements.Strings.TreeToGet and "Selected Tree Not Found" or string.format("Got %d %s Tree(s)", Amount, Tree))
-    Requirements.Strings.TreeToGet = nil
-end
-
-Requirements.Funcs.FillBlueprints = function(WoodType)
-    if not game:GetService"Players".LocalPlayer.SuperBlueprint.Value then
-        return library:Notify("Error!", "You need the power to use this feature")
-    end
-
-    Requirements.Vars.OldPos = game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame 
-
-    local OneUnits, Blueprints = {}, {}
-
-    for i,v in next, game:GetService"Workspace".PlayerModels:GetChildren() do
-        if v:FindFirstChild"Owner" and v.Owner.Value == game:GetService"Players".LocalPlayer then
-            if v:FindFirstChild"Type" and v.Type.Value == "Blueprint" then
-                table.insert(Blueprints, v)
-            end
-        end
-    end
-
-    for i,v in next, game:GetService"Workspace".PlayerModels:GetChildren() do
-        if v:FindFirstChild"Owner" and v.Owner.Value == game:GetService"Players".LocalPlayer then
-            if v:FindFirstChild"TreeClass" and v.TreeClass.Value == WoodType then
-                if v.WoodSection.Size.Y >= 1 and v.WoodSection.Size.Y < 2 then
-                    table.insert(OneUnits, v)
-                end
-            end
-        end
-    end
-
-    if #Blueprints < 1 then
-        return library:Notify("Error!", "Failed to find Blueprints")
-    end
-
-    if #OneUnits < 1  then
-        return library:Notify("Error!", "Failed to find one units of the selected wood type")
-    end
-
-    for i,v in next, Blueprints do
-        local Plank = OneUnits[1]
-
-        if not Plank then break end
-
-        Requirements.Funcs.Create("BodyPosition", Plank.WoodSection, {MaxForce = Vector3.new(9e9, 9e9, 9e9), D = 9e9, P = 9e9, Position = v.BuildDependentWood.Position})
-
-        Requirements.Funcs.Teleport(CFrame.new(Plank.WoodSection.CFrame.p) + Vector3.new(0,2,2))
-
-        repeat
-            pcall(function()
-                Requirements.Funcs.MoveModel(Plank, 35, v.BuildDependentWood.CFrame)
-            end)
-            task.wait()
-        until not Plank.Parent
-
-        table.remove(OneUnits, table.find(OneUnits, OneUnits[1]))
-    end
-
     game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame = Requirements.Vars.OldPos
-    library:Notify("Nightfall", "Blueprints Filled Successfully")
-end
-
-Requirements.Funcs.PlankToBP = function(Value)
-    if not Value then
-        return Requirements.Connections.PlankToBP:Disconnect()
-    end
-
-    Requirements.Vars.Mouse = game:GetService"Players".LocalPlayer:GetMouse()
-    Requirements.Strings.SelectedBP = nil
-    Requirements.Strings.SelectedPlank = nil
-
-    Requirements.Connections.PlankToBP = Requirements.Vars.Mouse.Button1Down:Connect(function()
-        local Target = Requirements.Vars.Mouse.Target.Parent
-        if Target:FindFirstChild"Owner" and Target.Owner.Value == game:GetService"Players".LocalPlayer then
-            if Target:FindFirstChild"Type" and Target.Type.Value == "Blueprint" then
-                Requirements.Strings.SelectedBP = Target
-                library:Notify("Nightfall", "Blueprint Selected")
-            elseif Target:FindFirstChild"TreeClass" and Target.TreeClass.Value ~= "Sign" and Target.Name == "Plank" then
-                Requirements.Strings.SelectedPlank = Target
-                library:Notify("Nightfall", "Plank Selected")
-            end
-        end
-    end)
-
-    repeat task.wait() until tostring(Requirements.Strings.SelectedBP and Requirements.Strings.SelectedPlank) ~= "nil"
-
-    Requirements.Connections.PlankToBP:Disconnect()
-    
-    Requirements.Funcs.MoveModel(Requirements.Strings.SelectedPlank, 35, Requirements.Strings.SelectedBP.BuildDependentWood.CFrame)
-
-    Requirements.Funcs.PlankToBP(true)
+	Requirements.Booleans.IsChopping = false
+	library:Notify("Get Tree", Requirements.Booleans.AbortGetTree and "Aborted" or "Got selected tree(s) successfully")
 end
 
 Requirements.Funcs.UnfillBlueprints = function(Value)
@@ -2111,166 +1685,56 @@ Requirements.Funcs.UnfillBlueprints = function(Value)
     end)
 end
 
-Requirements.Funcs.UnitCutter = function(Value)
-    if not Value then
-        Requirements.Connections.PlankReAdded:Disconnect()
-        Requirements.Connections.UnitCutter:Disconnect()
-        return
-    end
-
-    Requirements.Vars.Mouse = game:GetService"Players".LocalPlayer:GetMouse()
-    local Target
-
-    Requirements.Connections.PlankReAdded = game:GetService("Workspace").PlayerModels.ChildAdded:Connect(function(v)
-        if v:WaitForChild"Owner" and v.Owner.Value == game:GetService"Players".LocalPlayer then
-            if v:WaitForChild"TreeClass" and v.TreeClass.Value ~= "Sign" and v.Name == "Plank" then
-                Target = v
-            end
-        end
-    end)
-
-    Requirements.Connections.UnitCutter = Requirements.Vars.Mouse.Button1Down:Connect(function()
-        Target = Requirements.Vars.Mouse.Target.Parent
-        if Target:FindFirstChild"Owner" and Target.Owner.Value == game:GetService"Players".LocalPlayer then
-            if Target:FindFirstChild"TreeClass" and Target.TreeClass.Value ~= "Sign" then
-                if Target.TreeClass.Value == "LoneCave" and Requirements.Funcs.GetBestAxe("LoneCave").BestAxe.ToolName.Value ~= "EndTimesAxe" then
-                    return library:Notify("Error!", "You need an endtimes axe to cut this wood")
-                end
-                repeat
-                    if not Requirements.Booleans.OneUnitCutter then
-                        break 
-                    end
-                    pcall(function()
-                        Requirements.Funcs.ChopTree(Target:FindFirstChild"CutEvent", 1, 1, Target.TreeClass.Value)
-                    end)
-                    task.wait(1)
-                until Target.WoodSection.Size.Y <= 1.88
-            end
-        end
-    end)
-end
-
 Requirements.Funcs.ClickToSell = function(Value)
 	if not Value then
         Requirements.Connections.ClickToSellC:Disconnect()
         return 
     end
-
-    Requirements.Vars.Mouse = game:GetService"Players".LocalPlayer:GetMouse()
-
-    Requirements.Connections.ClickToSellC = Requirements.Vars.Mouse.Button1Down:Connect(function()
-        local Target = Requirements.Vars.Mouse.Target.Parent
-        if Target.Parent.Name == "PlayerModels" and Target.Name == "Plank" or Target.Parent.Name == "LogModels" then
-            if Target:FindFirstChild"Owner" and Target.Owner.Value == game:GetService"Players".LocalPlayer then
-                Requirements.Funcs.Teleport(CFrame.new(Target:FindFirstChild"WoodSection".CFrame.p))
-                Requirements.Funcs.MoveModel(Target, 35, game.workspace.Stores.WoodRUs.Furnace:FindFirstChild("Big", true).Parent.CFrame + Vector3.new(0,8,0))
+	Requirements.Vars.Mouse = game:GetService"Players".LocalPlayer:GetMouse()
+	Requirements.Connections.ClickToSellC = Requirements.Vars.Mouse.Button1Down:Connect(function()
+        if Requirements.Booleans.IsSelling then
+            return
+        end
+		Requirements.Strings.Target = Requirements.Vars.Mouse.Target.Parent
+        if not Requirements.Strings.Target.Parent == "PlayerModels" or not Requirements.Strings.Target.Parent == "LogModels" then
+            return 
+        end
+        if Requirements.Strings.Target:FindFirstChild"Owner" and Requirements.Strings.Target.Owner.Value == game:GetService"Players".LocalPlayer then
+            if Requirements.Strings.Target:FindFirstChild"TreeClass" and Requirements.Strings.Target.TreeClass.Value ~= "Sign" then
+                Requirements.Booleans.IsSelling = true
+                Requirements.Funcs.Teleport(CFrame.new(Requirements.Strings.Target:FindFirstChild"WoodSection".CFrame.p))
+                Requirements.Funcs.MoveModel(Requirements.Strings.Target, 35, game.workspace.Stores.WoodRUs.Furnace:FindFirstChild("Big", true).Parent.CFrame + Vector3.new(0,8,0))
+                Requirements.Booleans.IsSelling = false
             end
         end
-    end)
+	end)
 end
 
 Requirements.Funcs.SellPlanks = function()
     Requirements.Vars.OldPos = game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame
-    repeat
-    pcall(function()
-        for i,v in next, game:GetService"Workspace".PlayerModels:GetChildren() do
-            if v:FindFirstChild"Owner" and v.Owner.Value == game:GetService"Players".LocalPlayer and v.Name == "Plank" then
-                Requirements.Funcs.Teleport(CFrame.new(v.WoodSection.CFrame.p))
-                if not v.PrimaryPart then 
-                    v.PrimaryPart = v:FindFirstChild"WoodSection"
-                end
-                Requirements.Funcs.MoveModel(v, 35, game.workspace.Stores.WoodRUs.Furnace:FindFirstChild("Big", true).Parent.CFrame + Vector3.new(0,8,0))
-            end
-        end
-    end)
-    task.wait(1)
-    until not Requirements.Funcs.FindPlanks()
-    game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame = Requirements.Vars.OldPos
-end
-
-Requirements.Funcs.BringPlanks = function()
-    Requirements.Vars.OldPos = game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame
-
+    repeat 
     for i,v in next, game:GetService"Workspace".PlayerModels:GetChildren() do
-        if v:FindFirstChild"Owner" and v.Owner.Value == game:GetService"Players".LocalPlayer then
-            if v:FindFirstChild"TreeClass" and v.TreeClass.Value ~= "Sign" then
-                Requirements.Funcs.Teleport(CFrame.new(v:FindFirstChild"WoodSection".CFrame.p))
-                Requirements.Funcs.MoveModel(v, 35, Requirements.Vars.OldPos)
+        if v:FindFirstChild"Owner" and v.Owner.Value == game:GetService"Players".LocalPlayer and v.Name == "Plank" then
+            game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.WoodSection.CFrame.p)
+            for i = 1,25 do
+                Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").Interaction.ClientIsDragging, v)
+                v:PivotTo(game.workspace.Stores.WoodRUs.Furnace:FindFirstChild("Big", true).Parent.CFrame + Vector3.new(0,8,0))
+                Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").Interaction.ClientIsDragging, v)
                 task.wait()
             end
         end
     end
-end
-
-Requirements.Funcs.GetAllIDs = function(Tree)
-    local TreesIDs = {}
-    for i,v in next, Tree:GetChildren() do
-        if v.Name == "WoodSection" then
-            if v:FindFirstChild"ID" and v.ID.Value ~= 1 then
-                table.insert(TreesIDs,v.ID.Value)
-            end
-        end
-    end
-    for i,v in next, Tree:GetChildren() do
-        if v.Name == "InnerWood" then
-            if table.find(TreesIDs, v.ID.Value) then
-                table.remove(TreesIDs,table.find(TreesIDs, v.ID.Value))
-            end
-        end
-    end
-    table.sort(TreesIDs)
-    return TreesIDs
-end
-
-Requirements.Funcs.DismemberTree = function(Tree)
-    if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild"Tool" or game:GetService("Players").LocalPlayer.Character:FindFirstChild"Tool" then
-        return library:Notify("Error!", "You need a tool")
-    end
-
-    if Tree:FindFirstChild"TreeClass" and Tree.TreeClass.Value == "LoneCave" then
-        if not Requirements.Funcs.GetBestAxe("LoneCave").BestAxe.ToolName.Value ~= "EndTimesAxe" then
-            return library:Notify("Error!", "You need an endtimes axe")
-        end
-    end
-
-    Requirements.Connections.TreeAdded = game:GetService"Workspace".LogModels.ChildAdded:Connect(function(v)
-        if v:waitForChild"Owner" and v.Owner.Value == game.Players.LocalPlayer then
-            Requirements.Booleans.TreeCutDown = true
-        end
-    end)
-
-    Requirements.Tables.AllIDS = Requirements.Funcs.GetAllIDs(Tree)
-
-    while #Requirements.Tables.AllIDS ~= 0  do
-        for i,v in next, Tree:GetChildren() do
-            if v.Name == "WoodSection" then
-                if v:FindFirstChild"ID" and v.ID.Value == Requirements.Tables.AllIDS[#Requirements.Tables.AllIDS] then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.CFrame.p)
-                    repeat
-                        pcall(function()
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.CFrame.p) + Vector3.new(0,0,5)
-                            Requirements.Funcs.ChopTree(v.Parent:FindFirstChild"CutEvent", Requirements.Tables.AllIDS[#Requirements.Tables.AllIDS], 0.32, v.Parent.TreeClass.Value)
-                        end)
-                        task.wait()
-                    until Requirements.Booleans.TreeCutDown
-                    Requirements.Booleans.TreeCutDown = false
-                    table.remove(Requirements.Tables.AllIDS, table.find(Requirements.Tables.AllIDS, Requirements.Tables.AllIDS[#Requirements.Tables.AllIDS]))
-                end
-            end
-        end
-        task.wait()
-    end
+    task.wait()
+    until not Requirements.Funcs.FindPlanks()
+    game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame = Requirements.Vars.OldPos
 end
 
 Requirements.Funcs.ModTree = function(Tree, Sawmill) -- DO NOT GIVE THIS TO ANYONE
+    print(Tree.Name)
     local ModWoodTreeCut = false
     local ModWoodTreeAdded
     local Count = 3
     Requirements.Vars.OldPos = game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame
-
-    if Tree:FindFirstChild"TreeClass" and Tree.TreeClass.Value == "Pine" then
-        while true do end
-    end
 
     if Tree:FindFirstChild"Owner" and Tree.Owner.Value ~= game:GetService"Players".LocalPlayer then
         return library:Notify("Error", "You do not own this tree")
@@ -2311,7 +1775,7 @@ Requirements.Funcs.ModTree = function(Tree, Sawmill) -- DO NOT GIVE THIS TO ANYO
 
     game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1417.34, 433.4, 1260.12)
 
-    Requirements.Funcs.MoveModel(Tree, 35, Requirements.Vars.OldPos + Vector3.new(0,50,0))
+    Requirements.Funcs.MoveModel(Tree, 35, Requirements.Vars.OldPos + Vector3.new(0,20,0))
 
     repeat
         game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Tree)
@@ -2328,10 +1792,7 @@ Requirements.Funcs.ModTree = function(Tree, Sawmill) -- DO NOT GIVE THIS TO ANYO
     end)
 
     repeat
-        Requirements.Funcs.Teleport(CFrame.new(Tree:FindFirstChild"WoodSection".CFrame.p + Vector3.new(3, 0, 0)))
-        pcall(function()
-            Requirements.Funcs.ChopTree(Tree:FindFirstChild"CutEvent", 1, 0.37, Tree:FindFirstChild"TreeClass".Value)
-        end)
+        Requirements.Funcs.ChopTree(Tree:FindFirstChild"CutEvent", 1, 0.37, Tree:FindFirstChild"TreeClass".Value)
         task.wait(.1)
     until ModWoodTreeCut
 
@@ -2373,7 +1834,7 @@ Requirements.Funcs.AnnoyPlayer = function(Target, Action)
     end
     Requirements.Vars.OldPos = game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame
     if Action == "Bring" or Action == "Kill" then
-        if not game:GetService"Players".LocalPlayer.Character.Humanoid.SeatPart then
+        if not game.Players.LocalPlayer.Character.Humanoid.SeatPart then
             if not Requirements.Funcs.FindVehicle() then
                 return library:Notify("Error!", "You need to own a vehicle to use this feature")
             else
@@ -2386,24 +1847,24 @@ Requirements.Funcs.AnnoyPlayer = function(Target, Action)
         repeat
             game.Players.LocalPlayer.Character.Humanoid.SeatPart.Parent:SetPrimaryPartCFrame(game.Players[Target].Character.HumanoidRootPart.CFrame*CFrame.Angles(0,0,math.rad(-90)))
             task.wait(.05)
-        until game.Players[Target].Character.Humanoid.Sit == true or not game:GetService"Players":FindFirstChild(Target) or not game:GetService"Players".LocalPlayer.Character.Humanoid.SeatPart
+        until game.Players[Target].Character.Humanoid.Sit == true or not game:GetService"Players":FindFirstChild(Target)
         for i = 1,25 do
-            game:GetService"Players".LocalPlayer.Character.Humanoid.SeatPart.Parent:SetPrimaryPartCFrame(Action == "Kill" and CFrame.new(113, -214, -951) or Requirements.Vars.OldPos)
+            game.Players.LocalPlayer.Character.Humanoid.SeatPart.Parent:SetPrimaryPartCFrame(Action == "Kill" and CFrame.new(113, -214, -951) or Requirements.Vars.OldPos)
             task.wait()
         end
     elseif Action == "Spectate" then
-        game.Workspace.Camera.CameraSubject = game:GetService"Players"[Target].Character.Head
+        game.Workspace.Camera.CameraSubject = game.Players[Target].Character.Head
     elseif Action == "Stop Spectating" then
-        game.Workspace.Camera.CameraSubject = game:GetService"Players".LocalPlayer.Character.Head
+        game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Head
     elseif Action == "Follow" then
         repeat
             Requirements.Funcs.Teleport(CFrame.new(game:GetService"Players":FindFirstChild(Target).Character.HumanoidRootPart.CFrame.p))
             task.wait()
-        until not game:GetService"Players"[Target] or Requirements.Strings.TrollAction == "Unfollow"
+        until not game.Players[Target] or Requirements.Strings.TrollAction == "Unfollow"
 		Requirements.Funcs.Teleport(Requirements.Vars.OldPos)
 	elseif Action == "Rock Bridge" then
 		for i = 1,100 do 
-			Requirements.Funcs.TeleportRockBridge(game:GetService"Players"[Target].Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0))
+			Requirements.Funcs.TeleportRockBridge(game.Players[Target].Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0))
 			task.wait()
 		end
     end
@@ -2455,7 +1916,6 @@ Requirements.Funcs.ClearShopItems = function()
             if v.Name == "ShopItems" then
                 for i,v in next, v:GetChildren() do
                     if v:WaitForChild"Owner" and v.Owner.Value == nil then
-                        Requirements.Funcs.FireRemote(game:GetService"ReplicatedStorage".Interaction.ClientIsDragging, v)
                         v:WaitForChild"Main".CanCollide = false
                     end
                 end
@@ -2465,158 +1925,13 @@ Requirements.Funcs.ClearShopItems = function()
     end
 end
 
-Requirements.Funcs.CarAnnoy = function()
-    for i,v in next, game:GetService"Workspace".PlayerModels:GetChildren() do
-        if v:FindFirstChild"Type" and v.Type.Value == "Vehicle" and v:FindFirstChild"Configuration" then
-            task.spawn(function()
-                while task.wait() do
-                    if not Requirements.Booleans.VehicleAnnoy then
-                        v.RunSounds:FireServer("Cut")
-                        break
-                    else
-                        v.RunSounds:FireServer("Startup")
-                    end
-                end
-            end)
-        end
-    end
-end
-
 Requirements.Funcs.SitInAnyVehicle = function()
     if game:GetService("Players").LocalPlayer.PlayerScripts.SitPermissions.Disabled == true then 
         return library:Notify("Error!", "Vehicle sit permissions are already disabled") 
     end
     game:GetService("Players").LocalPlayer.PlayerScripts.SitPermissions.Disabled = true
-    library:Notify("Nightfall","Disabled vehicle sit permissions")
+    library:Notify("NightFall","Disabled vehicle sit permissions")
 end
-
-Requirements.Funcs.PullObjects = function()
-    local LocalPlayer = game:GetService("Players").LocalPlayer
-    local unanchoredParts = {}
-    local movers = {}
-    for index, part in pairs(workspace:GetDescendants()) do
-    if part:IsA("Part") and part.Anchored == false and part:IsDescendantOf(LocalPlayer.Character) == false then
-    table.insert(unanchoredParts, part)
-    part.Massless = true
-    part.CanCollide = false
-    if part:FindFirstChildOfClass("BodyPosition") ~= nil then
-    part:FindFirstChildOfClass("BodyPosition"):Destroy()
-    end
-    end
-    end
-    for index, part in pairs(unanchoredParts) do
-    local mover = Instance.new("BodyPosition", part)
-    table.insert(movers, mover)
-    mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-    end
-    repeat
-    for index, mover in pairs(movers) do
-    mover.Position = LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(0, 0, 5))
-    end
-    wait(0.5)
-    until LocalPlayer.Character:FindFirstChild("Humanoid").Health <= 0
-    for _, mover in pairs(movers) do
-    mover:Destroy()
-    end
-    library:Notify("Nightfall","Successfully Pulled Objects")
-end
-
-Requirements.Funcs.ThrowObjects = function()
-local LocalPlayer = game:GetService("Players").LocalPlayer
-local unanchoredParts = {}
-local movers = {}
-for index, part in pairs(workspace:GetDescendants()) do
-    if part:IsA("Part") and part.Anchored == false and part:IsDescendantOf(LocalPlayer.Character) == false then
-        table.insert(unanchoredParts, part)
-        part.Massless = true
-        part.CanCollide = true
-        if part:FindFirstChildOfClass("BodyVelocity") ~= nil then
-            part:FindFirstChildOfClass("BodyVelocity"):Destroy()
-        end
-    end
-end
-for index, part in pairs(unanchoredParts) do
-    local mover = Instance.new("BodyVelocity", part)
-    table.insert(movers, mover)
-    mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-    mover.Velocity = LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame.LookVector * 500
-end
-wait(1)
-for _, mover in pairs(movers) do
-    mover:Destroy()
-end
-library:Notify("Nightfall", "Successfully Thrown Object(s)", false)
-end
-
----~ExtraFuncs~---
-
-if os.date("%B") == "October" then
-    if Requirements.Funcs.GetTreesLowID("Spooky") or Requirements.Funcs.GetTreesLowID("SpookyNeon") then
-        library:Notify("Nightfall", "Spooky wood detected")
-    end
-end
-
-Requirements.Funcs.GameMenuTheme = function(BGColor, TxtColor) 
-    for i,v in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
-        if v.Name ~= "Chat" and v.Name ~= "TargetGui" and v.Name ~= "ColdAsIce" then
-            for i,v in next, v:GetDescendants() do
-                if not v:FindFirstChild"UICorner" then
-                    Instance.new("UICorner",v)
-                end
-                if v.Name == "DropShadow" then
-                    v:Destroy()
-                end
-                if v:IsA("TextButton") or v:IsA("Frame") or v:IsA("ScrollingFrame") then
-                    v.BackgroundColor3 = BGColor
-                end
-                if v:IsA("TextLabel") or v:IsA("TextButton") or v:IsA("TextBox") then
-                    v.TextColor3 = TxtColor
-                    v.BackgroundColor3 = BGColor
-                    v.Font = Enum.Font.GothamMedium
-                end
-            end
-        end
-    end
-end
-Requirements.Funcs.GameMenuTheme(Color3.fromRGB(225, 225, 225), Color3.fromRGB(0, 0, 0))
-
-Requirements.Funcs.PlayMusic = function(ToPlay)
-    Requirements.Funcs.ClearOrphanedSounds()
-    for i,v in next, game:GetService"Players".LocalPlayer.PlayerGui.ClientSounds:GetChildren() do
-        if v:IsA"Sound" and v.Name:sub(1, 7) == "Region_" or v.Name:sub(1, 6) == "Store_" then
-            if v.Name == string.format("Region_%s", ToPlay) or v.Name == string.format("Store_%s", ToPlay) then
-                v.Volume = 0.12
-                v.Playing = true
-            else
-                v.Volume = 0
-                v.Playing = false
-            end
-        end
-    end
-end
-
-Requirements.Funcs.SendNotiWhenJAL = function(Value)
-    Requirements.Config.JoinAndLeaveNotify = Value
-    if not Value then
-        Requirements.Connections.PlayerJoined:Disconnect()
-        Requirements.Connections.PlayerLeft:Disconnect()
-        return
-    end
-
-    Requirements.Connections.PlayerJoined = game:GetService"Players".PlayerAdded:Connect(function(v)
-       if v:IsFriendsWith(game:GetService"Players".LocalPlayer.UserId) then
-            library:Notify("Nightfall", string.format("Your friend %s has joined your game", tostring(v.Name)))
-        end
-    end)
-
-    Requirements.Connections.PlayerLeft = game:GetService"Players".PlayerRemoving:Connect(function(v)
-        if v:IsFriendsWith(game:GetService"Players".LocalPlayer.UserId) then
-            library:Notify("Nightfall", string.format("Your friend %s has left the game", tostring(v.Name)))
-        end
-    end)
-end
-
---print("silent was here with Belle Delphine 😉") 
 
 ---~PlayerTab~---
 Tab = UI:Tab("Player", "6022668898")
@@ -2646,7 +1961,7 @@ Section:Toggle("Infinite Jump", Requirements.Config.InfJump, function(Value)
     Requirements.Funcs.InfJump(Value)
 end)
 
-Section:Slider("Fly Speed", Requirements.Config.FlySpeed, 50, 500, false, function(Value)
+Section:Slider("Fly Speed", Requirements.Config.FlySpeed, 50, 300, false, function(Value)
 	Requirements.Config.FlySpeed = Value
 end)
 
@@ -2663,11 +1978,7 @@ end)
 ---~Section2~---
 Section = Tab:Section("Player")
 
-Section:Slider("Zoom Distance", Requirements.Config.DefaultZoom, 140, 10000, false, function(Value)
-    game.Players.LocalPlayer.CameraMaxZoomDistance = Value
-end)
-
-Section:Slider("Field Of View", Requirements.Config.FOV, 20, 120, false, function(Value)
+Section:Slider("Field Of View", Requirements.Config.FOV, 20, 100, false, function(Value)
     Requirements.Config.FOV = Value
 	game:GetService("Workspace").Camera.FieldOfView = Value
 end)
@@ -2710,8 +2021,7 @@ Section:PlrList("Teleport To Player's Plot",true,true,function(Value)
     Requirements.Funcs.Teleport(Requirements.Funcs.GetCurrentPlot(game:GetService"Players"[Value]).OriginSquare.CFrame + Vector3.new(0,5,0))
 end)
 
-Section:KeyBind("Teleport Key", Requirements.Config.ClickTPKey, function(Value)
-    Requirements.Config.ClickTPKey = Value
+Section:KeyBind("Teleport Key", "G", function(Value)
 	Requirements.Vars.Mouse = game:GetService"Players".LocalPlayer:GetMouse()
     if Requirements.Vars.Mouse.Target == nil then return end
     Requirements.Funcs.Teleport(CFrame.new(Requirements.Vars.Mouse.Hit.p) + Vector3.new(0,5,0))
@@ -2723,23 +2033,15 @@ Tab = UI:Tab("Game", "6034227061")
 ---~Section1~---
 Section = Tab:Section("Lighting")
 
-local AD, AN
-
-AD = Section:Toggle("Always Day", Requirements.Config.AlwaysDay, function(Value)
-    if Requirements.Config.AlwaysNight then
-        AN:Set(false)
-    end
+Section:Toggle("Always Day", false, function(Value)
     Requirements.Config.AlwaysDay = Value
 end)
 
-AN = Section:Toggle("Always Night", Requirements.Config.AlwaysNight, function(Value)
-    if Requirements.Config.AlwaysDay then
-        AD:Set(false)
-    end
+Section:Toggle("Always Night", false, function(Value)
     Requirements.Config.AlwaysNight = Value
 end)
 
-Section:Toggle("Clear Fog", Requirements.Config.ClearFog , function(Value)
+Section:Toggle("Clear Fog", false, function(Value)
     Requirements.Config.ClearFog = Value
 end)
 
@@ -2792,32 +2094,20 @@ end)
 ---~Section3~---
 Section = Tab:Section("Map Themes")
 
-Section:Toggle("Christmas Theme", false, function(Value)
-    Requirements.Funcs.Christmas(Value)
+Section:Button("Christmas Theme",function()
+    Requirements.Funcs.Christams()
 end)
 
-Section:Toggle("Halloween Theme", false, function(Value)
-    if Requirements.Booleans.MapThemeActive then
-        Requirements.Funcs.MainTheme()
-        if not Value then return end 
-    end
-    Requirements.Funcs.CollectMainThemeData()
-    loadstring(game:HttpGet'https://raw.githubusercontent.com/ItsEcstasy/Nightfall/main/Assets/HalloweenTheme')()
-    Requirements.Booleans.MapThemeActive = true
+Section:Button("Halloween Theme",function()
+	loadstring(game:HttpGet'https://raw.githubusercontent.com/silentben8x/Silent/main/Halloween')()
 end)
 
-Section:Toggle("WillyWonker Theme", false, function(Value)
-    if Requirements.Booleans.MapThemeActive then
-        Requirements.Funcs.MainTheme()
-        if not Value then return end 
-    end
-    Requirements.Funcs.CollectMainThemeData()
-    loadstring(game:HttpGet'https://raw.githubusercontent.com/ItsEcstasy/Nightfall/main/Assets/WillyWonkerTheme')()
-    Requirements.Booleans.MapThemeActive = true
+Section:Button("WillyWonker Theme",function()
+	loadstring(game:HttpGet'https://raw.githubusercontent.com/silentben9x/silentwinningmain/main/Willy%20Wonker%20Map%20Theme')()
 end)
 
-Section:Toggle("Autmn Theme", false, function(Value)
-    Requirements.Funcs.Autamn(Value)
+Section:Button("Autmn Theme",function()
+	Requirements.Funcs.Autamn()
 end)
 
 ---~SlotTab~---
@@ -2890,15 +2180,6 @@ end)
 
 Section:Button("Abort Dupe Inventory", function()
     Requirements.Booleans.AbortAxeDupe = true
-    library:Notify("Nightfall", "Finishing Things Up Please Wait")
-end)
-
-Section:Button("Transfer Power To Build With Ease To Selected Slot",function()
-    library:Notify("Warning", "This will wipe all existing data from the selected slot do you wish to continue ?", true, function(Value)
-        if Value then
-            Requirements.Funcs.TransferPower(Requirements.Strings.DupeSlot)
-        end
-    end)
 end)
 
 Section:Button("Centre Square Dupe",function()
@@ -2906,7 +2187,7 @@ Section:Button("Centre Square Dupe",function()
         if Value then
 	        Requirements.Funcs.DupePlot(Requirements.Strings.DupeSlot, false)
         else
-            library:Notify("Nightfall", "Canceled Action")
+            library:Notify("NightFall", "Canceled Action")
         end
     end)
 end)
@@ -2916,27 +2197,15 @@ Section:Button("Full Base Dupe",function()
         if Value then
 	        Requirements.Funcs.DupePlot(Requirements.Strings.DupeSlot, true)
         else
-           library:Notify("Nightfall", "Canceled Action") 
+           library:Notify("NightFall", "Canceled Action") 
         end
     end)
-end)
-
-Section:Button("Money Dupe", function()
-    library:Notify("Nightfall", "Duping Money, This can take some time.")
-    wait(6)
-    library:Notify("Nightfall", "Please sell a non-sawmilled log.")
-    wait(15)
-    library:Notify("Nightfall", "Awaiting log to be sold.")
-    wait(35)
-    library:Notify("Nightfall", "Sold log detected, pelase wait for money to double.")
-    wait(60)
-    library:Notify("Nightfall", "Bro really thought you were getting your money duped. L + Ratio")
 end)
 
 ---Section4~---
 Section = Tab:Section("Vehicle")
 
-Section:Slider("Vehicle Speed", 1, 1, 5, true, function(Value)
+Section:Slider("Vehicle Speed", 1, 1, 5, false, function(Value)
     Requirements.Funcs.ChangeVehicleState("MaxSpeed", Value)
 end)
 
@@ -2967,13 +2236,11 @@ end)
 ---~Section3~---
 Section = Tab:Section("Wipe")
 
-local WipeOptionsDropdown
 Section:PlrList("Target", false, true,function(Value)
 	Requirements.Strings.WipeTarget = Value
-    WipeOptionsDropdown:setoptions(Requirements.Funcs.GetTargetsItems(Value))
 end)
 
-WipeOptionsDropdown = Section:DropDown("Select Specific Type", {"Tool", "Loose Item", "Gift", "Structure", "Blueprint", "Vehicle", "Vehicle Spot"},function(Value)
+Section:DropDown("Select Specific Type", {"All", "Tool", "Loose Items", "Gift", "Structures", "Blueprints"},function(Value)
 	Requirements.Strings.WipeOption = Value
 end)
 
@@ -2981,20 +2248,12 @@ Section:Button("Clear Selected Type",function()
 	Requirements.Funcs.DestroySelectedOption(Requirements.Strings.WipeTarget, Requirements.Strings.WipeOption)
 end)
 
-Section:Button("Wipe Current Base",function()
-    library:Notify("Warning", "Are you sure you want to wipe your base this can not be undone", true, function(Value)
-        if Value then
-            Requirements.Funcs.WipeCurrentSlot(game:GetService"Players".LocalPlayer.CurrentSaveSlot.Value)
-        end
-    end)
-end)
-
 Section:Toggle("Click To Delete", false, function(Value)
     Requirements.Funcs.ClickToDelete(Value)
 end)
 
 ---~ItemsTab~---
-Tab = UI:Tab("Items", "6035053278")
+Tab = UI:Tab("Items", "3926307971")
 
 ---~Section1~---
 Section = Tab:Section("Item Stacker")
@@ -3018,10 +2277,9 @@ Section:Button("Stack",function()
         if Requirements.Strings.Target.Parent.Parent.Name == "PlayerModels" then
             if Requirements.Strings.Target.Parent:FindFirstChild"Owner" and Requirements.Strings.Target.Parent.Owner.Value == game:GetService"Players".LocalPlayer then
                 local ModelName = Requirements.Strings.Target.Parent:FindFirstChild"ItemName" and Requirements.Strings.Target.Parent.ItemName.Value or Requirements.Strings.Target.Parent:FindFirstChild"PurchasedBoxItemName" and Requirements.Strings.Target.Parent.PurchasedBoxItemName.Value
-                local Owner = tostring(Requirements.Strings.Target.Parent:FindFirstChild"Owner".Value)
-                local ModelStringVal = Requirements.Strings.Target.Parent:FindFirstChild"ItemName" and "ItemName" or Requirements.Strings.Target.Parent:FindFirstChild"PurchasedBoxItemName" and "PurchasedBoxItemName" or Requirements.Strings.Target.Parent:FindFirstChild"TreeClass" and "TreeClass"
+                local ModelStringVal = Requirements.Strings.Target.Parent:FindFirstChild"ItemName" and "ItemName" or Requirements.Strings.Target.Parent:FindFirstChild"PurchasedBoxItemName" and "PurchasedBoxItemName"
                 task.spawn(function()
-                    Requirements.Funcs.SortItems(ModelName, Owner, ModelStringVal, Requirements.Strings.XAxis, Requirements.Strings.ZAxis)
+                    Requirements.Funcs.SortItems(ModelName, ModelStringVal, Requirements.Strings.XAxis, Requirements.Strings.ZAxis)
                 end)
                 Requirements.Connections.StackerSelect:Disconnect()
             end
@@ -3039,7 +2297,6 @@ Section:Button("Abort Stacking",function()
         end
         if game:GetService"Workspace":FindFirstChild"BoxSort" then
             game:GetService"Workspace":FindFirstChild"BoxSort":Destroy()
-            Requirements.Booleans.IsSorting = false
         end
         Requirements.Booleans.AbortStacker = true
     end
@@ -3048,8 +2305,8 @@ end)
 ---~Section2~---
 Section = Tab:Section("Other")
 
-Section:Toggle("Hard Dragger", Requirements.Config.HardDragger, function(Value)
-    Requirements.Funcs.HardDragger(Value)
+Section:Toggle("Hard Dragger", false, function(Value)
+    Requirements.Config.HardDragger = Value
 end)
 
 Section:Toggle("Count Items", false, function(Value)
@@ -3064,24 +2321,10 @@ Section:Toggle("Far Axe Equip", false, function(Value)
     Requirements.Funcs.FarAxeEquip(Value)
 end)
 
-Section:Toggle("Remove Blueprint Percentage", Requirements.Config.RemoveBPPercentage, function(Value)
-    Requirements.Funcs.RemoveBPPercentage(Value)
+Section:Toggle("Disable Blueprint Glow", false, function(Value)
+    
 end)
 
----~Section3~---
-Section = Tab:Section("Extras")
-
-Section:Button("Max Sawmill Size",function()
-    Requirements.Funcs.SetSawmillState(true)
-end)
-
-Section:Button("Lowest Sawmill Size",function()
-    Requirements.Funcs.SetSawmillState(false)
-end)
-
-Section:Button("Eat Candy", function ()-- testing
--- Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").Interaction.ClientInteracted:FireServer(v, "Eat")    
-end)
 ---AutoBuy~---
 Tab = UI:Tab("Auto Buy", "6031265983")
 
@@ -3159,26 +2402,19 @@ end)
 ---~Section2~---
 Section = Tab:Section("Blueprint Filler")
 
-Section:DropDown("Select Plank Type", {"Oak", "Generic", "Cherry", "Birch", "Volcano", "GoldSwampy", "GreenSwampy", "Walnut", "Palm", "Fir", "Pine", "SnowGlow", "Frost", "Koa", "CaveCrawler", "LoneCave", "Spooky","SpookyNeon"},function(Value)
-	Requirements.Strings.FillType = Value
+Section:DropDown("Select Plank Type", {"BasicHatchet"},function(Value)
+	
 end)
 
 Section:Button("Fill All Blueprints",function()
-	Requirements.Funcs.FillBlueprints(Requirements.Strings.FillType)
+	
 end)
 
-local PTBP
-PTBP = Section:Toggle("Plank To Blueprint", false, function(Value)
-    Requirements.Booleans.PlankToBP = Value
-    if not game:GetService"Players".LocalPlayer.SuperBlueprint.Value then
-        task.wait(1.2)
-        PTBP:Set(false)
-        return library:Notify("Error!", "You need to own the power to use this feature")
-    end
-    Requirements.Funcs.PlankToBP(Value)
+Section:Toggle("Auto Fill Blueprints", false, function(Value)
+    
 end)
 
-Section:Toggle("Unfill Structures", false, function(Value)
+Section:Toggle("Unfill Blueprints", false, function(Value)
     Requirements.Funcs.UnfillBlueprints(Value)
 end)
 
@@ -3186,8 +2422,7 @@ end)
 Section = Tab:Section("Other")
 
 Section:Toggle("One Unit Cutter", false, function(Value)
-    Requirements.Booleans.OneUnitCutter = Value
-    Requirements.Funcs.UnitCutter(Value)
+    
 end)
 
 Section:Toggle("Click To Sell", false, function(Value)
@@ -3201,40 +2436,17 @@ end)
 
 Section:Button("Sell All Logs",function()
 	Requirements.Vars.OldPos = game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame
-	Requirements.Funcs.MoveLogs(game.workspace.Stores.WoodRUs.Furnace:FindFirstChild("Big", true).Parent.CFrame + Vector3.new(0,8,0), true)
+	Requirements.Funcs.MoveLogs(game.workspace.Stores.WoodRUs.Furnace:FindFirstChild("Big", true).Parent.CFrame + Vector3.new(0,8,0),true)
 end)
 
 Section:Button("Sell All Planks",function()
 	Requirements.Funcs.SellPlanks()
 end)
 
-Section:Button("Bring All Planks",function()
-	Requirements.Funcs.BringPlanks()
-end)
-
-Section:Button("Dismember Tree",function()
-    Requirements.Vars.Mouse = game:GetService"Players".LocalPlayer:GetMouse()
-	Requirements.Connections.TJC = Requirements.Vars.Mouse.Button1Down:Connect(function()
-		local Target = Requirements.Vars.Mouse.Target
-		if Target.Parent:FindFirstChild"Owner" and Target.Parent.Owner.Value == game.Players.LocalPlayer then
-			if Target.Parent:FindFirstChild"TreeClass" and Target.Parent.TreeClass.Value ~= "Sign" then
-				if Target.Parent.Parent.Name == "LogModels" then
-					Requirements.Strings.TreeToJointCut = Target.Parent
-				end
-			end
-		end
-		task.spawn(function()
-			Requirements.Funcs.DismemberTree(Requirements.Strings.TreeToJointCut)
-		end)
-		Requirements.Connections.TJC:Disconnect()
-	end)
-end)
-
 Section:Button("Mod Wood",function()
     if Requirements.Booleans.IsModdingTree then
         return library:Notify("Error!", "You are currently modding a tree")
     end
-    library:Notify("Nightfall", "Click a Tree and Sawmill")
 	Requirements.Booleans.IsModdingTree = true
     Requirements.Strings.TreeToMod = nil
     Requirements.Strings.SawmillMod = nil
@@ -3292,26 +2504,10 @@ Section:Toggle("Clear All Shop Items", false, function(Value)
     end
 end)
 
-Section:Toggle("Vehicle Annoy", false, function(Value)
-    Requirements.Booleans.VehicleAnnoy = Value
-    if Value then
-        Requirements.Funcs.CarAnnoy()
-    end
-end)
-
 Section:Button("Sit In Any Vehicle",function()
     Requirements.Funcs.SitInAnyVehicle()
 end)
 
-Section:Button("Pull Objects", function()
-    Requirements.Funcs.PullObjects()
-end)
-    
-Section:Button("Throw Everything", function()
-    Requirements.Funcs.ThrowObjects()
-end)
-
-    
 ---~SettingsTab~---
 Tab = UI:Tab("Settings", "6031280882")
 
@@ -3323,104 +2519,21 @@ Section:KeyBind("Hide UI", "LeftControl", function(Value)
 end)
 
 Section:Button("Destroy UI",function()
-    library:Notify("Nightfall", "Are you sure you want to close Nightfall ?", true, function(Value)
-        if Value then
-            for i,v in next, Requirements.Connections do
-                if typeof(v) == "connection" then
-                    v:Disconnect()
-                end
-            end
-            if Requirements.Config.BetterGraphics then
-                game:GetService"Lighting".Blur:Destroy()
-                game:GetService"Lighting".ColorCorrection:Destroy()
-                game:GetService"Lighting".SunRays:Destroy()
-            end
-            library:Destroy()
-        end
-    end)
+    library:Destroy()
 end)
 
-Section:Toggle("Save Config", Requirements.Config.AutoSaveConfig, function(Value)
-    Requirements.Config.AutoSaveConfig = Value
-    if Value then
-        task.spawn(function()
-            while Requirements.Config.AutoSaveConfig do
-                Requirements.Funcs.SaveConfig()
-                task.wait(.5)
-            end
-        end)
-    end
-end)
-
-Section:Label("A List of Preset Themes")
-Section:Button("Copy Themes Link", function ()
-setclipboard("https://github.com/ItsEcstasy/Nightfall/tree/main/UIThemes")
+Section:Toggle("Save Config", false, function(Value)
+    
 end)
 
 ---~Section2~---
 Section = Tab:Section("Game")
 
-Section:Toggle("Dark Mode", Requirements.Config.UIMode, function(Value)
+Section:Toggle("Dark Mode", true, function(Value)
     Requirements.Config.UIMode = Value
-	Requirements.Funcs.GameMenuTheme(Value and Color3.fromRGB(0, 0, 0) or Color3.fromRGB(225,225,225), Value and Color3.fromRGB(225,225,225) or Color3.fromRGB(0,0,0))
-end)
-
-Section:DropDown("Game Music", Requirements.Funcs.GetMusic(), function(Value)
-    Requirements.Funcs.PlayMusic(Value)
-end)
-
-Section:Toggle("Join/Leave Notifications", Requirements.Config.JoinAndLeaveNotify, function(Value)
-    Requirements.Funcs.SendNotiWhenJAL(Value)
+	Requirements.Funcs.GameMenuTheme(Value and Color3.fromRGB(0,0,0) or Color3.fromRGB(225,225,225), Value and Color3.fromRGB(225,225,225) or Color3.fromRGB(0,0,0))
 end)
 
 Section:Button("Re-Join Game",function()
-    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
+    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,game.JobId, game.Players.LocalPlayer)
 end)
-
-Section:Button("Server Hop", function ()
-local currentPlace = game.PlaceId,game:GetService("TeleportService"):Teleport(currentPlace)
-end)
-
-Section:Button("Join Discord Server",function()
-    if Current == "Synapse X" then
-        syn.request({Url = "http://127.0.0.1:6463/rpc?v=1", Method = "POST",Headers = {["Content-Type"] = "application/json", ["origin"] = "https://discord.com"},Body = game:GetService("HttpService"):JSONEncode({["args"] = {["code"] = "NightfallGUI"},["cmd"] = "INVITE_BROWSER", ["nonce"] = "."})})
-    else
-        setclipboard("https://discord.gg/Nightfallgui")
-        library:Notify("Nightfall", "Discord Invite Copyed To Clipboard")
-    end
-end)
-
----~Section3~---
-Section = Tab:Section("Information")
-
-Section:Label("Version 2.10.2")
-
-local FD = Section:Label(string.format("Ferry Departures in %s", tostring(game:GetService"Workspace".Ferry.TimeToDeparture.Value)))
-
-game:GetService"Workspace".Ferry.TimeToDeparture:GetPropertyChangedSignal"Value":Connect(function()
-    if game:GetService"Workspace".Ferry.Moving.Value or game:GetService"Workspace".Ferry.TimeToDeparture.Value == 0 then
-        FD.Text = "Ferry Has Departured"
-    else
-        FD.Text = string.format("Ferry Departures In %s Seconds", tostring(game:GetService"Workspace".Ferry.TimeToDeparture.Value))
-    end
-end)
-
-local Ping = Section:Label(string.format("Ping: %s", tostring(math.floor(game:GetService('Stats').PerformanceStats.Ping:GetValue()))))
-
-local CanLoad = Section:Label("Player May Load")
-
-Section:Label("Developers: silent ben8x and Ecstasy")
-
-Requirements.Connections.InfoStats = game:GetService"RunService".Stepped:Connect(function()
-    Ping.Text = string.format("Ping: %s", tostring(math.floor(game:GetService('Stats').PerformanceStats.Ping:GetValue())))
-
-    if not Requirements.Funcs.FireRemote(game:GetService("ReplicatedStorage").LoadSaveRequests.ClientMayLoad, game:GetService"Players".LocalPlayer) then
-        CanLoad.Text = "Load On Cooldown"
-    else
-        CanLoad.Text = "You May Load"
-    end
-end)
-
-print("[+] Successfully Initalized Library")
-print("[+] Successfully Initalized Functionalities")
-print("[!] If you paid for this you were scammed\n-Silent ben8x & Ecstasy")
