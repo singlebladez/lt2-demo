@@ -2158,7 +2158,7 @@
                     ItemBought = game:GetService("Workspace").PlayerModels.ChildAdded:Connect(function(v)
                        if v:WaitForChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
                            if v:WaitForChild("Main") then
-                               for i = 1,40 do 
+                               for i = 1,80 do 
                                    game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v)
                                    v.Main.CFrame = OldPos
                                    game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v)
@@ -2176,7 +2176,7 @@
                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Item.Main.CFrame + Vector3.new(5,0,5)
                    repeat game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Item) task.wait() until Item.Owner.Value ~= nil
                    if Item.Owner.Value ~= game.Players.LocalPlayer then break end
-                   for i = 1,30 do
+                   for i = 1,50 do
                        game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Item)
                        Item.Main.CFrame = Counter.CFrame + Vector3.new(0,Item.Main.Size.Y,0.5,0)
                        task.wait()
@@ -2189,7 +2189,7 @@
                        task.wait()
                    until Item.Parent ~= "ShopItems"
                    if tostring(Item):sub(1,4) ~= "2022" then
-                       for i = 1,30 do 
+                       for i = 1,50 do 
                            game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Item)
                            Item.Main.CFrame = OldPos
                            task.wait()
