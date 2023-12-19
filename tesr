@@ -1,14 +1,3 @@
-local Executor = identifyexecutor()
-
-getgenv().Ancestor_Loaded = false
-getgenv().DEBUG_MODE = true 
-
-local SupportedExecutors = {'Synapse X', 'ScriptWare', 'Krnl', 'Valyse', 'Fluxus', 'Hydrogen' ,}
-local Supported = table.find(SupportedExecutors, Executor) ~= nil
-
-assert(Supported, 'Executor Not Supported')
-
-repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild('PlayerGui') and game.Players.LocalPlayer.PlayerGui:FindFirstChild('OnboardingGUI') and game.Players.LocalPlayer.PlayerGui.OnboardingGUI.DoOnboarding.Loaded.Value
 
 local Maid, Ancestor, GUISettings, Connections = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/KhayneGleave/Ancestor/main/Maid.txt'))(), {
 
