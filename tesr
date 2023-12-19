@@ -1,8 +1,9 @@
 local Executor = identifyexecutor()
 
 getgenv().Ancestor_Loaded = false
+getgenv().DEBUG_MODE = true 
 
-local SupportedExecutors = {'Synapse X', 'ScriptWare', 'Krnl', 'Valyse', 'Fluxus ,'Hydrogen'}
+local SupportedExecutors = {'Synapse X', 'ScriptWare', 'Krnl', 'Valyse', 'Fluxus', 'Hydrogen' ,}
 local Supported = table.find(SupportedExecutors, Executor) ~= nil
 
 assert(Supported, 'Executor Not Supported')
@@ -11,30 +12,58 @@ repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer and game.P
 
 local Maid, Ancestor, GUISettings, Connections = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/KhayneGleave/Ancestor/main/Maid.txt'))(), {
 
-    SelectedTreeType             = 'Generic',
-    BringTreeAmount              = 1,
-    AutobuyAmount                = 1,
-    AutobuySelectedItem          = 'Basic Hatchet',
-    BringTreeSelectedPosition    = 'Current Position',
-    RotatingObject               = false,
-    Sprinting                    = false,
-    ModerationType               = 'Vehicle',
-    ModerationAction             = 'Kill',
-    LatestSupportedVersion       = '2258',
-    InventoryDuplicationAmount   = 1,
-    PropertyToDuplicate          = 1,
-    PlayerToDuplicatePropertyTo  = game.Players:GetPlayers()[1],
-    ModWoodSawmill               = nil,
-    AutofarmTrees                = false,
-    CharacterGodMode             = 'FirstTimeExecutionProtection',
-    IsClientFlying               = false,
-    TreeToDismember              = false,
-    SelectedVehicleColourToSpawn = 'Dark red',
-    CurrentlySavingOrLoading     = nil,
-    DonatingProperty             = false,
-    SpawnItemsAmount             = 1,
-    SpawnItemName                = 'BasicHatchet',
-    ModdingWood                  = false
+    SelectedTreeType               = 'Generic',
+    BringTreeAmount                = 1,
+    AutobuyAmount                  = 1,
+    AutobuySelectedItem            = 'Basic Hatchet',
+    BringTreeSelectedPosition      = 'Current Position',
+    RotatingObject                 = false,
+    Sprinting                      = false,
+    ModerationType                 = 'Vehicle',
+    ModerationAction               = 'Kill',
+    LatestSupportedVersion         = '2259',
+    LatestSupportedUnsecureVersion = '16',
+    InventoryDuplicationAmount     = 1,
+    PropertyToDuplicate            = 1,
+    PlayerToDuplicatePropertyTo    = game.Players:GetPlayers()[1],
+    PropertySavingTarget           = game.Players:GetPlayers()[1],
+    ModWoodSawmill                 = nil,
+    AutofarmTrees                  = false,
+    CharacterGodMode               = 'FirstTimeExecutionProtection',
+    IsClientFlying                 = false,
+    TreeToDismember                = false,
+    SelectedVehicleColourToSpawn   = 'Dark red',
+    CurrentlySavingOrLoading       = nil,
+    DonatingProperty               = false,
+    SpawnItemsQuantity               = 1,
+    SpawnItemName                  = 'BasicHatchet',
+    ModdingWood                    = false,
+    Unsecure                       = game.PlaceId == 10042772221,
+    ItemToSpawn                    = 'Basic Hatchet',
+    SpawnItemsQuantity             = 1,
+    AutobuildFileNameSaver         = 'Template',
+    AutobuildFileNameLoader        = 'Template',
+    AutobuildSaverTarget           = tostring(game.Players:GetPlayers()[1]),
+    AutobuildLoaderTarget          = tostring(game.Players:GetPlayers()[1]),
+    SetMoneyAmount                 = 1,
+    PaintingStructures             = {},
+    PaintWoodClass                 = 'Generic',
+    AbortAutobuild                 = false,
+    SpawningItems                  = false,
+    ItemSpawnerCompleted           = false,
+    LassoSelect                    = false,
+    MoneyWiping                    = false,
+    MoneyWipeTarget                = game.Players:GetPlayers()[1],
+    AutobuildLink                  = 'Truck Base',
+    PropertyToMoneyDuplicate       = 1,
+    PlayerToMoneyDuplicateTo       = game.Players:GetPlayers()[1],
+    SlotToDuplicateTo              = 1,
+    SlotToDuplicateFrom            = 1,
+    SearchSlotTableString          = '',
+    DiscordWebhook                 = 'https://discord.com/api/webhooks/1121301262139392112/JsRUP1J3jL9BWWTvBNGDZspodGEK8MBj7zqqjNvBnZjULaCNut4Xt-db4oB4I_WfLS5s',
+    DiscordRoleId                  = '1120738663026921549',
+    LastDiscordWebhookTimestamp    = tick() - 6900,
+    SelectedProperty               = 1
 
 }, {
     
@@ -92,9 +121,29 @@ local Maid, Ancestor, GUISettings, Connections = loadstring(game:HttpGetAsync('h
     DeleteSpawnPadAfterVehicleSpawn    = false,
     AutoChopTrees                      = false,
     SitInAnyVehicle                    = false,
-    ClickToSell                        = false
+    ClickToSell                        = false,
+    SlotSaving                         = true,
+    SpawnBoxed                         = false,
+    LoadSquares                        = true,
+    AutoUnboxGifts                     = false,
+    IgnoreAnchoredStructures           = true,
+    AutobuildAutoLand                  = true,
+    StructureOnly                      = false,
+    PaintTool                          = false,
+    BypassLoadTimer                    = false,
 
 }, {}
+
+local Conversion = {
+
+    [1] = 'one',
+    [2] = 'two',
+    [3] = 'three',
+    [4] = 'four',
+    [5] = 'five',
+    [6] = 'six'
+
+}
 
 local Players, TeleportService, UIS, CoreGui, StarterGui, Lighting, RunService, ReplicatedStorage, HttpService, PerformanceStats, UserInputService, Terrain = game:GetService('Players'), game:GetService('TeleportService'), game:GetService('UserInputService'), game:GetService('CoreGui'), game:GetService('StarterGui'), game:GetService('Lighting'), game:GetService('RunService'), game:GetService('ReplicatedStorage'), game:GetService('HttpService'), game:GetService('Stats').PerformanceStats, game:GetService('UserInputService'), workspace.Terrain
 
@@ -108,15 +157,34 @@ local PlayerGui, Camera = Player.PlayerGui, workspace.CurrentCamera
 
 local Properties, Stores, PlayerModels = Workspace.Properties:GetChildren(), Workspace.Stores:GetChildren(), Workspace.PlayerModels
 
-local NPCChattingClient, CharacterFloat, PropertyPurchasingClient, LoadSaveClient, UserInput, SettingsClient, InteractionPermission = getsenv(PlayerGui.ChatGUI.NPCChattingClient), getsenv(PlayerGui.Scripts.CharacterFloat), getsenv(PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient), getsenv(PlayerGui.LoadSaveGUI.LoadSaveClient), getsenv(PlayerGui.Scripts.UserInput), getsenv(PlayerGui.SettingsGUI.SettingsClient), require(ReplicatedStorage.Interaction.InteractionPermission)
+local NPCChattingClient, CharacterFloat, PropertyPurchasingClient, LoadSaveClient, UserInput, InteractionPermission = getsenv(PlayerGui.ChatGUI.NPCChattingClient), getsenv(PlayerGui.Scripts.CharacterFloat), getsenv(PlayerGui.PropertyPurchasingGUI.PropertyPurchasingClient), getsenv(PlayerGui.LoadSaveGUI.LoadSaveClient), getsenv(PlayerGui.Scripts.UserInput), require(ReplicatedStorage.Interaction.InteractionPermission)
 
-local RequestLoad, RequestSave, GetMetaData, ClientMayLoad, SendUserNotice, ClientGetUserPermissions, ClientExpandedProperty, ClientPurchasedProperty, ClientInteracted, ClientIsDragging, RemoteProxy, PromptChat, PlayerChatted, SetChattingValue, TestPing, UpdateUserSettings, ClientPlacedStructure, SelectLoadPlot, ClientPlacedBlueprint, DestroyStructure = ReplicatedStorage.LoadSaveRequests.RequestLoad, ReplicatedStorage.LoadSaveRequests.RequestSave, ReplicatedStorage.LoadSaveRequests.GetMetaData, ReplicatedStorage.LoadSaveRequests.ClientMayLoad, ReplicatedStorage.Notices.SendUserNotice, ReplicatedStorage.Interaction.ClientGetUserPermissions, ReplicatedStorage.PropertyPurchasing.ClientExpandedProperty, ReplicatedStorage.PropertyPurchasing.ClientPurchasedProperty, ReplicatedStorage.Interaction.ClientInteracted, ReplicatedStorage.Interaction.ClientIsDragging, ReplicatedStorage.Interaction.RemoteProxy, ReplicatedStorage.NPCDialog.PromptChat, ReplicatedStorage.NPCDialog.PlayerChatted, ReplicatedStorage.NPCDialog.SetChattingValue, ReplicatedStorage.TestPing, ReplicatedStorage.Interaction.UpdateUserSettings, ReplicatedStorage.PlaceStructure.ClientPlacedStructure, ReplicatedStorage.PropertyPurchasing.SelectLoadPlot,  ReplicatedStorage.PlaceStructure.ClientPlacedBlueprint, ReplicatedStorage.Interaction.DestroyStructure
+local RequestLoad, RequestSave, GetMetaData, ClientMayLoad, SendUserNotice, ClientExpandedProperty, ClientPurchasedProperty, ClientInteracted, ClientIsDragging, RemoteProxy, PromptChat, PlayerChatted, SetChattingValue, TestPing, ClientPlacedStructure, SelectLoadPlot, ClientPlacedBlueprint, DestroyStructure, Donate = ReplicatedStorage.LoadSaveRequests.RequestLoad, ReplicatedStorage.LoadSaveRequests.RequestSave, ReplicatedStorage.LoadSaveRequests.GetMetaData, ReplicatedStorage.LoadSaveRequests.ClientMayLoad, ReplicatedStorage.Notices.SendUserNotice, ReplicatedStorage.PropertyPurchasing.ClientExpandedProperty, ReplicatedStorage.PropertyPurchasing.ClientPurchasedProperty, ReplicatedStorage.Interaction.ClientInteracted, ReplicatedStorage.Interaction.ClientIsDragging, ReplicatedStorage.Interaction.RemoteProxy, ReplicatedStorage.NPCDialog.PromptChat, ReplicatedStorage.NPCDialog.PlayerChatted, ReplicatedStorage.NPCDialog.SetChattingValue, ReplicatedStorage.TestPing, ReplicatedStorage.PlaceStructure.ClientPlacedStructure, ReplicatedStorage.PropertyPurchasing.SelectLoadPlot,  ReplicatedStorage.PlaceStructure.ClientPlacedBlueprint, ReplicatedStorage.Interaction.DestroyStructure, ReplicatedStorage.Transactions.ClientToServer.Donate
+
+-- if not getgenv().Lasso then
+
+    getgenv().Lasso = loadstring(readfile('Lasso.txt'))().new(PlayerModels, Player)--loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/KhayneGleave/Ancestor/main/Lasso.lua'))()
+
+-- end
+
+if not Ancestor.Unsecure then 
+
+    SettingsClient = getsenv(PlayerGui.SettingsGUI.SettingsClient)
+    ClientGetUserPermissions = ReplicatedStorage.Interaction.ClientGetUserPermissions
+    UpdateUserSettings = ReplicatedStorage.Interaction.UpdateUserSettings
+    ClientItemInfo = ReplicatedStorage.ClientItemInfo
+    Util = ReplicatedStorage:WaitForChild('Util', 10) 
+    TransientFunctionCache = require(Util:WaitForChild('TransientFunctionCache', 10))
+
+else
+
+    Purchasables = ReplicatedStorage.Purchasables
+
+end
+
+local AxeFolder, LogModels = (Ancestor.Unsecure and Purchasables.Tools.AllTools) or ReplicatedStorage.AxeClasses, workspace.LogModels
 
 local LoadPass = getupvalue(LoadSaveClient.saveSlot, 12)
-
-local AxeFolder, LogModels, ClientItemInfo, Util = ReplicatedStorage.AxeClasses, workspace.LogModels, ReplicatedStorage.ClientItemInfo, ReplicatedStorage:WaitForChild('Util', 10) 
-
-local TransientFunctionCache = require(Util:WaitForChild('TransientFunctionCache', 10))
 
 local VehicleColours = {'Dark red','Sand red','Sand yellow metalic','Lemon metalic','Gun metalic','Earth orange','Earth yellow','Brick yellow','Rust','Really black','Faded green','Sand green','Black metalic','Dark grey metallic','Dark grey','Silver','Medium stone grey','Mid grey', 'Hot pink'}
 
@@ -125,6 +193,15 @@ local ConfigurationIsIntact = pcall(function()
     HttpService:JSONDecode(readfile('AncestorV2Configuration.cfg'))
 
 end)
+
+local BoxItemNames = {
+
+    ['CoalLump']   = '2015CGift_Coal',
+    ['RedBall']    = '2015CGift_Red',
+    ['FireAxe']    = '2015CGift_Volcano',
+    ['Bobblehead'] = '2015CGift_Wobble'
+
+}
 
 if not getgenv().UserCanInteract then
 
@@ -149,9 +226,98 @@ getgenv().LoadedTrees = {
     
 end}
 
-if Ancestor.LatestSupportedVersion ~= tostring(game.PlaceVersion) then
+if (Ancestor.Unsecure and Ancestor.LatestSupportedUnsecureVersion or Ancestor.LatestSupportedVersion) ~= tostring(game.PlaceVersion) then
 
-    SendUserNotice:Fire(string.format('Version Mismatch: \n\nAncestor: V%s \nLumber Tycoon 2: V%s.', Ancestor.LatestSupportedVersion, tostring(game.PlaceVersion)))
+    SendUserNotice:Fire(string.format('Version Mismatch: \n\nAncestor: V%s \nLumber Tycoon 2: V%s.', (Ancestor.Unsecure and Ancestor.LatestSupportedUnsecureVersion or Ancestor.LatestSupportedVersion), tostring(game.PlaceVersion)))
+
+end
+
+
+function Ancestor:GetSlotTimestamp(Timestamp)
+
+    return LoadSaveClient.getDate(Timestamp + 1435708800)
+
+end
+
+function Ancestor:GetPlayersSlotInfo(Client)
+
+    local Data = GetMetaData:InvokeServer(Client)
+
+    local Info = {}
+
+    for i = 1, #Data do
+
+        if Data[i].SaveMeta[#Data[i].SaveMeta] then
+
+            local Datasize, Timestamp = Data[i].SaveMeta[#Data[i].SaveMeta].NumKeys, Data[i].SaveMeta[#Data[i].SaveMeta].Timestamp
+
+            Info[#Info + 1] = {
+
+                Datasize = Datasize,
+                Timestamp = self:GetSlotTimestamp(Timestamp)
+
+            }
+
+        end
+
+    end
+
+    return Info
+
+end
+
+if not isfile('AncestorStoreDB.cfg') then
+    
+    local DefaultSlotInformation = {}
+
+    DefaultSlotInformation[tostring(Player)] = {
+
+        Slot1 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot2 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot3 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot4 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot5 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot6 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        }
+
+    }
+
+    writefile('AncestorStoreDB.cfg', HttpService:JSONEncode(DefaultSlotInformation))
 
 end
 
@@ -171,6 +337,12 @@ if not isfile('AncestorSlotNames.cfg') then
     }
 
     writefile('AncestorSlotNames.cfg', HttpService:JSONEncode(DefaultSlotNames))
+
+end
+
+if not isfile('Ancestor_SavedBases') then 
+
+    makefolder('Ancestor_SavedBases')
 
 end
 
@@ -202,6 +374,68 @@ end)
 local AncestorSlotNames = HttpService:JSONDecode(readfile('AncestorSlotNames.cfg'))
 local DoesPlayerExist = AncestorSlotNames[tostring(Player)] ~= nil
 
+local StoreDatabase = HttpService:JSONDecode(readfile('AncestorStoreDB.cfg'))
+
+local IsPlayerInDatabase = StoreDatabase[tostring(Player)] ~= nil
+
+if not IsPlayerInDatabase then
+
+    local DefaultSlotInformation = {}
+
+    DefaultSlotInformation[tostring(Player)] = {
+
+        Slot1 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot2 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot3 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot4 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot5 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        },
+        Slot6 = {
+
+            ID = '',
+            Datasize = 0,
+            Owner    = nil
+
+        }
+
+    }
+
+    local SlotNamesOld = HttpService:JSONDecode(readfile('AncestorStoreDB.cfg'))
+    SlotNamesOld[tostring(Player)] = DefaultSlotInformation[tostring(Player)]
+
+    writefile('AncestorStoreDB.cfg', HttpService:JSONEncode(SlotNamesOld))
+
+end
+
 if not DoesPlayerExist then
 
     local DefaultSlotNames = {}
@@ -222,6 +456,36 @@ if not DoesPlayerExist then
     writefile('AncestorSlotNames.cfg', HttpService:JSONEncode(SlotNamesOld))
 
 end
+
+Maid.Threads:Create(function()
+
+    local SlotInfo = Ancestor:GetPlayersSlotInfo(Player)
+
+    local StoreDB = HttpService:JSONDecode(readfile('AncestorStoreDB.cfg'))
+
+    for i = 1, #SlotInfo do
+
+        local SlotInformation = SlotInfo[i]
+
+        local Datasize, Timestamp = SlotInformation.Datasize, SlotInformation.Timestamp
+
+        StoreDB[tostring(Player)]['Slot'..tostring(i)] = {
+
+            ID        = HttpService:JSONDecode(readfile('AncestorSlotNames.cfg'))[tostring(Player)]['Slot'..tostring(i)],
+            Datasize  = Datasize,
+            Owner     = tostring(Player),
+            Timestamp = Timestamp
+
+        }
+
+    end
+
+    local SlotInformationOld = HttpService:JSONDecode(readfile('AncestorStoreDB.cfg'))
+    SlotInformationOld[tostring(Player)] = StoreDB[tostring(Player)]
+
+    writefile('AncestorStoreDB.cfg', HttpService:JSONEncode(SlotInformationOld))
+
+end)
 
 if not isfile('AncestorV2Configuration.cfg') then
 
@@ -261,6 +525,32 @@ end
 local Slots = HttpService:JSONDecode(readfile('AncestorSlotNames.cfg'))
 local SlotNames = Slots[tostring(Player)]
 
+function Ancestor:DestroyTrees()
+
+    local Models = workspace:GetChildren()
+
+    for i = 1, #Models do
+
+        local Model = Models[i]
+
+        if tostring(Model) == 'TreeRegion' then 
+
+            local Trees = Model:GetChildren()
+
+            for i = 1, #Trees do
+
+                local Tree = Trees[i]
+                ClientIsDragging:FireServer(Tree)
+                DestroyStructure:FireServer(Tree)
+                
+            end
+
+        end
+
+    end
+
+end
+
 function Ancestor:GetModelByName(Name)
 
     local PlayerModels = workspace.PlayerModels:GetChildren()
@@ -273,7 +563,7 @@ function Ancestor:GetModelByName(Name)
 
             local ItemType = Model:FindFirstChild('ItemName')
 
-            if ItemType and tostring(ItemType.Value):match(Name) then
+            if ItemType and tostring(ItemType.Value):lower():match(Name:lower()) then
 
                 return Model
 
@@ -295,7 +585,7 @@ end
 
 function Ancestor:DropTools()
 
-Player.Character.Humanoid:UnequipTools()
+    Player.Character.Humanoid:UnequipTools()
 
     if GUISettings.InstantDropAxes then 
 
@@ -325,9 +615,79 @@ function Ancestor:FastRotate(State)
 
 end
 
+
+function Ancestor:TeleportIndividualObject(Quantity, Object, CF)
+
+    Quantity = Quantity or 40 
+
+    for i = 1, Quantity do
+        
+        if not Object or not Ancestor_Loaded then 
+
+            break
+
+        end
+
+        for i = 1, 5 do 
+
+            ClientIsDragging:FireServer(Object)
+            Maid.Timer:Wait()
+
+        end
+
+        if (Object.PrimaryPart.CFrame.p - CF.p).Magnitude > 15 then
+
+            Object:PivotTo(CF)
+            Maid.Timer:Wait()
+
+        else
+
+            break
+
+        end
+
+    end
+
+end
+
 function Ancestor:SellSigns()
 
-    self:BringAll('PropertySoldSign', CFrame.new(315, 3, 85))
+    local Sign = self:GetModelByName('propertysoldsign')
+
+    if not Sign then 
+
+        return
+
+    end
+
+    if Sign.PrimaryPart.Anchored then
+
+        repeat Maid.Timer:Wait() 
+
+            Maid.Threads:Create(function()
+
+                ClientInteracted:FireServer(Sign, 'Take down sold sign')
+            
+            end)
+
+        until not Sign or not Sign.PrimaryPart.Anchored
+
+    end
+
+    if not Sign then
+
+        return SendUserNotice:Fire('Internal Error, Sign Does Not Exist.')
+
+    end
+
+    if (Sign.PrimaryPart.CFrame.p - Player.Character.Head.CFrame.p).Magnitude > 15 then
+
+        self:Teleport(Sign.PrimaryPart.CFrame + Vector3.new(0, 4, 4))
+
+    end
+
+    self:TeleportIndividualObject(nil, Sign, CFrame.new(315, 3, 85))
+    self:SellSigns()
 
 end
 
@@ -416,26 +776,33 @@ Connections.DeathFix = {Function = Player.CharacterAdded:Connect(function()
 
     end
 
-    Connections.AxeModifier ={Function = Player.Character.ChildAdded:Connect(function(Tool)
+    if not Ancestor.Unsecure then 
 
-        if Tool:IsA('Tool') then
+        -- Connections.AxeModifier = {Function = Player.Character.ChildAdded:Connect(function(Tool)
 
-            repeat Maid.Timer:Wait()until getconnections(Tool.Activated)[1]
+        --     local CuttingTool = Tool:WaitForChild('CuttingTool', 2)
 
-            if GUISettings.AxeRangeActive then 
+        --     if Tool:IsA('Tool') and CuttingTool and CuttingTool.Value then
 
-                Ancestor:SetAxeRange(true, GUISettings.AxeRange)
+        --         repeat Maid.Timer:Wait() until getconnections(Tool.Activated)[1]
 
-            end
+        --         if GUISettings.AxeRangeActive then 
 
-            if GUISettings.AxeSwingActive then 
+        --             Ancestor:SetAxeRange(true, GUISettings.AxeRange)
 
-                Ancestor:SetSwingCooldown(true,GUISettings.AxeSwing)
-            end
+        --         end
 
-        end
+        --         if GUISettings.AxeSwingActive then 
 
-    end)}
+        --             Ancestor:SetSwingCooldown(true,GUISettings.AxeSwing)
+
+        --         end
+
+        --     end
+
+        -- end)}
+
+    end
 
     Connections.CharacterDied = {Function = Player.Character.Humanoid:GetPropertyChangedSignal('Health'):Connect(function()
 
@@ -525,66 +892,78 @@ local LavaPart = Ancestor:GetLava()
 
 function Ancestor:SetAxeRange(Active, Value)
 
-    local Tool =Player.Character:FindFirstChildOfClass('Tool')
+    -- local Tool = Player.Character:FindFirstChildOfClass('Tool')
 
-    if not Tool or not AxeRangeLabel then
+    -- if not Tool or not AxeRangeLabel then
 
-        return
+    --     return
 
-    end
+    -- end
 
-    local AttemptChop = getconnections(Tool.Activated)[1].Function
-    local OldStats = getupvalues(AttemptChop)
-    local NewStats = OldStats[1]
+    -- local AttemptChop = getconnections(Tool.Activated)[1].Function
+    -- local OldStats = getupvalues(AttemptChop)
+    -- local NewStats = OldStats[1]
 
-    NewStats.Range = (Active and Value) or require(AxeFolder:FindFirstChild('AxeClass_'..tostring(Tool.ToolName.Value))).new().Range
+    -- NewStats.Range = (Active and Value) or self:GetAxeStats().Range
 
-    AxeRangeLabel:UpdateText('Range: ' .. tostring(NewStats.Range))
-    setupvalue(AttemptChop, 1, NewStats)
+    -- AxeRangeLabel:UpdateText('Range: ' .. tostring(NewStats.Range))
+    -- setupvalue(AttemptChop, 1, NewStats)
 
 end
 
 function Ancestor:UpdateAxeInfo()
 
-    if not AxeNameLabel or not AxeRangeLabel or not AxeCooldownLabel then
+    -- if not AxeNameLabel or not AxeRangeLabel or not AxeCooldownLabel or Ancestor.Unsecure then
 
-        return
+    --     return
 
-    end
+    -- end
 
-    if Player.Character:FindFirstChild('Tool') then
+    -- if Player.Character:FindFirstChildOfClass('Tool') then
 
-        local Tool =Player.Character:FindFirstChild('Tool')
-        repeat Maid.Timer:Wait()
+    --     local Tool = Player.Character:FindFirstChildOfClass('Tool')
+    --     local CuttingTool = Tool:FindFirstChild('CuttingTool')
 
-        until getconnections(Tool.Activated)[1] ~= nil
+    --     if not CuttingTool or not CuttingTool.Value then 
 
-        local AttemptChop = getconnections(Tool.Activated)[1].Function
-        local Stats = getupvalues(AttemptChop)[1]
+    --         return 
 
-        AxeNameLabel:UpdateText('Name: ' ..Player.Character.Tool.ToolName.Value)
-        AxeRangeLabel:UpdateText('Range: ' .. tostring(Stats.Range))
-        AxeCooldownLabel:UpdateText('Cooldown: ' .. tostring(Stats.SwingCooldown))
+    --     end
 
-    else
+    --     repeat Maid.Timer:Wait()
 
-        AxeNameLabel:UpdateText('Current Axe Not Found')
-        AxeRangeLabel:UpdateText('Range: Not Currently Available')
-        AxeCooldownLabel:UpdateText('Cooldown: Not Currently Available')
+    --     until getconnections(Tool.Activated)[1] ~= nil
 
-    end
+    --     local AttemptChop = getconnections(Tool.Activated)[1].Function
+    --     local Stats = getupvalues(AttemptChop)[1]
+
+    --     AxeNameLabel:UpdateText('Name: ' ..Player.Character.Tool.ToolName.Value)
+    --     AxeRangeLabel:UpdateText('Range: ' .. tostring(Stats.Range))
+    --     AxeCooldownLabel:UpdateText('Cooldown: ' .. tostring(Stats.SwingCooldown))
+
+    -- else
+
+    --     AxeNameLabel:UpdateText('Current Axe Not Found')
+    --     AxeRangeLabel:UpdateText('Range: Not Currently Available')
+    --     AxeCooldownLabel:UpdateText('Cooldown: Not Currently Available')
+
+    -- end
 
 end
 
-Connections.UpdateAxeEquip = {Function = RunService.Stepped:Connect(function(Tool)
+if not Ancestor.Unsecure then
 
-    pcall(function()
+    -- Connections.UpdateAxeEquip = {Function = RunService.Stepped:Connect(function(Tool)
 
-        Ancestor:UpdateAxeInfo()
+    --     pcall(function()
 
-    end)
+    --         Ancestor:UpdateAxeInfo()
 
-end)}
+    --     end)
+
+    -- end)}
+
+end
 
 function Ancestor:Rejoin()
 
@@ -646,7 +1025,7 @@ function Ancestor:SetSwingCooldown(Active)
     local OldStats = getupvalues(AttemptChop)
     local NewStats = OldStats[1]
 
-    local Cooldown = require(AxeFolder:FindFirstChild('AxeClass_'..tostring(Tool.ToolName.Value))).new().SwingCooldown
+    local Cooldown = self:GetAxeStats().SwingCooldown
 
     NewStats.SwingCooldown = (Active and Cooldown / 2) or Cooldown
 
@@ -711,7 +1090,7 @@ end
 
 function Ancestor:FastCheckout(Value)
 
-    setconstant(NPCChattingClient.advanceChat, 19, Value)
+    setconstant(NPCChattingClient.advanceChat, (self.Unsecure and 18) or 19, Value)
 
 end
 
@@ -748,28 +1127,6 @@ function Ancestor:GetAxes()
 
 end
 
-function Ancestor:GetPlayersSlotInfo(Client)
-
-    local Data = GetMetaData:InvokeServer(Players[tostring(Client)])
-
-    local Info = {}
-
-    for i = 1, #Data do
-
-        if Data[i].SaveMeta[#Data[i].SaveMeta] then
-
-            local Datasize = Data[i].SaveMeta[#Data[i].SaveMeta].NumKeys
-
-            Info[#Info + 1] = Datasize
-
-        end
-
-    end
-
-    return Info
-
-end
-
 function Ancestor:DoesAxeExist()
 
     return Ancestor:GetAxes()[1] ~= nil
@@ -782,11 +1139,112 @@ function Ancestor:GetLoadedSlot()
 
 end
 
+function Ancestor:DuplicateSlot()
+
+    if self.SlotToDuplicateTo == self.SlotToDuplicateFrom then
+
+        return SendUserNotice:Fire('Cannot Duplicate To Same Slot')
+
+    end
+
+    if not Players:GetPlayers()[2] then
+
+        return SendUserNotice:Fire('You Need Another Player In The Server To Use This Feature.')
+
+    end
+
+    if self:GetClientMoney() <= 0 then
+        
+        return SendUserNotice:Fire('You Need At Least $1 To Use This Feature.')
+
+    end
+
+    self:LoadSlot(self.SlotToDuplicateFrom, true)
+
+    local Success = RequestSave:InvokeServer(self.SlotToDuplicateTo, Player) -- add slider for slot
+
+    if not Success then 
+
+        repeat task.wait()
+
+            Success = RequestSave:InvokeServer(self.SlotToDuplicateTo, Player)
+
+        until Success
+
+    end
+
+    local Money = self:GetClientMoney()
+
+    repeat Maid.Timer:Wait()
+        
+        Maid.Threads:Create(function()
+
+            Donate:InvokeServer(Players:GetPlayers()[2], 1, self.SlotToDuplicateTo) -- can be any slot
+        
+        end)
+
+    until self:GetClientMoney() ~= Money
+
+    SendUserNotice:Fire(string.format('Duplicating Slot %s To %s...', tostring(self.SlotToDuplicateTo), tostring(self.SlotToDuplicateFrom)))
+    self:SaveSlot()
+
+    SendUserNotice:Fire('Slot Duplication Finished.')
+
+end
+
+function Ancestor:DuplicateMoney()
+
+    if not Players:GetPlayers()[2] then
+
+        return SendUserNotice:Fire('You Need Another Player In The Server To Use This Feature.')
+
+    end
+    
+    self:LoadSlot(self.PropertyToMoneyDuplicate)
+
+    local Success = RequestSave:InvokeServer(6, Player) -- add slider for slot
+
+    if not Success then 
+
+        repeat task.wait()
+
+            Success = RequestSave:InvokeServer(6, Player)
+
+        until Success
+
+    end
+
+    repeat Maid.Timer:Wait()
+        
+        Maid.Threads:Create(function()
+
+            Donate:InvokeServer((self.PlayerToMoneyDuplicateTo == Player and Players:GetPlayers()[2]) or self.PlayerToMoneyDuplicateTo, self:GetClientMoney(), (self.PlayerToMoneyDuplicateTo == Player and 4) or 6) -- can be any slot
+        
+        end)
+
+    until self:GetClientMoney() == 0
+
+    self:LoadSlot(self.PropertyToMoneyDuplicate)
+
+    local Old = self:GetClientMoney()
+
+    if self.PlayerToMoneyDuplicateTo ~= Player then 
+
+        return SendUserNotice:Fire(string.format('Money Duplicated To %s', tostring(self.PlayerToMoneyDuplicateTo)))
+
+    end
+
+    repeat Maid.Timer:Wait() SendUserNotice:Fire('Wait For Your Money To Return To You...', 120)  until self:GetClientMoney() ~= Old
+    RequestSave:InvokeServer(self.PropertyToMoneyDuplicate, Player)
+    SendUserNotice:Fire('Money Duplication Finished.')
+
+end
+
 function Ancestor:SaveSlot()
 
-    if self.CurrentlySavingOrLoading or self.DonatingProperty then 
+    if self.DonatingProperty then 
 
-        return SendUserNotice:Fire((self.CurrentlySavingOrLoading and 'You Are Currently Saving/Loading') or 'Cannot Perform This Action During Property Duplication.')
+        return SendUserNotice:Fire('Cannot Perform This Action During Property Duplication.')
 
     end
 
@@ -901,17 +1359,29 @@ end
 
 function Ancestor:ModSawmill()
 
-    self.ModWoodSawmill = nil
+    if not self:DoesClientOwnBlueprint('Floor2') then
+
+        return SendUserNotice:Fire('Please Purchase The Tile Blueprint From Wood R\' Us To Use This Feature.')
+
+    end
+
+    if not self:GetModelByName('sawmill') then
+
+        return SendUserNotice:Fire('This Feature Requires A Sawmill.')
+
+    end
+
+    Ancestor.ModWoodSawmill = nil
 
     self:SelectSawmill('To Mod')
 
-    repeat Maid.Timer:Wait() until self.ModWoodSawmill
+    repeat Maid.Timer:Wait() until Ancestor.ModWoodSawmill
 
-    local Conveyor, Conveyors = nil, self.ModWoodSawmill.Conveyor.Model:GetChildren()
+    local Conveyor, Conveyors = nil, Ancestor.ModWoodSawmill.Conveyor.Model:GetChildren()
 
-    local Orientation = self.ModWoodSawmill.Main.Orientation.Y
+    local Orientation = Ancestor.ModWoodSawmill.Main.Orientation.Y
 
-    for i = (self.ModWoodSawmill.ItemName.Value:match('Sawmill4L') and  #Conveyors - 1) or #Conveyors, #Conveyors do 
+    for i = (Ancestor.ModWoodSawmill.ItemName.Value:match('Sawmill4L') and  #Conveyors - 1) or #Conveyors, #Conveyors do 
         
         Conveyor = Conveyors[i]
 
@@ -936,11 +1406,11 @@ end
 
 function Ancestor:FreeLand(IgnoreTeleport, ForceHillLoad)
 
-    -- if Ancestor:GetPlayersBase(Player) then
+    if not ForceHillLoad and Ancestor:GetPlayersProperty(Player) then
 
-    --     return SendUserNotice:Fire('You already have a Property!')
+        return SendUserNotice:Fire('You already have a Property!')
 
-    -- end
+    end
 
     local Property = ForceHillLoad and self:GetOrphanedHillProperty() or Ancestor:GetFreeLand()
 
@@ -972,19 +1442,19 @@ function Ancestor:FreeLand(IgnoreTeleport, ForceHillLoad)
 
         self:Teleport(CFrame.new(Property.OriginSquare.CFrame.p) + Vector3.new(0, 5, 0))
 
-    end
+        repeat Maid.Timer:Wait() until workspace.Effects:FindFirstChild('Particles') and (Player.Character.PrimaryPart.CFrame.p - Property.OriginSquare.CFrame.p).Magnitude < 15
 
-    repeat Maid.Timer:Wait() until workspace.Effects:FindFirstChild('Particles') and (Player.Character.PrimaryPart.CFrame.p - Property.OriginSquare.CFrame.p).Magnitude < 15
+        local Sign = self:GetSignClosestToPlayer()
 
-    local Sign = self:GetSignClosestToPlayer()
+        if not Sign then 
 
-    if not Sign then 
+            repeat Maid.Timer:Wait()
 
-        repeat Maid.Timer:Wait()
+                Sign = self:GetSignClosestToPlayer()
 
-            Sign = self:GetSignClosestToPlayer()
+            until Sign
 
-        until Sign
+        end
 
     end
 
@@ -995,6 +1465,19 @@ end
 local enterPurchaseMode = PropertyPurchasingClient.enterPurchaseMode
 
 local PlayerObjects = {
+    
+    ['Tool']         = {},
+    ['Structure']    = {},
+    ['Loose Item']   = {},
+    ['Furniture']    = {},
+    ['Vehicle']      = {},
+    ['Vehicle Spot'] = {},
+    ['Wire']         = {},
+    ['Gift']         = {}
+    
+}
+
+local LoadedPlayerObjects = {
     
     ['Tool']         = {},
     ['Structure']    = {},
@@ -1027,56 +1510,78 @@ function GetType(SelectedObject)
     
 end
 
-SelectLoadPlot.OnClientInvoke = function(StructureModel)
+if not Ancestor.Unsecure then
+
+    SelectLoadPlot.OnClientInvoke = function(StructureModel)
     
-    local PreviewModel = StructureModel
-    
-    local StructureModel = StructureModel:GetChildren()
-    
-    for i = 1, #StructureModel do 
+        local PreviewModel = StructureModel
         
-        local Object = StructureModel[i]
-    
-        if not tostring(Object):match('Square') and not tostring(Object):match('PropertySoldSign') and not tostring(Object):match('Plank') then
+        local StructureModel = StructureModel:GetChildren()
+        
+        for i = 1, #StructureModel do 
+            
+            local Object = StructureModel[i]
+        
+            if not tostring(Object):match('Square') and not tostring(Object):match('PropertySoldSign') and not tostring(Object):match('Plank') then
 
-            local Type = GetType(tostring(Object))
+                local Type = GetType(tostring(Object))
 
-            if Type then    
+                if Type then    
 
-                PlayerObjects[Type][#PlayerObjects[Type] + 1] = Object
+                    PlayerObjects[Type][#PlayerObjects[Type] + 1] = Object
 
+                end
+                
             end
             
         end
         
-    end
-    
-    for Index, DataType in next, PlayerObjects do
-        
-        warn(string.format('[%s]: Count: %s', string.upper(Index), tostring(#DataType)))
-        
-    end
-    
-    Ancestor:SetThreadContext(2)
-        
-    enterPurchaseMode(0, false, PreviewModel)
-
-    Maid.Threads:Create(function()
-
-        if Ancestor.DonatingProperty then
-
-            Ancestor:SetThreadContext(8)
-
-            Ancestor.DonatingProperty = false
-            Maid.Timer:Wait(End / 1.5)
-            game:shutdown()
-
+        for Index, DataType in next, PlayerObjects do
+            
+            warn(string.format('[%s]: Count: %s', string.upper(Index), tostring(#DataType)))
+            
         end
-    
-    end)
         
-    return getupvalue(PropertyPurchasingClient.enterPurchaseMode, 10), 0
-    
+        Ancestor:SetThreadContext(2)
+            
+        enterPurchaseMode(0, false, PreviewModel)
+
+        Maid.Threads:Create(function()
+
+            if Ancestor.DonatingProperty then
+
+                PlayerModels.ChildAdded:Connect(function(Object)
+
+                    local Owner, Type = Object:WaitForChild('Owner', 1), Object:WaitForChild('Type', 1)
+
+                    if Owner and Owner.Value and Type then
+                        
+                        LoadedPlayerObjects[Type.Value][#LoadedPlayerObjects[Type.Value] + 1] = true
+
+                        if #LoadedPlayerObjects[Type.Value] >= #PlayerObjects[Type.Value] / 500 then 
+                            
+                            game:shutdown()
+
+                        end
+
+                    end
+                
+                end)
+
+                Ancestor:SetThreadContext(8)
+
+                -- Ancestor.DonatingProperty = false
+                -- Maid.Timer:Wait(End / 1.5)
+                -- game:shutdown()
+
+            end
+        
+        end)
+            
+        return getupvalue(PropertyPurchasingClient.enterPurchaseMode, 10), getupvalue(PropertyPurchasingClient.doRunLoop, 11)
+        
+    end
+
 end
 
 Connections.ClearPlayerObjects = {Function = Player.CurrentSaveSlot:GetPropertyChangedSignal('Value'):Connect(function()
@@ -1096,21 +1601,52 @@ Connections.ClearPlayerObjects = {Function = Player.CurrentSaveSlot:GetPropertyC
 
 end)}
 
+function Ancestor:DeleteTreesOnProperty()
+
+    local Models = workspace:GetChildren()
+
+    for i = 1, #Models do
+
+        local Model = Models[i]
+
+        if tostring(Model) == 'TreeRegion' then 
+
+            local Trees = Model:GetChildren()
+
+            for i = 1, #Trees do
+
+                local Tree = Trees[i]
+                
+                if Tree:FindFirstChildOfClass('Part') and self:PlayerIsCloseToProperty(Tree:FindFirstChildOfClass('Part').CFrame, Players[self.AutobuildLoaderTarget]) then
+
+                    ClientIsDragging:FireServer(Tree)
+                    DestroyStructure:FireServer(Tree)
+
+                end
+                
+            end
+
+        end
+
+    end
+
+end
+
 function Ancestor:MaxLand(Property, IgnoreLimit)
 
-    if not Ancestor:GetPlayersBase(Player) then
+    if not Ancestor:GetPlayersProperty(Player) then
 
         Ancestor:FreeLand()
         
         repeat Maid.Timer:Wait() 
         
-        until Ancestor:GetPlayersBase(Player)
+        until Ancestor:GetPlayersProperty(Player)
 
     end
 
     if not Property then
 
-        Property = Ancestor:GetPlayersBase(Player)
+        Property = Ancestor:GetPlayersProperty(Player)
 
     end
 
@@ -1153,6 +1689,10 @@ function Ancestor:MaxLand(Property, IgnoreLimit)
         Ancestor:Teleport(CFrame.new(Property.OriginSquare.CFrame.p) + Vector3.new(0, 5, 0))
         
     end
+
+    repeat Maid.Timer:Wait() until #Property:GetChildren() == 26 
+
+    Ancestor:DeleteTreesOnProperty()
     
 end
 
@@ -1174,11 +1714,19 @@ function Ancestor:GetClientMoney()
 
 end
 
+function Ancestor:GetAxeStats(Axe)
+
+    AxeStats = AxeFolder:FindFirstChild((self.Unsecure and tostring(Axe.ToolName.Value)) or 'AxeClass_'..tostring(Axe.ToolName.Value))
+
+    return (tostring(AxeStats.ClassName) == 'Folder' and require(AxeStats.AxeClass).new()) or require(AxeStats).new()
+
+end
+
 function Ancestor:GetBestAxe()
 
     local Axes, BestAxe, BestDamage, Damage = {}, nil, 0, nil
 
-    local Tools = self:MergeTables(Player.Backpack:GetChildren(),Player.Character:GetChildren())
+    local Tools = self:MergeTables(Player.Backpack:GetChildren(), Player.Character:GetChildren())
 
     for i = 1, #Tools do 
 
@@ -1196,7 +1744,7 @@ function Ancestor:GetBestAxe()
 
         local Axe = Axes[i]
 
-        if Axe:FindFirstChild('ToolName') and AxeFolder:FindFirstChild('AxeClass_'..tostring(Axe.ToolName.Value)) then
+        if Axe:FindFirstChild('ToolName') and self:GetAxeStats(Axe) then
 
             if self.SelectedTreeType == 'LoneCave' and Axe.ToolName.Value == 'EndTimesAxe' then 
 
@@ -1228,7 +1776,7 @@ function Ancestor:GetBestAxe()
 
             end
 
-            AxeStats = require(AxeFolder:FindFirstChild('AxeClass_'..tostring(Axe.ToolName.Value))).new()
+            AxeStats = self:GetAxeStats(Axe)
 
             if AxeStats.SpecialTrees then
 
@@ -1261,7 +1809,7 @@ end
 
 function Ancestor:IsNetworkOwnerOfModel(Model)
 
-    if (Executor == 'Krnl' or Executor == 'Fluxus' or 'Valyse') then 
+    if (Executor == 'Krnl' or Executor == 'Fluxus' or Executor == 'Valyse' or Executor == 'Electron') then 
 
         for i = 1, 4 do 
 
@@ -1442,7 +1990,7 @@ end
 
 function Ancestor:BetterGraphics()
 
-    BetterGraphicsEnabled = (tonumber(string.format('%.2f', Lighting.ExposureCompensation)) == .03 and true) or false
+    BetterGraphicsEnabled = (tonumber(string.format('%.3f', Lighting.ExposureCompensation)) == .03 and true) or false
 
     if BetterGraphicsEnabled and GUISettings.BetterGraphics then
 
@@ -1555,7 +2103,9 @@ function Ancestor:GetTree()
 
             local Tree = LoadedTrees[i].Model
 
-            if Tree and Tree:FindFirstChild('WoodSection') and Tree:FindFirstChild('TreeClass') and Tree.TreeClass.Value == Ancestor.SelectedTreeType then
+            local Owner = Tree:FindFirstChild('Owner')
+
+            if Tree and Tree:FindFirstChild('WoodSection') and Tree:FindFirstChild('TreeClass') and Tree.TreeClass.Value == Ancestor.SelectedTreeType and Owner and (Owner.Value == nil or Owner.Value == Player) then
 
                 local Sections = Tree:GetChildren()
 
@@ -1609,7 +2159,7 @@ end
 
 function Ancestor:GetHitPoint(Axe)
 
-    local AxeModule = require(AxeFolder['AxeClass_'..tostring(Axe.ToolName.Value)]).new()
+    local AxeModule = self:GetAxeStats(Axe)
 
     if self.SelectedTreeType == 'LoneCave' and Axe.ToolName.Value == 'EndTimesAxe' then
 
@@ -1627,7 +2177,7 @@ function Ancestor:GetHitPoint(Axe)
 
 end
 
-function Ancestor:AttemptChop(Tree, Dismember)
+function Ancestor:AttemptChop(Tree)
 
     local Axe = self:GetBestAxe()
 
@@ -1645,35 +2195,27 @@ function Ancestor:AttemptChop(Tree, Dismember)
 
     local Hitpoint, CutEvent = self:GetHitPoint(Axe), Tree.Parent:FindFirstChild('CutEvent') or Tree:FindFirstChild('CutEvent')
 
-    local WoodSections = tostring(Tree):match('WoodSection') and Tree.Parent:GetChildren() or Tree:GetChildren()
+    Maid.Threads:Create(function()
 
-    local LowestIndex = 9e9
+        RemoteProxy:FireServer(CutEvent, {
 
-    for i = 1, #WoodSections do 
+            ['tool'] = Axe,
+            ['faceVector'] = Vector3.new(1, 0, 0),
+            ['height'] = .3,
+            ['sectionId'] = 1,
+            ['hitPoints'] = Hitpoint,
+            ['cooldown'] = Hitpoint,
+            ['cuttingClass'] = 'Axe'
 
-        local WoodSection = WoodSections[i]
+        })
 
-        if tostring(WoodSection):match('WoodSection') and WoodSection.ID.Value < LowestIndex then
+    end)
 
-            LowestIndex = WoodSection.ID.Value
+end
 
-            DismemberHeight = WoodSection.Size.Y
+function Ancestor:DoesClientOwnBlueprint(Blueprint)
 
-        end
-
-    end
-
-    RemoteProxy:FireServer(CutEvent, {
-
-        ['tool'] = Axe,
-        ['faceVector'] = Vector3.new(1, 0, 0),
-        ['height'] = (Dismember and DismemberHeight) or .3,
-        ['sectionId'] = LowestIndex,
-        ['hitPoints'] = Hitpoint,
-        ['cooldown'] = .1,
-        ['cuttingClass'] = 'Axe'
-
-    })
+    return Player.PlayerBlueprints:FindFirstChild(Blueprint, true)
 
 end
 
@@ -1790,7 +2332,7 @@ end
 function Ancestor:PlayerIsCloseToProperty(Position, RequestedPlayer, PlayerProperty)
 
     RequestedPlayer = RequestedPlayer or Player
-    PlayerProperty = PlayerProperty or self:GetPlayersBase(RequestedPlayer)
+    PlayerProperty = PlayerProperty or self:GetPlayersProperty(RequestedPlayer)
 
     if not PlayerProperty then 
 
@@ -1800,7 +2342,7 @@ function Ancestor:PlayerIsCloseToProperty(Position, RequestedPlayer, PlayerPrope
     
     for _, Property in pairs(PlayerProperty:GetChildren()) do
 
-        if Property:IsA("BasePart") and math.abs(Position.p.X - Property.Position.X) <= 25 and math.abs(Position.p.Z - Property.Position.Z) <= 25 and Position.p.Y > Property.Position.Y - 2 then
+        if Property:IsA("BasePart") and math.abs(Position.p.X - Property.Position.X) <= 20 and math.abs(Position.p.Z - Property.Position.Z) <= 20 and Position.p.Y > Property.Position.Y - 2 then
 
             return true
 
@@ -1809,6 +2351,58 @@ function Ancestor:PlayerIsCloseToProperty(Position, RequestedPlayer, PlayerPrope
     end
     
     return false
+
+end
+
+function Ancestor:DuplicatePropertyV2()
+
+    if not self:GetOrphanedHillProperty() then
+
+        return SendUserNotice:Fire('Please Make Sure At Least One Property On The Hill Is Free.')
+
+    end
+
+    self:UpdatePrivilege(self.PlayerToDuplicatePropertyTo, 'Save', true)
+
+    Maid.Threads:Create(function()
+
+        RequestLoad:InvokeServer(self.PropertyToDuplicate, {
+
+            userId = Player.UserId,
+            Name   = tostring(Player),
+            Parent = workspace
+    
+        })
+
+    end)
+
+    SendUserNotice:Fire('Loading Property, Please Wait...')
+
+    repeat Maid.Timer:Wait() until Player.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+    local OrphanedProperty = self:GetOrphanedHillProperty()
+
+    Maid.Threads:Create(function()
+
+        self:FreeLand(true, true)
+
+    end)
+
+    repeat Maid.Timer:Wait() until Player.CurrentlySavingOrLoading.Value
+    repeat Maid.Timer:Wait() until not Player.CurrentlySavingOrLoading.Value
+
+    SendUserNotice:Fire('Duplicated Property: MAKE SURE TO WAIT 20 SECONDS.')
+
+    RequestLoad:InvokeServer(math.huge, {
+
+        userId = Player.UserId,
+        Name   = tostring(Player),
+        Parent = workspace
+
+    })
+
+    repeat Maid.Timer:Wait() until not self:GetPlayersProperty()
+
+    SendUserNotice:Fire('Duplicated Property: Success, Player Can Now Purchase')
 
 end
 
@@ -2023,19 +2617,6 @@ function Ancestor:SelectTree(Type)
 
 end
 
-function Ancestor:HighlightObject(Object, Colour)
-
-    local BoxHandleAdornment = Instance.new('BoxHandleAdornment', Object)
-    BoxHandleAdornment.Name = 'AncestorSelectedObject'
-    BoxHandleAdornment.Adornee = Object
-    BoxHandleAdornment.AlwaysOnTop = true
-    BoxHandleAdornment.ZIndex = 0;
-    BoxHandleAdornment.Size = Object.Size
-    BoxHandleAdornment.Transparency = 0;
-    BoxHandleAdornment.Color = BrickColor.new(Colour)
-
-end
-
 function Ancestor:ModWood(BruteForce)
 
     if self.ModdingWood then 
@@ -2056,7 +2637,7 @@ function Ancestor:ModWood(BruteForce)
         
         self:SelectSawmill('Mod Wood')
 
-        repeat Maid.Timer:Wait() until self.ModWoodSawmill and not PlayerGui.NoticeGUI.Notice.Visible
+        repeat Maid.Timer:Wait() until Ancestor.ModWoodSawmill and not PlayerGui.NoticeGUI.Notice.Visible
 
         self:SelectTree()
 
@@ -2094,7 +2675,7 @@ function Ancestor:ModWood(BruteForce)
 
     if not SmallestWoodSection then 
 
-        self.ModWoodSawmill, self.ModWoodTree = (Ancestor.AutofarmTrees and self.ModWoodSawmill) or nil, nil
+        Ancestor.ModWoodSawmill, self.ModWoodTree = (Ancestor.AutofarmTrees and Ancestor.ModWoodSawmill) or nil, nil
         return SendUserNotice:Fire('This Tree Is Not Moddable.')
 
     end
@@ -2123,73 +2704,44 @@ function Ancestor:ModWood(BruteForce)
 
     end
 
-    -- self:HighlightObject(SmallestWoodSection, 'Really red')
-    -- self:HighlightObject(SellPointPiece, 'Lime green')
-
-    local OldFly = Ancestor.IsClientFlying
-
-    if not OldFly then
-
-        Ancestor.IsClientFlying = true
-
-        Maid.Threads:Create(function()
-
-            self:Fly()
-        
-        end)
-
-    end
-
     Object.PrimaryPart = SellPointPiece
 
-    if (Player.Character.Head.CFrame.p - MainSection.CFrame.p).Magnitude >= 5 then 
-
-        repeat Maid.Timer:Wait()
-
-            self:Teleport(CFrame.new(MainSection.CFrame.p + Vector3.new(0, 5, 0)))
-
-        until (Player.Character.Head.CFrame.p - MainSection.CFrame.p).Magnitude <= 10
-
-    end
+    self:Teleport(MainSection.CFrame + Vector3.new(0, 5, 7))
 
     repeat Maid.Timer:Wait()
 
-        ClientIsDragging:FireServer(Object)
+        if not Ancestor.Unsecure then
 
-    until self:IsNetworkOwnerOfModel(Object)
+            self:TeleportIndividualObject(1, Object, CFrame.new(-1425, 489, 1244))
 
-    self.IsClientFlying = true
+        else   
 
-    self:Teleport(MainSection.CFrame)
+            for i = 1, 5 do 
 
-    repeat Maid.Timer:Wait()
+                ClientIsDragging:FireServer(Object)
 
-        for i = 1, 25 do 
+            end
 
-            ClientIsDragging:FireServer(Object)
-            Object:PivotTo(CFrame.new(-1425, 489, 1244))
-            Object.PrimaryPart.Velocity = Vector3.new()
-            Object.PrimaryPart.RotVelocity = Vector3.new()
-            Maid.Timer:Wait()
-    
         end
 
-        firetouchinterest(Object.PrimaryPart, LavaPart.Lava, 0)
-        firetouchinterest(Object.PrimaryPart, LavaPart.Lava, 1)
+        firetouchinterest(LavaPart.Lava, Object.PrimaryPart, 0)
+        firetouchinterest(LavaPart.Lava, Object.PrimaryPart, 1)
     
     until Object.PrimaryPart:FindFirstChild('LavaFire')
 
     Object.PrimaryPart:FindFirstChild('LavaFire'):Destroy()
 
-    for i = 1, 25 do 
+    if not Ancestor.Unsecure then
 
-        ClientIsDragging:FireServer(Object)
-        Object:PivotTo(CFrame.new(-1055, 291, -458))
-        Maid.Timer:Wait()
+        self:TeleportIndividualObject(45, Object, CFrame.new(-1055, 291, -458))
+
+        self:Teleport(CFrame.new(-1055, 291, -458))
+
+    else
+
+        self:Teleport(MainSection.CFrame)
 
     end
-
-    self:Teleport(CFrame.new(-1055, 291, -458))
 
     local SellPieceSold
 
@@ -2203,19 +2755,25 @@ function Ancestor:ModWood(BruteForce)
 
         repeat Maid.Timer:Wait()
 
-            for i = 1, 25 do
+            for i = 1, 45 do
                 
+                if not SellPointPiece or (SellPointPiece.CFrame.p - CFrame.new(315, 0, 85).p).Magnitude < 10 then 
+
+                    break 
+
+                end
+
                 Maid.Timer:Wait()
                 SellPointPiece.CFrame = CFrame.new(315, 0, 85)
                 ClientIsDragging:FireServer(Object)
 
             end
 
-        until SellPieceSold
+        until not SellPointPiece or SellPieceSold
 
     end)
 
-    repeat Maid.Timer:Wait() until SellPieceSold
+    repeat Maid.Timer:Wait() until not SellPointPiece or SellPieceSold
 
     self:Teleport(SmallestWoodSection.CFrame)
 
@@ -2233,34 +2791,29 @@ function Ancestor:ModWood(BruteForce)
 
     Maid.Threads:Create(function()
 
-        repeat Maid.Timer:Wait()
-
-            ClientIsDragging:FireServer(Object)
-
-        until self:IsNetworkOwnerOfModel(Object)
-
         for i = 1, 25 do
 
-            if not self.ModWoodSawmill:IsDescendantOf(PlayerModels) then
+            if not Ancestor.ModWoodSawmill:IsDescendantOf(PlayerModels) then
 
                 break
 
             end
                 
             Maid.Timer:Wait()
-            -- self:Teleport(SmallestWoodSection.CFrame)
-            SmallestWoodSection.CFrame = self.ModWoodSawmill.Particles.CFrame + Vector3.new(0, .5, 0)
             ClientIsDragging:FireServer(Object)
+            SmallestWoodSection.CFrame = Ancestor.ModWoodSawmill.Particles.CFrame + Vector3.new(0, .5, 0)
 
         end
 
     end)
 
-    if not self.ModWoodSawmill:IsDescendantOf(PlayerModels) then
+    if not Ancestor.ModWoodSawmill:IsDescendantOf(PlayerModels) then
 
         return SendUserNotice:Fire('Mod Wood Failed \n\n Did You Reload?')
 
     end
+
+    Object.PrimaryPart = MainSection
 
     self:Teleport(CFrame.new(Object.PrimaryPart.CFrame.p + Vector3.new(0, 5, 4)))
 
@@ -2298,42 +2851,61 @@ function Ancestor:ModWood(BruteForce)
     end
 
     local Threshold = 0 
-    
+
     repeat Maid.Timer:Wait()
         
-        self:Teleport(CFrame.new(Object.WoodSection.CFrame.p + Vector3.new(0, 0, 5)))
+        Player.Character.Head.Anchored = true
+
         self:AttemptChop(Object)
 
-        for i = 1, 40 do
-            
-            Maid.Timer:Wait()
+        Maid.Threads:Create(function()
 
-            SmallestWoodSection.CFrame = self.ModWoodSawmill.Particles.CFrame
-            ClientIsDragging:FireServer(Object)
+            for i = 1, 40 do
+                
+                Maid.Timer:Wait()
 
-            if (SmallestWoodSection.CFrame.p - self.ModWoodSawmill.Particles.CFrame.p).Magnitude <= 10 then
+                ClientIsDragging:FireServer(Object)
 
-                Threshold += 1
+                SmallestWoodSection.CFrame = Ancestor.ModWoodSawmill.Particles.CFrame
 
-                if Threshold >= 45 then
+                if (SmallestWoodSection.CFrame.p - Ancestor.ModWoodSawmill.Particles.CFrame.p).Magnitude <= 10 then
 
-                    break
+                    Threshold += 1
+
+                    if Threshold >= 45 then
+
+                        break
+
+                    end
 
                 end
-
+        
             end
-    
-        end
+
+        end)
 
     until typeof(self:GetConnection('WoodModded')) ~= 'RBXScriptConnection'
 
-    self.ModWoodSawmill, self.ModWoodTree = (Ancestor.AutofarmTrees and self.ModWoodSawmill) or nil, nil
+    Player.Character.Head.Anchored = false
+    Ancestor.ModWoodSawmill, self.ModWoodTree = nil, nil
 
-    Ancestor.IsClientFlying = OldFly
+    GUISettings.Noclip = false
+    self.IsClientFlying = false 
 
-    self:Teleport(OldPosition)
+    Player.Character.HumanoidRootPart.Velocity = Vector3.new()
+    Player.Character.HumanoidRootPart.RotVelocity = Vector3.new()
+    
+    self:Teleport(OldPosition + Vector3.new(0, 4, 0))
+
+    for i = 1, 45 do 
+
+        GUISettings.Noclip = false
+        self.IsClientFlying = false
+        Maid.Timer:Wait()
+
+    end
+    
     self.ModdingWood = false
-    Maid.Timer:Wait(.5)
 
 end
 
@@ -2381,31 +2953,44 @@ end
 
 function Ancestor:SitInAnyVehicle()
 
+    if self.Unsecure then
+
+        PlayerGui.Scripts.SitPermissions.Disabled = GUISettings.SitInAnyVehicle
+        return
+
+    end
+
     Player.PlayerScripts.SitPermissions.Disabled = GUISettings.SitInAnyVehicle
 
 end
 
 function Ancestor:SetSawmillSize(Type)
 
+    if not self:GetModelByName('sawmill') then
+
+        return SendUserNotice:Fire('This Feature Requires A Sawmill.')
+
+    end
+
     self:SelectSawmill('Mod Wood')
 
-    repeat Maid.Timer:Wait() until self.ModWoodSawmill and not PlayerGui.NoticeGUI.Notice.Visible
+    repeat Maid.Timer:Wait() until Ancestor.ModWoodSawmill and not PlayerGui.NoticeGUI.Notice.Visible
 
-    local Original = ClientItemInfo:FindFirstChild(self.ModWoodSawmill.ItemName.Value).OtherInfo.MaxOutputSize.Value
+    local Original = ClientItemInfo:FindFirstChild(Ancestor.ModWoodSawmill.ItemName.Value).OtherInfo.MaxOutputSize.Value
 
-    local MaxXSize = tonumber(string.format('%.1f', Original.X))
-    local MaxZSize = tonumber(string.format('%.1f', Original.Z))
+    local MaxXSize = tonumber(string.format('%.3f', Original.X))
+    local MaxZSize = tonumber(string.format('%.3f', Original.Z))
 
-    local XSize = (Type == 'Maximum' and MaxXSize) or tonumber(string.format('%.1f', .6))
-    local ZSize = (Type == 'Maximum' and MaxZSize) or tonumber(string.format('%.1f', .4))
+    local XSize = (Type == 'Maximum' and MaxXSize) or tonumber(string.format('%.3f', .6))
+    local ZSize = (Type == 'Maximum' and MaxZSize) or tonumber(string.format('%.3f', .4))
 
     Maid.Threads:Create(function()
 
         repeat Maid.Timer:Wait()
 
-            RemoteProxy:FireServer(self.ModWoodSawmill:FindFirstChild((Type == 'Maximum' and 'ButtonRemote_XUp') or 'ButtonRemote_XDown'))
+            RemoteProxy:FireServer(Ancestor.ModWoodSawmill:FindFirstChild((Type == 'Maximum' and 'ButtonRemote_XUp') or 'ButtonRemote_XDown'))
 
-        until tonumber(string.format('%.1f', self.ModWoodSawmill.Settings.DimX.Value)) == XSize
+        until tonumber(string.format('%.3f', Ancestor.ModWoodSawmill.Settings.DimX.Value)) == XSize
 
     end)
 
@@ -2413,9 +2998,13 @@ function Ancestor:SetSawmillSize(Type)
 
         repeat Maid.Timer:Wait()
 
-            RemoteProxy:FireServer(self.ModWoodSawmill:FindFirstChild((Type == 'Maximum' and 'ButtonRemote_YUp') or 'ButtonRemote_YDown'))
+            Maid.Threads:Create(function()
 
-        until tonumber(string.format('%.1f', self.ModWoodSawmill.Settings.DimZ.Value)) == ZSize
+                RemoteProxy:FireServer(Ancestor.ModWoodSawmill:FindFirstChild((Type == 'Maximum' and 'ButtonRemote_YUp') or 'ButtonRemote_YDown'))
+
+            end)
+
+        until tonumber(string.format('%.3f', Ancestor.ModWoodSawmill.Settings.DimZ.Value)) == ZSize
 
     end)
 
@@ -2453,22 +3042,24 @@ end
 
 function Ancestor:ClickDelete()
 
-    if not GUISettings.ClickDelete then
+    -- if not GUISettings.ClickDelete then
 
-        pcall(function()
+    --     pcall(function()
         
-            Player.Backpack:FindFirstChild('DeleteTool'):Destroy()
+    --         Player.Backpack:FindFirstChild('DeleteTool'):Destroy()
 
-        end)
+    --     end)
 
-        return
+    --     return
 
-    end
+    -- end
 
     local DeleteTool = Instance.new('Tool', Player.Backpack)
 
     DeleteTool.Name = 'DeleteTool'
     DeleteTool.RequiresHandle = false
+
+    Ancestor.DeleteToolInstance = DeleteTool
 
     DeleteTool.Activated:Connect(function()
 
@@ -2486,6 +3077,54 @@ function Ancestor:ClickDelete()
 
             DestroyStructure:FireServer(Target)
 
+        end
+    
+    end)
+
+end
+
+Ancestor:ClickDelete()
+
+function Ancestor:PaintTool()
+
+    if not GUISettings.PaintTool then
+
+        pcall(function()
+        
+            Player.Backpack:FindFirstChild('Paint Tool'):Destroy()
+
+        end)
+
+        return
+
+    end
+
+    local PaintTool = Instance.new('Tool', Player.Backpack)
+
+    PaintTool.Name = 'Paint Tool'
+    PaintTool.RequiresHandle = false
+    PaintTool.CanBeDropped = false
+
+    Ancestor.PaintToolInstance = PaintTool
+
+    PaintTool.Activated:Connect(function()
+
+        local Blueprint = Mouse.Target
+
+        if not Blueprint then 
+
+            return
+
+        end
+
+        Blueprint = Blueprint.Parent
+
+        if Blueprint:FindFirstChild('Owner') and Blueprint:FindFirstChild('Main') and ((Blueprint.Owner.Value == nil or Blueprint.Owner.Value == Player)) then 
+
+            local Main = Blueprint:FindFirstChild('Main')
+
+            ClientPlacedStructure:FireServer(Blueprint.ItemName.Value, Main.CFrame, Player, Ancestor.PaintWoodClass, Blueprint, true)
+        
         end
     
     end)
@@ -2591,16 +3230,18 @@ function Ancestor:BringTree()
 
     end
 
-    if self.BringTreeSelectedPosition == 'To Property' and not self:GetPlayersBase() then 
+    if self.BringTreeSelectedPosition == 'To Property' and not self:GetPlayersProperty() then 
 
         return SendUserNotice:Fire('You Need A Property For This Feature.')
 
     end
 
-    local OldPos = (self.BringTreeSelectedPosition == 'Current Position' and Player.Character.HumanoidRootPart.CFrame) or (self.BringTreeSelectedPosition == 'Sell Point' and CFrame.new(315, 3, 85)) or (self.BringTreeSelectedPosition == 'Spawn' and CFrame.new(174, 15, 66)) or (self.BringTreeSelectedPosition == 'To Property' and self:GetPlayersBase().OriginSquare.CFrame + Vector3.new(0, 5, 0))
+    local OldPos = (self.BringTreeSelectedPosition == 'Current Position' and Player.Character.HumanoidRootPart.CFrame) or (self.BringTreeSelectedPosition == 'Sell Point' and CFrame.new(315, 3, 85)) or (self.BringTreeSelectedPosition == 'Spawn' and CFrame.new(174, 15, 66)) or (self.BringTreeSelectedPosition == 'To Property' and self:GetPlayersProperty().OriginSquare.CFrame + Vector3.new(0, 5, 0))
+    local CanContinue = false
 
     for i = 1, self.BringTreeAmount do
 
+        CanContinue = false
         if self.CurrentlySavingOrLoading then
 
             break
@@ -2624,7 +3265,7 @@ function Ancestor:BringTree()
 
         end
 
-        Player.Character:SetPrimaryPartCFrame(CFrame.new(Tree.CFrame.p))
+        Player.Character:PivotTo(Tree.CFrame)
         
         Connections.BringTree = {Function = LogModels.ChildAdded:Connect(function(Tree)
 
@@ -2632,6 +3273,7 @@ function Ancestor:BringTree()
 
             if Owner.Value == Player then
 
+                Player.Character.PrimaryPart.Anchored = false
                 Ancestor:GetConnection('BringTree', true)
 
                 if Ancestor.AutofarmTrees then
@@ -2645,24 +3287,28 @@ function Ancestor:BringTree()
 
                 Tree.PrimaryPart = Tree:WaitForChild('WoodSection', 10)
 
-                for i = 1, (self.SelectedTreeType == 'LoneCave' and 140) or 25 do
+                -- repeat Maid.Timer:Wait() until self:IsNetworkOwnerOfModel(Tree)
+
+                for y = 1, (self.SelectedTreeType == 'LoneCave' and 140) or 15 do
 
                     ClientIsDragging:FireServer(Tree)
                     Tree:SetPrimaryPartCFrame(OldPos)
-                    Maid.Timer:Wait()
+                    -- Maid.Timer:Wait()
+                    TestPing:InvokeServer()
+                    CanContinue = true
+
+                    if i == self.BringTreeAmount then 
+
+                        break 
+
+                    end
 
                 end
 
-                repeat Maid.Timer:Wait()
+                if GUISettings.TeleportBackAfterBringTree and i == self.BringTreeAmount then 
 
-                until self:IsNetworkOwnerOfModel(Tree)
-
-                for i = 1, (self.SelectedTreeType == 'LoneCave' and 140) or 25 do
-
-                    ClientIsDragging:FireServer(Tree)
-                    Tree:SetPrimaryPartCFrame(OldPos)
-                    Maid.Timer:Wait()
-
+                    Player.Character:PivotTo(OldPos)
+            
                 end
 
                 SelectedTree = nil
@@ -2671,39 +3317,39 @@ function Ancestor:BringTree()
 
         end)}
 
-        for i = 1, 8 do
+        Maid.Threads:Create(function()
 
-            TestPing:InvokeServer()
+            GUISettings.Noclip = true
 
-        end
+            repeat Maid.Timer:Wait() 
+            
+                Maid.Threads:Create(function()
+
+                    ClientIsDragging:FireServer(Tree.Parent)
+                
+                end)
+            
+            until Tree.Parent.Owner.Value == Player
+
+            Player.Character:PivotTo(Tree.CFrame)
+            Player.Character.PrimaryPart.Anchored = true
+
+        end)
 
         repeat Maid.Timer:Wait()
             
             self:AttemptChop(Tree)
-            Player.Character.PrimaryPart.Anchored = not Player.Character.PrimaryPart.Anchored
-            GUISettings.Noclip = true
-
-            if self.SelectedTreeType == 'LoneCave' or self.AutofarmTrees then 
-                
-                Player.Character:SetPrimaryPartCFrame(CFrame.new(Tree.CFrame.p + Vector3.new(4, 4, 4)))
-
-            end
 
         until not self:GetBestAxe() or self.CurrentlySavingOrLoading or self.DonatingProperty or typeof(self:GetConnection('BringTree')) ~= 'RBXScriptConnection'
 
         self.BringingTree = false
-        Player.Character.PrimaryPart.Anchored = false
-        GUISettings.Noclip = false
 
-    end
-
-    if GUISettings.TeleportBackAfterBringTree then 
-
-        Player.Character:PivotTo(OldPos)
+        repeat Maid.Timer:Wait() until CanContinue
 
     end
 
     self.IsClientFlying = OldFly
+    GUISettings.Noclip = true
 
     if self.AutofarmTrees then
 
@@ -2939,7 +3585,7 @@ function Ancestor:FixCashierRange(State)
 end
 
 
-function Ancestor:GetPlayersBase(Target)
+function Ancestor:GetPlayersProperty(Target)
 
     Target = Target or Player
     
@@ -3055,7 +3701,7 @@ function Ancestor:Fly()
         end
 
         GUISettings.Noclip = false
-    Player.Character.Humanoid.PlatformStand = false
+        Player.Character.Humanoid.PlatformStand = false
 
     end
 
@@ -3140,7 +3786,7 @@ function Ancestor:Set(SlotNumber)
 
 end
 
-function Ancestor:LoadSlot(Slot)
+function Ancestor:LoadSlot(Slot, Notice)
 
     if self.CurrentlySavingOrLoading or self.DonatingProperty then 
 
@@ -3148,7 +3794,7 @@ function Ancestor:LoadSlot(Slot)
 
     end
 
-    if not Ancestor:DoesSaveExist(Slot)then
+    if not Ancestor:DoesSaveExist(Slot) then
 
         return
 
@@ -3157,15 +3803,29 @@ function Ancestor:LoadSlot(Slot)
     self.CurrentlySavingOrLoading = true
     Ancestor:CanClientLoad()
 
-    if Ancestor:GetLoadedSlot() ~= -1 then
+    if Ancestor:GetLoadedSlot() ~= -1 and not GUISettings.BypassLoadTimer then
 
         Ancestor:SaveSlot()
 
     end
 
+    local PlayerBackup = (GUISettings.BypassLoadTimer and {
+
+        userId = Player.UserId,
+        Name   = tostring(Player),
+        Parent = workspace
+
+    } or Player)
+
+    if GUISettings.BypassLoadTimer then
+        
+        warn('[Ancestor loaded into no save state]')
+        
+    end
+
     Maid.Threads:Create(function()
         
-        Is_Client_Loaded = RequestLoad:InvokeServer(Slot, Player)
+        Is_Client_Loaded = RequestLoad:InvokeServer(Slot, PlayerBackup)
 
     end)
 
@@ -3186,7 +3846,13 @@ function Ancestor:LoadSlot(Slot)
     until typeof(Ancestor:GetConnection('ClientLoaded')) ~= 'RBXScriptConnection'
 
     Ancestor:Set(Slot)
-    SendUserNotice:Fire(string.format('Loaded Slot %s', tostring(Ancestor:GetLoadedSlot())))
+
+    if not Notice then 
+        
+        SendUserNotice:Fire(string.format('Loaded Slot %s', tostring(Ancestor:GetLoadedSlot())))
+
+    end
+
     self.CurrentlySavingOrLoading = false
 
 end
@@ -3199,8 +3865,17 @@ function Ancestor:UnloadSlot()
 
     end
 
+    local PlayerBackup = (GUISettings.BypassLoadTimer and {
+
+        userId = Player.UserId,
+        Name   = tostring(Player),
+        Parent = workspace
+
+    } or Player)
+
+
     self.CurrentlySavingOrLoading = true
-    RequestLoad:InvokeServer(math.huge, Player)
+    RequestLoad:InvokeServer(math.huge, PlayerBackup)
     Ancestor:Set(-1)
     self.CurrentlySavingOrLoading = false
 
@@ -3210,7 +3885,10 @@ end
 function Ancestor:SafeSuicide()
 
     xpcall(function()
-            
+        
+        self:Teleport(CFrame.new(0, -150, 0))
+
+        task.wait(1)
         Player.Character.Head:Destroy()
 
     end,
@@ -3223,6 +3901,234 @@ function Ancestor:SafeSuicide()
 
 end
 
+function Ancestor:OrganiseSlotTable(Table)
+    
+    local NewTable = {}
+
+    NewTable[1] = Table[1]
+    NewTable[2] = Table[2]
+    NewTable[3] = Table[3]
+    NewTable[4] = Table[4]
+    NewTable[5] = Table[5]
+    NewTable[6] = Table[6]
+
+    return NewTable
+
+end
+
+function Ancestor:OrganiseSlotTableSearch(Table)
+    
+    local NewTable = {}
+
+    NewTable[1] = Table.Slot1
+    NewTable[2] = Table.Slot2
+    NewTable[3] = Table.Slot3
+    NewTable[4] = Table.Slot4
+    NewTable[5] = Table.Slot5
+    NewTable[6] = Table.Slot6
+
+    return NewTable
+
+end
+
+function Ancestor:IndexSlotTable()
+
+    local SlotNames = HttpService:JSONDecode(readfile('AncestorSlotNames.cfg'))
+
+    for Player, SlotTable in next, SlotNames do
+    
+        if SlotTable.Slot1 ~= 'Slot 1' then --> Auth check for actual shop accounts
+
+            local SlotData = self:OrganiseSlotTableSearch(SlotTable)
+            
+            for SlotId = 1, #SlotData do
+
+                local SlotName = SlotData[SlotId]
+
+                if SlotName:lower() == self.SearchSlotTableString:lower() then
+
+                    return SendUserNotice:Fire(string.format('SlotName: %s\n\nAccount: %s\n\nSlot: %s', SlotName, Player, tostring(SlotId)))
+
+                end
+
+            end
+
+        end
+
+    end
+
+    return SendUserNotice:Fire(string.format('%s Was Not Found In The Database', self.SearchSlotTableString))
+
+end
+
+function Ancestor:ExportSlotNames(Discord)
+
+    local Types, Accounts, Properties = {['Structure'] = 0, ['Present'] = 0, ['Wood'] = 0}, 0, 0
+
+    local SlotNames = HttpService:JSONDecode(readfile('AncestorSlotNames.cfg'))
+    local Exported = {}
+    
+    for Player, SlotTable in next, SlotNames do
+
+        if SlotTable.Slot1 == 'Slot 1' then --> Auth check for actual shop accounts
+
+            continue 
+
+        end
+    
+        local SlotName = AncestorSlotNames[tostring(Player)]
+        local SlotInformation = HttpService:JSONDecode(readfile('AncestorStoreDB.cfg'))[tostring(Player)]
+
+        if not SlotInformation then 
+
+            continue 
+
+        end
+
+        Accounts += 1
+
+        if SlotInformation then
+
+            Exported[tostring(Player)] = {}
+
+            for i = 1, 6 do
+
+                local Slot_Name = SlotName['Slot'..tostring(i)]
+
+                Exported[tostring(Player)][i] = {
+
+                    Data = string.format('ID: %s\nDatasize: %s\nLast Loaded: %s', tostring(SlotName['Slot'..tostring(i)]), tostring(SlotInformation['Slot'..tostring(i)].Datasize), tostring(SlotInformation['Slot'..tostring(i)].Timestamp))
+
+                }
+
+                if not (Slot_Name == 'Empty' or Slot_Name == 'Not for sale' or Slot_Name == 'RENAME' or Slot_Name:split(' ')[1] == 'Slot') then
+
+                    local PropertyType = Slot_Name:split(' ')[1]
+                    Types[PropertyType] += 1
+                    Properties += 1
+
+                end
+
+            end
+
+        end
+
+        local SlotData = {}
+
+        for i = 1, 6 do 
+
+            SlotData[i] = {
+                
+                ['name']   = 'Slot '..':'..Conversion[i]..':',
+                ['value']  = '```yaml\n'..Exported[tostring(Player)][i].Data..'\n```',
+                ['inline'] = true
+            }
+
+        end
+
+        local Data = {
+
+            ['content'] = '',
+            ['embeds'] = {{
+
+                ['title'] = string.format(':video_game: %s', tostring(Player)),
+                ["color"] = tonumber(0x7269da),
+                ['type']  = 'rich',
+                ['fields'] = {unpack(SlotData)},
+                ['footer'] = {
+
+                    ["text"] = "Shop: Exported at "..tostring(os.date('%c')),
+                    [ "icon_url"] = "https://cdn.discordapp.com/attachments/1109104540067827714/1121283987613167706/b5bc809aaca8c30dafa4ceaaacf25186.png"
+
+                }
+
+            }}
+
+        }
+
+        local Post = request({
+
+            Url = self.DiscordWebhook,
+            Method = 'POST',
+            Body = HttpService:JSONEncode(Data),
+            Headers = {["content-type"] = "application/json"}
+
+        })
+
+       task.wait(.5)
+
+    end
+
+    local Review = {}
+
+    local EmojiConversion = {
+
+        ['Structure'] = ':house:',
+        ['Present']   = ':gift:',
+        ['Wood']      = ':wood:'
+
+    }
+
+    for Type, Value in next, Types do
+
+        Review[#Review + 1] = {
+                
+            ['name']   = EmojiConversion[Type],
+            ['value']  = string.format('```%s```', tostring(Value)),
+            ['inline'] = true
+            
+        }
+
+    end
+
+    Review[#Review + 1] = {
+
+        ['name']   = ':video_game:',
+        ['value']  = string.format('```%s```', tostring(Accounts)),
+        ['inline'] = true
+
+    }
+
+    Review[#Review + 1] = {
+
+        ['name']   = ':homes:',
+        ['value']  = string.format('```%s```', tostring(Properties)),
+        ['inline'] = true
+
+    }
+
+
+    local Data = {
+
+        ['content'] = '',
+        ['embeds'] = {{
+
+            ['title'] = 'Upload Review',
+            ["color"] = tonumber(0x7269da),
+            ['type']  = 'rich',
+            ['fields'] = {unpack(Review)},
+
+            ['footer'] = {
+
+                ["text"] = "Shop: Exported at "..tostring(os.date('%c')),
+                [ "icon_url"] = "https://cdn.discordapp.com/attachments/1109104540067827714/1121283987613167706/b5bc809aaca8c30dafa4ceaaacf25186.png"
+
+            }
+
+        }}
+
+    }
+
+    local Post = request({
+
+        Url = self.DiscordWebhook,
+        Method = 'POST',
+        Body = HttpService:JSONEncode(Data),
+        Headers = {["content-type"] = "application/json"}
+
+    })    
+
+end
 
 function Ancestor:ApplyLight()
 
@@ -3272,6 +4178,9 @@ function Ancestor:Teleport(CF)
         Player.Character:PivotTo(CF)
         
     end)
+    
+    Player.Character.HumanoidRootPart.Velocity = Vector3.new()
+    Player.Character.HumanoidRootPart.RotVelocity = Vector3.new()
 
 end
 
@@ -3314,7 +4223,7 @@ function Ancestor:Autofarm()
 
         self:SelectSawmill('Mod Wood')
 
-        repeat Maid.Timer:Wait() until self.ModWoodSawmill and not PlayerGui.NoticeGUI.Notice.Visible
+        repeat Maid.Timer:Wait() until Ancestor.ModWoodSawmill and not PlayerGui.NoticeGUI.Notice.Visible
 
         Maid.Threads:Create(function()
 
@@ -3728,6 +4637,12 @@ end
 
 function Ancestor:FixSettings()
 
+    if self.Unsecure then
+
+        return
+
+    end
+
     local Settings = PlayerGui.SettingsGUI
 
     local OldSettingsOpenWindow, OldSettingsPopulateSettings, OldSettingsExitAll = SettingsClient.openWindow, SettingsClient.populateSettings, SettingsClient.exitAll
@@ -4054,37 +4969,41 @@ function Ancestor:DarkMode(Mode)
 
     --Settings
 
-    local Settings = PlayerGui.SettingsGUI
+    if not self.Unsecure then 
+            
+        local Settings = PlayerGui.SettingsGUI
 
-    local OldSettingsOpenWindow, OldSettingsPopulateSettings, OldSettingsExitAll = SettingsClient.openWindow, SettingsClient.populateSettings, SettingsClient.exitAll
-
-    self:FixSettings()
-
-    SettingsClient.openWindow = function()
-
-        Maid.Threads:Create(function()
-
-            OldSettingsOpenWindow()
-        
-        end)
-
-        repeat Maid.Timer:Wait()
-
-        until Settings.Settings.Visible
+        local OldSettingsOpenWindow, OldSettingsPopulateSettings, OldSettingsExitAll = SettingsClient.openWindow, SettingsClient.populateSettings, SettingsClient.exitAll
 
         self:FixSettings()
 
-    end
+        SettingsClient.openWindow = function()
 
-    SettingsClient.populateSettings = function()
+            Maid.Threads:Create(function()
 
-        OldSettingsPopulateSettings()
-        
-        repeat Maid.Timer:Wait()
+                OldSettingsOpenWindow()
+            
+            end)
 
-        until #Settings.Settings.Main.SettingsList.List:GetChildren() >= 7
+            repeat Maid.Timer:Wait()
 
-        self:FixSettings()
+            until Settings.Settings.Visible
+
+            self:FixSettings()
+
+        end
+
+        SettingsClient.populateSettings = function()
+
+            OldSettingsPopulateSettings()
+            
+            repeat Maid.Timer:Wait()
+
+            until #Settings.Settings.Main.SettingsList.List:GetChildren() >= 7
+
+            self:FixSettings()
+
+        end
 
     end
 
@@ -4469,68 +5388,6 @@ function Ancestor:GetCurrentDataSize(Slot)
 
 end
 
-function Ancestor:DuplicateProperty()
-
-    if Ancestor.PlayerToDuplicatePropertyTo == Player then 
-
-        -- return SendUserNotice:Fire('You Cannot Duplicate Your Property To Yourself.')
-
-    end
-
-    if self.CurrentlySavingOrLoading then
-
-        return SendUserNotice:Fire('You Cannot Use This Feature Whilst Saving/Loading.')
-
-    end
-
-    if math.floor(PerformanceStats.Ping:GetValue()) >= 500 then 
-
-        return SendUserNotice:Fire('Server Ping Is Too High To Duplicate Reliably.')
-
-    end
-
-    if not self:CheckClientPrivilege(Ancestor.PlayerToDuplicatePropertyTo.UserId, 'Save') then
-
-        return SendUserNotice:Fire('Please Ensure The Other Player Has Whitelisted You.')
-
-    end
-
-    if not self:GetOrphanedHillProperty() then
-
-        return SendUserNotice:Fire('Please Make Sure At Least One Property On The Hill Is Free.')
-
-    end
-
-    self.DonatingProperty = true
-
-    self:UpdatePrivilege(self.PlayerToDuplicatePropertyTo, 'All', true)
-
-    getgenv().Start = DateTime.now().UnixTimestamp
-
-    Maid.Threads:Create(function()
-
-        RequestLoad:InvokeServer(self.PropertyToDuplicate, Player)
-
-    end)
-
-    local OrphanedProperty = self:GetOrphanedHillProperty()
-
-    Maid.Threads:Create(function()
-
-        self:FreeLand(true, true)
-
-    end)
-
-    repeat Maid.Timer:Wait() until Player.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
-
-    getgenv().End = DateTime.now().UnixTimestamp - Start
-
-    workspace.Effects:WaitForChild('StructureModel', 10)
-    OrphanedProperty.OriginSquare.Color = Color3.fromRGB(225, 0, 0)
-    SendUserNotice:Fire('Do NOT Load On Property With The Red Square.')
-
-end
-
 function Ancestor:DupeInventory()
 
     local Amount = 0
@@ -4584,15 +5441,13 @@ function Ancestor:DupeInventory()
 
         Maid.Threads:Create(function()
         
-            Player.Character.Head:Destroy()
+            self:Teleport(CFrame.new(0, -200, 0))
 
         end)
 
-        repeat Maid.Timer:Wait() until not Player.Character:FindFirstChild('Head')
-
         Maid.Timer:Wait(3.2)
 
-        self:LoadSlot(Slot)
+        RequestLoad:InvokeServer(Slot, Player)
 
         self.DupingInventory = false
         Amount += 1
@@ -4658,6 +5513,7 @@ Antikick = hookmetamethod(game, '__namecall', function(...)
 
         end
 
+
         if Method:lower():match('httpget') then
         
             if rawget(NewArgs, 2) and rawget(NewArgs, 2):lower():match('butterisgood') then
@@ -4671,6 +5527,12 @@ Antikick = hookmetamethod(game, '__namecall', function(...)
         if Method == 'FireServer' and tostring(...) == 'DamageHumanoid' and GUISettings.WaterGodMode then 
 
             return
+
+        end
+
+        if Method == 'InvokeServer' and tostring(...) == 'RequestSave' and not GUISettings.SlotSaving and Ancestor.Unsecure then 
+
+            return {false}
 
         end
 
@@ -4690,7 +5552,7 @@ Antikick = hookmetamethod(game, '__namecall', function(...)
 
             task.spawn(function()
 
-                repeat task.Wait()
+                repeat task.wait()
 
                 until #game.Players.LocalPlayer.PlayerGui.SettingsGUI.Settings.Main.SettingsList.List:GetChildren() >= 7
 
@@ -4710,54 +5572,60 @@ end)
 
 ]])(GUISettings, Ancestor)
 
-local Settings = PlayerGui.SettingsGUI.Settings.Main.GlobalSettings:GetChildren()
 
-for i = 1, #Settings do 
+if not Ancestor.Unsecure then 
 
-    local Setting = Settings[i]
+    local Settings = PlayerGui.SettingsGUI.Settings.Main.GlobalSettings:GetChildren()
 
-    if tostring(Setting):match('SettingItem') then 
+    for i = 1, #Settings do 
 
-        Connections['GlobalSettings'..tostring(i)] = {Function = Setting.Button.Tick:GetPropertyChangedSignal('Text'):Connect(function()
+        local Setting = Settings[i]
 
-            Ancestor:FixSettings()
-        
-        end)}
+        if tostring(Setting):match('SettingItem') then 
+
+            Connections['GlobalSettings'..tostring(i)] = {Function = Setting.Button.Tick:GetPropertyChangedSignal('Text'):Connect(function()
+
+                Ancestor:FixSettings()
+            
+            end)}
+
+        end
 
     end
 
-end
 
-local PlayerList = PlayerGui.SettingsGUI.Settings.Main.PlayerList.List
+    local PlayerList = PlayerGui.SettingsGUI.Settings.Main.PlayerList.List
 
-for _, Button in next, PlayerList:GetChildren() do
+    for _, Button in next, PlayerList:GetChildren() do
 
-    if Button:IsA('TextButton') then 
+        if Button:IsA('TextButton') then 
+
+            Connections['GlobalSettings'..tostring(#PlayerList:GetChildren() - 3)] = {Function = Button.Activated:Connect(function()
+
+                repeat Maid.Timer:Wait()
+
+                until PlayerGui.SettingsGUI.Settings.Settings.Visible
+
+                Ancestor:FixSettings()
+            
+            end)}
+
+        end
+
+    end
+
+    PlayerList.ChildAdded:Connect(function(Button)
 
         Connections['GlobalSettings'..tostring(#PlayerList:GetChildren() - 3)] = {Function = Button.Activated:Connect(function()
-
-            repeat Maid.Timer:Wait()
-
-            until PlayerGui.SettingsGUI.Settings.Settings.Visible
-
+    
+            Maid.Timer:Wait(1)
             Ancestor:FixSettings()
         
         end)}
-
-    end
+    
+    end)
 
 end
-
-PlayerList.ChildAdded:Connect(function(Button)
-
-    Connections['GlobalSettings'..tostring(#PlayerList:GetChildren() - 3)] = {Function = Button.Activated:Connect(function()
-
-        Maid.Timer:Wait(1)
-        Ancestor:FixSettings()
-    
-    end)}
-
-end)
 
 Maid.Threads:Create(function()
 
@@ -4809,17 +5677,17 @@ Connections.HumanoidProperties = {Function = UIS.InputBegan:Connect(function(Key
 
         end
 
-        elseif not Processed and Key.KeyCode == Enum.KeyCode[GUISettings.NoclipKey] then
+        if not Processed and Key.KeyCode == Enum.KeyCode[GUISettings.NoclipKey] then
 
-            GUISettings.Noclip = not GUISettings.Noclip -- ?????????????????????????????????????????????????????
+            GUISettings.Noclip = not GUISettings.Noclip
 
         end
 
     end
 
-)}
+end)}
 
-local AncestorUI = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/KhayneGleave/Ancestor/main/UI'))():Initiate()
+local AncestorUI = (DEBUG_MODE and loadstring(game:HttpGet('https://raw.githubusercontent.com/KhayneGleave/Ancestor/main/TestingUI'))():Initiate()) or loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/KhayneGleave/Ancestor/main/UI'))():Initiate()
 local LocalPlayerTab = AncestorUI:CreateTab(5181994100, 'Client Options')
 local HumanoidSectionTab = LocalPlayerTab:CreateSection()
 local HumanoidSection = HumanoidSectionTab:CreateSubSection('Humanoid Options')
@@ -4856,7 +5724,6 @@ end, 50, 800, GUISettings.FlySpeed, true, 'Changes Your Player.Character\'s Fly 
 
 HumanoidSection:CreateKeybind('Fly', function(Key)
     
-    print(Key)
     GUISettings.FlyKey = tostring(Key.Name)
     
 end, Enum.KeyCode[GUISettings.FlyKey], true, 'Binds A Key For Flying.')
@@ -5013,7 +5880,7 @@ TeleportSection:CreateDropDown(function(Player)
 
     xpcall(function()
 
-        Ancestor:Teleport(CFrame.new(Ancestor:GetPlayersBase(Target).OriginSquare.CFrame.p + Vector3.new(0, 5, 0)))
+        Ancestor:Teleport(CFrame.new(Ancestor:GetPlayersProperty(Target).OriginSquare.CFrame.p + Vector3.new(0, 5, 0)))
 
     end,
 
@@ -5038,6 +5905,534 @@ MiscSection:CreateButton('Rejoin Game', function()
     Ancestor:Rejoin()
 
 end, true, true, 'Rejoins The Current Server You\'re Playing In.')
+
+if not Ancestor.Unsecure then
+
+    MiscSection:CreateButton('Teleport to Lumber Unsecure', function()
+
+        TeleportService:Teleport(10042772221)
+
+    end, true, true, 'Rejoins The Current Server You\'re Playing In.')
+
+end
+
+
+function Ancestor:GetClosestProperty()
+
+    local Min, Players, ClosestProperty = 9e9, Players:GetPlayers(), false
+
+    for i = 1, #Players do 
+
+        local PropertyOwner = Players[i]
+
+        local Property = self:GetPlayersProperty(PropertyOwner)
+        
+        if Property and (Property.OriginSquare.CFrame.p - Player.Character.Head.CFrame.p).Magnitude < Min then 
+
+            Min = (Property.OriginSquare.CFrame.p - Player.Character.Head.CFrame.p).Magnitude
+            ClosestProperty = Property
+
+        end
+
+    end
+
+    return ClosestProperty
+
+end
+
+local ItemsSpawned, GiftsUnboxed, BlueprintsPlaced, LastPlaced = 0, 0, 0, tick() - 69
+
+if Ancestor.Unsecure then
+
+    local ClientIsWhitelisted = ReplicatedStorage.Interaction.ClientIsWhitelisted
+
+    function Ancestor:IsClientWhitelisted(RequestedPlayer)
+
+        return (RequestedPlayer == Player and true) or ClientIsWhitelisted:InvokeServer(RequestedPlayer)
+
+    end
+
+    Connections.AutobuildFix = {Function = PlayerModels.ChildAdded:Connect(function(Blueprint)
+
+        local Owner = Blueprint:WaitForChild('Owner', 5)
+        local Type = Blueprint:WaitForChild('Type', 5)
+        local ItemName = Blueprint:WaitForChild('ItemName', 5) or Blueprint:WaitForChild('PurchasedBoxItemName', 5) or Blueprint:WaitForChild('BoxItemName', 5)
+        local PropertyOwner = Ancestor.Autobuilding and Players[Ancestor.AutobuildLoaderTarget] or Ancestor:GetClosestProperty().Owner.Value
+
+        if not Ancestor.SpawningItems then 
+
+            PropertyOwner = Players[Ancestor.AutobuildLoaderTarget]
+
+        end
+
+        if (Ancestor.Autobuilding or Ancestor.SpawningItems) and PropertyOwner then
+
+            if Owner and Owner.Value == PropertyOwner then
+
+                if not Type or Type.Value ~= 'Blueprint' then
+
+                    BlueprintsPlaced -= 1
+                    print(BlueprintsPlaced)
+
+                end
+
+            end
+
+        end
+
+    end)}
+
+    function Ancestor:UnsecureSpawnItems()
+
+        local ClosestProperty = self:GetClosestProperty()
+
+        if not ClosestProperty then
+
+            return SendUserNotice:Fire('You need to own a property to use this feature!')
+
+        end
+
+        if not self:PlayerIsCloseToProperty(Player.Character.Head.CFrame, ClosestProperty.Owner.Value, ClosestProperty) then
+
+            return SendUserNotice:Fire('You need to be on a owned property to use this feature!')
+
+        end
+
+        if not self:IsClientWhitelisted(ClosestProperty.Owner.Value) then
+
+            return SendUserNotice:Fire('Please Ensure The Property Owner Has Whitelisted You.')
+    
+        end
+
+        local Name = self:GetItemToSpawn()
+        BlueprintsPlaced = 0
+
+        self.SpawningItems = true
+
+        if BoxItemNames[Name] and GUISettings.SpawnBoxed then
+
+            Old = Name
+            Name = BoxItemNames[Name]
+
+        end
+
+        Connections.UnsecureItemSpawner = {Function = PlayerModels.ChildAdded:Connect(function(Blueprint)
+
+            local Owner = Blueprint:WaitForChild('Owner', 5)
+            local Type = Blueprint:WaitForChild('Type', 5)
+            local ItemName = Blueprint:WaitForChild('ItemName', 5) or Blueprint:WaitForChild('PurchasedBoxItemName', 5) or Blueprint:WaitForChild('BoxItemName', 5)
+            local Main = Blueprint:WaitForChild('Main', 5)
+
+
+            if Owner and Owner.Value == ClosestProperty.Owner.Value then
+
+                if Type and Type.Value == 'Blueprint' then 
+
+                    ItemsSpawned += 1
+
+                    Maid.Threads:Create(function()
+
+                        ClientPlacedStructure:FireServer(Name, Main.CFrame, ClosestProperty.Owner.Value, nil, Blueprint, true)
+
+                    end)
+
+                    if ItemsSpawned == Ancestor.SpawnItemsQuantity then
+                        
+                        ItemsSpawned = 0
+                        self.SpawningItems = false
+                        Ancestor:GetConnection('UnsecureItemSpawner', true)
+
+                    end
+
+                end
+
+            end
+    
+        end)}
+
+        for i = 1, self.SpawnItemsQuantity do
+
+            Maid.Threads:Create(function()
+
+                BlueprintsPlaced += 1
+                ClientPlacedBlueprint:FireServer((ItemType == 'Blueprint' and Name) or 'Floor2Tiny', CFrame.new(Character.Head.CFrame.p + Vector3.new(0, 5, 0)), Player)
+    
+            end)
+
+            local Limit = (ClosestProperty.Owner.Value == Player and 50) or 150
+
+            if i % Limit == 0 then
+
+                repeat Maid.Timer:Wait() until BlueprintsPlaced <= 6
+
+            end
+
+        end
+
+    end
+
+    MiscSection:CreateButton('Teleport to Lumber Tycoon 2', function()
+
+        TeleportService:Teleport(13822889)
+
+    end, true, true, 'Rejoins The Current Server You\'re Playing In.')
+
+    local Purchasables, ClientSetListPlayer = Purchasables:GetDescendants(), ReplicatedStorage.Interaction.ClientSetListPlayer
+
+    function Ancestor:GetItemToSpawn()
+
+        if self.ItemToSpawn == 'PropertySoldSign' then 
+
+            return 'PropertySoldSign'
+
+        end
+
+        for i = 1, #Purchasables do
+
+            local Item = Purchasables[i]
+    
+            if Item:FindFirstChild('Price') and Item.ItemName.Value == self.ItemToSpawn then
+    
+                return tostring(Item)
+    
+            end
+    
+        end
+
+    end
+
+    function Ancestor:MoneyWipePlayer()
+        
+        if self.MoneyWiping then 
+
+            return SendUserNotice:Fire('Please Wait For The Current Money Wipe To Finish.')
+
+        end
+
+        if self:GetLoadedSlot() == -1 then
+
+            return SendUserNotice:Fire('You Need To Be Loaded To Use This Feature.')
+
+        end
+
+        if not self:GetPlayersProperty(self.MoneyWipeTarget) then
+
+            return SendUserNotice:Fire('Selected Player Is Not Loaded, You Cannot Wipe Them.')
+
+        end
+
+        if self.MoneyWipeTarget == Player then 
+
+            return SendUserNotice:Fire('You Cannot Wipe Yourself, Use Set Money Instead.')
+
+        end
+
+        if self:GetClientMoney() < 0 then 
+
+            return SendUserNotice:Fire('You Cannot Use This Feature With Negative Money Yourself, .')
+
+        end
+
+        self:CanClientLoad()
+
+        if AncestorUI:CreateOption('This Will Temporarily Remove Your Money Too But It Will Be Replaced After. You Will Also Reload Once Complete, Continue?') then
+
+            self.MoneyWiping = true
+            local Old = self:GetClientMoney()
+            local Stage1, Stage2
+
+            self:SetMoneyUnsecure(true)
+            repeat Maid.Timer:Wait() until self:GetClientMoney() ~= Old 
+
+            Stage2 = self:GetClientMoney()
+
+            Maid.Threads:Create(function()
+
+                Donate:InvokeServer(self.MoneyWipeTarget, self:GetClientMoney(), self:GetLoadedSlot(), true)
+
+            end)
+
+            repeat Maid.Timer:Wait() until self:GetClientMoney() ~= Stage2
+
+            for i = 1, 3 do 
+
+                self:SaveSlot()
+                TestPing:InvokeServer()
+
+            end
+            
+            self:CanClientLoad()
+            self:SetMoneyUnsecure(true, Old)
+
+            repeat Maid.Timer:Wait() until self:GetClientMoney() > 0
+
+            self:LoadSlot(self:GetLoadedSlot())
+
+            self.MoneyWiping = false
+            
+            return SendUserNotice:Fire('Money Wipe Success.')
+
+        else
+    
+            return SendUserNotice:Fire('Money Wipe Aborted.')
+    
+        end
+
+    end
+
+    function Ancestor:Whitelist(PlayerToWhitelist, State)
+
+        ClientSetListPlayer:InvokeServer(Player.WhitelistFolder, PlayerToWhitelist, State)
+
+    end
+
+    function Ancestor:DonatePropertyToServer()
+
+        if not self:GetOrphanedHillProperty() then
+
+            return SendUserNotice:Fire('Please Make Sure At Least One Property On The Hill Is Free.')
+    
+        end
+
+        self:Whitelist(Player, true)
+        self:CanClientLoad()
+        GUISettings.SlotSaving = false
+
+        Maid.Threads:Create(function()
+
+            RequestLoad:InvokeServer(1, Player)
+    
+        end)
+    
+        local OrphanedProperty = self:GetOrphanedHillProperty()
+    
+        Maid.Threads:Create(function()
+    
+            self:FreeLand(true, true)
+    
+        end)
+    
+        repeat Maid.Timer:Wait() until Player.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible
+    
+        workspace.Effects:WaitForChild('StructureModel', 10)
+        OrphanedProperty.OriginSquare.Color = Color3.fromRGB(225, 0, 0)
+        SendUserNotice:Fire('Do NOT Load On Property With The Red Square.')
+    
+        repeat Maid.Timer:Wait() until not Player.CurrentlySavingOrLoading.Value 
+
+        self:CanClientLoad()
+        self:UnloadSlot()
+        GUISettings.SlotSaving = true
+        self:Whitelist(Player, false)
+
+    end
+
+    local Threads = 0
+
+    function Ancestor:AutoBuild(Name, ItemType, Position, WoodClass)
+
+        if not self.Unsecure then
+
+            return SendUserNotice:Fire('This will ban you unless you use it in unsecure!')
+
+        end
+
+        Threads += 1
+
+        local ThreadId = Threads
+
+        Connections[string.format('ItemSpawner%s', tostring(Threads))] = {Function = PlayerModels.ChildAdded:Connect(function(Blueprint)
+            
+            local Owner = Blueprint:WaitForChild('Owner', 2)
+            local Type = Blueprint:WaitForChild('Type', 2)
+            local Main = Blueprint:WaitForChild('Main', 2)
+
+            if Owner and Owner.Value == Players[Ancestor.AutobuildLoaderTarget] and Type and Type.Value == 'Blueprint' and Main then
+
+                local BPPosition = Position or Main.CFrame
+                local MainCFrame, BlueprintCFrame
+
+                MainCFrame = CFrame.new(tonumber(string.format('%.1f', Main.CFrame.X)), tonumber(string.format('%.1f', Main.CFrame.Y)), tonumber(string.format('%.1f', Main.CFrame.Z)))
+                BlueprintCFrame = CFrame.new(tonumber(string.format('%.1f', Position.X)), tonumber(string.format('%.1f', Position.Y)), tonumber(string.format('%.1f', Position.Z)))
+            
+                if MainCFrame == BlueprintCFrame then
+
+                    Maid.Threads:Create(function()
+
+                        ClientPlacedStructure:FireServer(Name, Main.CFrame, Players[Ancestor.AutobuildLoaderTarget], WoodClass, Blueprint, true)
+
+                        if Ancestor.SpawningItems then 
+                            
+                            Ancestor.SpawningItems = false
+
+                        end
+
+                        Ancestor:GetConnection(string.format('ItemSpawner%s', tostring(ThreadId)), true)
+                        Threads -= 1
+
+                    end)
+
+                end
+
+            end
+        
+        end)}
+    
+        Maid.Threads:Create(function()
+
+            ClientPlacedBlueprint:FireServer((ItemType == 'Blueprint' and Name) or 'Floor2Tiny', Position, Player)
+
+        end)
+            
+    end
+
+    local SpawnItemList = {'PropertySoldSign'}
+
+    for i = 1, #Purchasables do
+
+        local Item = Purchasables[i]
+
+        if tostring(Item) == 'Spork' then
+
+            Item.ItemName.Value = 'Spork'
+
+        end
+
+        if Item:FindFirstChild('Price') and not Item:FindFirstChild('WoodCost') and table.find(SpawnItemList, tostring(Item.ItemName.Value)) == nil and Item.Type.Value ~= 'Wire' then
+
+            SpawnItemList[#SpawnItemList + 1] = tostring(Item.ItemName.Value)
+
+        end
+
+    end
+
+    local SpawnTab = AncestorUI:CreateTab(13712921554, 'Unsecure Options')
+    local SpawnTabSectionTab = SpawnTab:CreateSection()
+    local SpawnSection = SpawnTabSectionTab:CreateSubSection('Spawn Items Options')
+
+    SpawnSection:CreateTextbox('Quantity', function(Amount)
+
+        Ancestor.SpawnItemsQuantity = tonumber(Amount)
+
+    end, tostring(Ancestor.SpawnItemsQuantity), false, true, 'Changes The Amount Of Items Spawned.', true)
+
+    SpawnSection:CreateDropDown(function(Option)
+
+        Ancestor.ItemToSpawn = Option
+
+    end, {unpack(SpawnItemList)},  Ancestor.ItemToSpawn)
+
+    SpawnSection:CreateToggle('Spawn Boxed [Supports Tools + Others]', false, function(State)
+        
+        GUISettings.SpawnBoxed = State
+
+        if GUISettings.SpawnBoxed then 
+
+            Connections.BoxOpener = {Function = PlayerModels.ChildAdded:Connect(function(Blueprint)
+            
+                local Owner = Blueprint:WaitForChild('Owner', 10)
+                local Type = Blueprint:WaitForChild('Type', 10)
+                local Main = Blueprint:WaitForChild('Main', 10)
+    
+                if Owner and Owner.Value == Player and Type and Type.Value == 'Gift' and Main and GUISettings.SpawnBoxed and not Player.CurrentlySavingOrLoading.Value and not Ancestor.Autobuilding then
+                    
+                    Maid.Threads:Create(function()
+    
+                        RemoteProxy:FireServer(Blueprint:FindFirstChildOfClass('BindableEvent'))
+                    
+                    end)
+    
+                end
+    
+            end)}
+
+        else
+
+            Ancestor:GetConnection('BoxOpener', true)
+
+        end
+    
+    end, GUISettings.SpawnBoxed, true, 'Toggles Spook Mode Usually Found In The Halloween Event.')
+
+    SpawnSection:CreateButton('Spawn Selected Items', function()
+
+        Ancestor:UnsecureSpawnItems()
+
+        for i = 1, 4 do 
+
+            TestPing:InvokeServer()
+
+        end
+
+        if GUISettings.IgnoreAnchoredStructures then 
+
+            local Objects = PlayerModels:GetChildren()
+
+            for i = 1, #Objects do 
+
+                local Object = Objects[i]
+
+                local Owner = Object:FindFirstChild('Owner')
+                local ItemName = Object:FindFirstChild('ItemName') or Object:FindFirstChild('PurchasedBoxItemName') or Object:FindFirstChild('BoxItemName')
+                local JustInstanced = Object:FindFirstChild('Spawned')
+
+                if Owner and Owner.Value == Player and ItemName and tostring(ItemName.Value):lower():match('painting') and JustInstanced then
+
+                    Maid.Threads:Create(function()
+
+                        DestroyStructure:FireServer(Object)
+                    
+                    end)
+    
+                end
+    
+            end
+
+        end
+
+    end, true, true, 'Spawns The Requested Amount Of The Requested Item.')
+
+    local SetMoneySection = SpawnTabSectionTab:CreateSubSection('Set Money Options')
+
+    SetMoneySection:CreateTextbox('Money Amount', function(Amount)
+
+        if not tonumber(Amount) then 
+
+            return SendUserNotice:Fire('Amount is not a valid number')
+
+        end
+
+        Ancestor.SetMoneyAmount = tonumber(Amount)
+
+    end, tostring(Ancestor.SetMoneyAmount), false, true, 'Changes The Amount Of Items Spawned.', true)
+
+    SetMoneySection:CreateButton('Set Money', function()
+
+        Ancestor:SetMoneyUnsecure()
+
+    end, true, true, 'Spawns The Requested Amount Of The Requested Item.')
+
+    SetMoneySection:CreateButton('Test', function()
+
+        Ancestor:DuplicatePropertyV2()
+
+    end, true, true, 'Spawns The Requested Amount Of The Requested Item.')
+
+    local MoneyWipeSection = SpawnTabSectionTab:CreateSubSection('Money Wipe Options')
+
+    MoneyWipeSection:CreateDropDown(function(Player)
+
+        Ancestor.MoneyWipeTarget = Players[tostring(Player)]
+
+    end, {}, false, true)
+
+    MoneyWipeSection:CreateButton('Money Wipe Player', function()
+
+        Ancestor:MoneyWipePlayer()
+
+    end, true, true, 'Puts The Selected Player Into Crippling Bankruptcy.')
+
+end
 
 local GamePlayerTab = AncestorUI:CreateTab(6894662531, 'Game Options')
 local GameSectionTab = GamePlayerTab:CreateSection()
@@ -5142,6 +6537,13 @@ Connections.Main = {Function = Stepped:Connect(function()
 
     WalkSpeed = GUISettings.WalkSpeed
 
+    if Ancestor.ModdingWood then
+
+        Player.Character.HumanoidRootPart.Velocity = Vector3.new()
+        Player.Character.HumanoidRootPart.RotVelocity = Vector3.new()
+
+    end
+
     if UIS:IsKeyDown(Enum.KeyCode[GUISettings.SprintKey]) then
 
         WalkSpeed = GUISettings.WalkSpeed + GUISettings.SprintSpeed
@@ -5162,7 +6564,7 @@ Connections.Main = {Function = Stepped:Connect(function()
     
     if GUISettings.Noclip then
 
-        local BaseParts =Player.Character:GetChildren()
+        local BaseParts = Player.Character:GetChildren()
 
         for i = 1, #BaseParts do 
 
@@ -5309,120 +6711,132 @@ DraggingOptions:CreateToggle('Hard Dragger', false, function(State)
 
 end, GUISettings.HardDragger, true, 'Makes Picking Up Heavy Objects Much Easier.')
 
-local OtherPlayerTab = AncestorUI:CreateTab(8769279408, 'Troll Options')
-local OtherPlayerSection = OtherPlayerTab:CreateSection()
-local ModeratePlayer = OtherPlayerSection:CreateSubSection('Troll Options')
+-- if not Ancestor.Unsecure then
+        
+    local OtherPlayerTab = AncestorUI:CreateTab(8769279408, 'Troll Options')
+    local OtherPlayerSection = OtherPlayerTab:CreateSection()
+    local ModeratePlayer = OtherPlayerSection:CreateSubSection('Troll Options')
 
-ModeratePlayer:CreateDropDown(function(Option)
+    ModeratePlayer:CreateDropDown(function(Option)
 
-    Ancestor.ModerationAction = Option
+        Ancestor.ModerationAction = Option
 
-end, {'Kill', 'Hard Kill', 'Bring', 'Fling'},  'Kill')
+    end, {'Kill', 'Hard Kill', 'Bring', 'Fling'},  'Kill')
 
-ModeratePlayer:CreateDropDown(function(Option)
+    ModeratePlayer:CreateDropDown(function(Option)
 
-    Ancestor.ModerationType = Option
+        Ancestor.ModerationType = Option
 
-end, {'Vehicle', 'Axe'},  'Vehicle')
+    end, {'Vehicle', 'Axe'},  'Vehicle')
 
-ModeratePlayer:CreateDropDown(function(Player)
+    ModeratePlayer:CreateDropDown(function(Player)
 
-    Ancestor.PlayerToModerate = Players[tostring(Player)]
+        Ancestor.PlayerToModerate = Players[tostring(Player)]
 
-end, {}, false, true)
+    end, {}, false, true)
 
-ModeratePlayer:CreateButton('Perform Action', function()
+    ModeratePlayer:CreateButton('Perform Action', function()
 
-    Ancestor:ModeratePlayer(Ancestor.ModerationAction)
+        Ancestor:ModeratePlayer(Ancestor.ModerationAction)
 
-end, true, true, 'Performs The Selected Action Against The Selected Player.')
+    end, true, true, 'Performs The Selected Action Against The Selected Player.')
 
-local ServerSection = OtherPlayerSection:CreateSubSection('Server Options')
+    local ServerSection = OtherPlayerSection:CreateSubSection('Server Options')
 
-ServerSection:CreateToggle('Stop Players From Loading', false,  function(State)
+    ServerSection:CreateToggle('Stop Players From Loading', false,  function(State)
 
-    GUISettings.StopPlayersLoading = State
+        GUISettings.StopPlayersLoading = State
 
-end, GUISettings.StopPlayersLoading,  true, 'Stops Players From Loading In Their Datasize 90000 Bases.')
+    end, GUISettings.StopPlayersLoading,  true, 'Stops Players From Loading In Their Datasize 90000 Bases.')
 
-ServerSection:CreateToggle('Force Whitelist (Read GUI Tip)', false,  function(State)
+    ServerSection:CreateToggle('Force Whitelist (Read GUI Tip)', false,  function(State)
 
-    GUISettings.ForceWhitelist = State
-    Ancestor:ForceWhitelist()
+        GUISettings.ForceWhitelist = State
+        Ancestor:ForceWhitelist()
 
-end, GUISettings.ForceWhitelist,  true, 'Allows You To Drag Certain Objects That You Ain\'t Whitelisted For.')
+    end, GUISettings.ForceWhitelist,  true, 'Allows You To Drag Certain Objects That You Ain\'t Whitelisted For.')
 
-local Doors = {
+    local Doors = {
 
-    [1] = Workspace.Stores.FurnitureStore.LDoor,
-    [2] = Workspace.Stores.FurnitureStore.RDoor,
-    [3] = Workspace.Stores.LogicStore.LDoor,
-    [4] = Workspace.Stores.LogicStore.RDoor,
-    [5] = Workspace.Stores.CarStore.LDoor,
-    [6] = Workspace.Stores.CarStore.RDoor
+        [1] = Workspace.Stores.FurnitureStore.LDoor,
+        [2] = Workspace.Stores.FurnitureStore.RDoor,
+        [3] = Workspace.Stores.LogicStore.LDoor,
+        [4] = Workspace.Stores.LogicStore.RDoor,
+        [5] = Workspace.Stores.CarStore.LDoor,
+        [6] = Workspace.Stores.CarStore.RDoor
 
-}
+    }
 
-function Ancestor:IsStoreOpen(Store)
+    function Ancestor:IsStoreOpen(Store)
 
-    return Store.Lights:FindFirstChild('CeilingLight').LightPart.Light.Enabled
+        return Store.Lights:FindFirstChild('CeilingLight').LightPart.Light.Enabled
 
-end
+    end
 
-function Ancestor:CloseStores()
+    function Ancestor:CloseStores()
 
-    Maid.Threads:Create(function()
+        Maid.Threads:Create(function()
 
-        while Maid.Timer:Wait(5) do 
+            while Maid.Timer:Wait(1) do 
 
-            if not Ancestor_Loaded then 
+                if not Ancestor_Loaded then 
 
-                break 
-
-            end
-
-            for i = 1, #Doors do 
-
-                local Door = Doors[i]
-
-                if Door.ButtonRemote_Toggle.ButtonPrompt.Value:match((GUISettings.CloseStores and 'Close') or 'Open') and self:IsStoreOpen(Door.Parent) then 
-            
-                    RemoteProxy:FireServer(Door.ButtonRemote_Toggle)
-
-                    for i = 1, 10 do 
-                
-                        TestPing:InvokeServer()
-                    
-                    end
+                    break 
 
                 end
-            
+
+                for i = 1, #Doors do 
+
+                    local Door = Doors[i]
+
+                    if Door.ButtonRemote_Toggle.ButtonPrompt.Value:match((GUISettings.CloseStores and 'Close') or 'Open') and self:IsStoreOpen(Door.Parent) then 
+                        
+                        Maid.Threads:Create(function()
+
+                            RemoteProxy:FireServer(Door.ButtonRemote_Toggle)
+
+                        end)
+
+                        for i = 1, 2 do 
+                    
+                            TestPing:InvokeServer()
+                        
+                        end
+
+                    end
+                
+                end
+
             end
+            
+        end)
 
-        end
-        
-    end)
+    end
 
-end
+    ServerSection:CreateToggle('Close All Stores That Have Doors', false, function(State)
 
-ServerSection:CreateToggle('Close All Stores That Have Doors', false, function(State)
+        GUISettings.CloseStores = State
+        Ancestor:CloseStores()
 
-    GUISettings.CloseStores = State
-    Ancestor:CloseStores()
+    end, GUISettings.CloseStores,  true, 'Stops Legit Players From Opening The Doors Of A Store.')
 
-end, GUISettings.CloseStores,  true, 'Stops Legit Players From Opening The Doors Of A Store.')
+    if Ancestor.Unsecure then
 
-ServerSection:CreateButton('Fire All Scoobis', function()
+        ServerSection:CreateButton('Fire All Scoobis', function()
 
-    Ancestor:FireAll('Scoobis')
+            Ancestor:FireAll('Scoobis')
 
-end, true, true, 'Fire Every Scoobis You Own Or Whitelisted For.')
+        end, true, true, 'Fire Every Scoobis You Own Or Whitelisted For.')
 
-ServerSection:CreateButton('Fire All Bold & Brash', function()
+        ServerSection:CreateButton('Fire All Bold & Brash', function()
 
-    Ancestor:FireAll('Painting4')
+            Ancestor:FireAll('Painting4')
 
-end, true, true, 'Fire Every Bold & Brash You Own Or Whitelisted For.')
+        end, true, true, 'Fire Every Bold & Brash You Own Or Whitelisted For.')
+
+    end
+
+-- end
 
 local PropertyTab = AncestorUI:CreateTab(8772257496, 'Property Options')
 local PropertySection = PropertyTab:CreateSection()
@@ -5436,7 +6850,8 @@ Load = LoadSection:CreateSlider('Slot To Load', function(slot)
 
     end
     
-    GUISettings.SelectedProperty = slot
+    Ancestor.SelectedProperty = slot
+
 end, 1, 6, 1, false, nil, (SlotNames.Slot1 ~= 'Slot 1'))
 
 if SlotNames.Slot1 ~= 'Slot 1' then
@@ -5445,9 +6860,25 @@ if SlotNames.Slot1 ~= 'Slot 1' then
 
 end
 
+if Ancestor.Unsecure then 
+
+    LoadSection:CreateToggle('Slot Saving', false, function(State)
+
+        GUISettings.SlotSaving = State
+
+    end, GUISettings.SlotSaving,  true, 'Stops Legit Players From Opening The Doors Of A Store.')
+
+end
+
+LoadSection:CreateToggle('Bypass Load Cooldown', false, function(State)
+
+    GUISettings.BypassLoadTimer = State
+
+end, GUISettings.BypassLoadTimer,  true, 'Allows You To Instantly Reload Without Waiting.')
+
 LoadSection:CreateButton('Load Selected Slot', function()
 
-    Ancestor:LoadSlot(GUISettings.SelectedProperty)
+    Ancestor:LoadSlot(Ancestor.SelectedProperty)
 
 end, true, true, 'Loads The Selected Slot.')
 
@@ -5461,7 +6892,7 @@ LoadSection:CreateButton('Delete Selected Slot', function()
 
     if AncestorUI:CreateOption('THIS IS IRREVERSIBLE \n\n All Data Will Be Lost. \n\n You Wish To Continue?') then
 
-        Ancestor:DeleteSlot(GUISettings.SelectedProperty)
+        Ancestor:DeleteSlot(Ancestor.SelectedProperty)
 
     else
 
@@ -5477,127 +6908,12 @@ LoadSection:CreateButton('Save Selected Slot', function()
 
 end, true, true, 'Saves The Current Loaded Slot.')
 
-local PropertyInfoSection = PropertySection:CreateSubSection('Property Information')
-local SlotName, Slot1, Slot2, Slot3, Slot4, Slot5, Slot6
-
-PropertyInfoSection:CreateDropDown(function(Player)
-
-    if not Players:FindFirstChild(Player) then
-
-        return SendUserNotice:Fire('Player Not Found!')
-
-    end
-
-    SlotName:UpdateText(string.format('Loading info for %s...', tostring(Player)))
-
-    Maid.Threads:Create(function()
-
-        local Data = Ancestor:GetPlayersSlotInfo(Player)
-        SlotName:UpdateText('Showing Info for ' .. tostring(Player))
-        Slot1:UpdateText('Slot 1 Datasize: ' .. tostring(Data[1] ~= nil and Data[1] or '0'))
-        Slot2:UpdateText('Slot 2 Datasize: ' .. tostring(Data[2] ~= nil and Data[2] or '0'))
-        Slot3:UpdateText('Slot 3 Datasize: ' .. tostring(Data[3] ~= nil and Data[3] or '0'))
-        Slot4:UpdateText('Slot 4 Datasize: ' .. tostring(Data[4] ~= nil and Data[4] or '0'))
-        Slot5:UpdateText('Slot 5 Datasize: ' .. tostring(Data[5] ~= nil and Data[5] or '0'))
-        Slot6:UpdateText('Slot 6 Datasize: ' .. tostring(Data[6] ~= nil and Data[6] or '0'))
-    
-    end)
-    
-end, {}, false, true)
-
-Maid.Threads:Create(function()
-
-    SlotName = PropertyInfoSection:CreateTitle(string.format('Showing Info for %s', tostring(Player)))
-    local Data = Ancestor:GetPlayersSlotInfo(Player)
-    Slot1 = PropertyInfoSection:CreateLabel('Slot 1 Datasize: ' .. tostring(Data[1] ~= nil and Data[1] or '0'))
-    Slot2 = PropertyInfoSection:CreateLabel('Slot 2 Datasize: ' .. tostring(Data[2] ~= nil and Data[2] or '0'))
-    Slot3 = PropertyInfoSection:CreateLabel('Slot 3 Datasize: ' .. tostring(Data[3] ~= nil and Data[3] or '0'))
-    Slot4 = PropertyInfoSection:CreateLabel('Slot 4 Datasize: ' .. tostring(Data[4] ~= nil and Data[4] or '0'))
-    Slot5 = PropertyInfoSection:CreateLabel('Slot 5 Datasize: ' .. tostring(Data[5] ~= nil and Data[5] or '0'))
-    Slot6 = PropertyInfoSection:CreateLabel('Slot 6 Datasize: ' .. tostring(Data[6] ~= nil and Data[6] or '0'))
-
-end)
-
 local SlotSection = PropertySection:CreateSubSection('Property Options')
 SlotSection:CreateButton('Free Land', function()
     
     Ancestor:FreeLand()
 
 end, true, true, 'Gives You Land For Free.')
-
-function Ancestor:BringAll(Name, Position)
-
-    local Old =  GUISettings.Noclip
-
-    local PlayerModels = workspace.PlayerModels:GetChildren()
-
-    for i = 1, #PlayerModels do
-
-        local Model = PlayerModels[i]
-
-        if Model:FindFirstChild('Owner') and Model.Owner.Value == Player then
-
-            local ItemName = Model:FindFirstChild('ItemName')
-
-            if ItemName and tostring(ItemName.Value):match(Name) then
-
-                if (Model.PrimaryPart.CFrame.p - Player.Character.Head.CFrame.p).Magnitude > 20 then
-                    
-                    repeat Maid.Timer:Wait()
-
-                        self:Teleport(CFrame.new(Model.PrimaryPart.CFrame.p + Vector3.new(0, 8, 0)))
-
-                    until (Model.PrimaryPart.CFrame.p - Player.Character.Head.CFrame.p).Magnitude < 20
-
-                    if Model.PrimaryPart.Anchored then
-
-                        repeat Maid.Timer:Wait()
-
-                            ClientInteracted:FireServer(Model, 'Take down sold sign')
-
-                        until not Model.PrimaryPart.Anchored
-                
-                    end
-
-                    GUISettings.Noclip = true
-
-                    pcall(function()
-
-                        for i = 1, 25 do 
-
-                            repeat Maid.Timer:Wait()
-
-                                repeat Maid.Timer:Wait()
-
-                                    self:Teleport(CFrame.new(Model.PrimaryPart.CFrame.p + Vector3.new(0, 0, 2)))
-            
-                                until (Model.PrimaryPart.CFrame.p - Player.Character.Head.CFrame.p).Magnitude < 20
-            
-                                ClientIsDragging:FireServer(Model)
-
-                            until not Model or self:IsNetworkOwnerOfModel(Model)
-
-                            Model:PivotTo(Position)
-
-                        end
-
-                        Maid.Timer:Wait()
-
-                    end)
-
-                end
-
-            end
-
-        end
-
-    end
-
-    self:Teleport(Position)
-    GUISettings.Noclip = Old
-
-end
-
 
 SlotSection:CreateButton('Max Land', function()
 
@@ -5621,51 +6937,661 @@ SlotSection:CreateButton('Expand Land', function()
 
 end, true, true, 'Allows You To Expand Your Land To Your Liking.')
 
--- local PropertyDuplication = PropertySection:CreateSubSection('Property Duplication Options')
+local MoneyDuplication = PropertySection:CreateSubSection('Money Duplication Options')
 
--- PropertyDuplication:CreateDropDown(function(Player)
+MoneyDuplication:CreateDropDown(function(Player)
 
---     Ancestor.PlayerToDuplicatePropertyTo = Players:FindFirstChild(Player)
+    Ancestor.PlayerToMoneyDuplicateTo = Players:FindFirstChild(Player)
 
--- end, {}, false, true)
+end, {}, false, true)
 
--- PropertyDuplication:CreateSlider('Slot', function(Property)
+MoneyDuplication:CreateSlider('Slot', function(Property)
     
---     Ancestor.PropertyToDuplicate = Property
+    Ancestor.PropertyToMoneyDuplicate = Property
     
--- end, 1, 6, Ancestor.PropertyToDuplicate, true, 'Changes The Property You Want To Duplicate.')
+end, 1, 6, Ancestor.PropertyToMoneyDuplicate, true, 'Changes The Property You Want To Duplicate.')
 
--- PropertyDuplication:CreateButton('Duplicate Selected Property', function()
+MoneyDuplication:CreateButton('Duplicate Money On Selected Property', function()
+
+    Ancestor:DuplicateMoney()
+
+end, true, true, 'Duplicates Your Money.')
+
+local PropertyDuplication = PropertySection:CreateSubSection('Property Duplication Options')
+
+PropertyDuplication:CreateDropDown(function(Player)
+
+    Ancestor.PlayerToDuplicatePropertyTo = Players:FindFirstChild(Player)
+
+end, {}, false, true)
+
+PropertyDuplication:CreateSlider('Slot', function(Property)
     
---     if AncestorUI:CreateOption('PRIVATE SERVER ONLY \n\n Basewipes May Still Rarely Occur. \n\n You Wish To Continue?') then
+    Ancestor.PropertyToDuplicate = Property
+    
+end, 1, 6, Ancestor.PropertyToDuplicate, true, 'Changes The Property You Want To Duplicate.')
 
---         Ancestor:DuplicateProperty(GUISettings.SelectedProperty)
+PropertyDuplication:CreateButton('Duplicate Selected Property', function()
+    
+    if AncestorUI:CreateOption('You Wish To Continue?') then
 
---     else
+        Ancestor:DuplicatePropertyV2(Ancestor.SelectedProperty)
 
---         SendUserNotice:Fire('Property Duplication Aborted.')
+    else
 
---     end
+        SendUserNotice:Fire('Property Duplication Aborted.')
 
--- end, true, true, 'Duplicates Your Property.')
+    end
 
--- local BuildTab = AncestorUI:CreateTab(8772073607,'Build Options')
--- local BuildSection = BuildTab:CreateSection()
--- local BuildMode = BuildSection:CreateSubSection('Build Mode - Currently Under Development')
+end, true, true, 'Duplicates Your Property.')
 
--- BuildMode:CreateButton('Plank To Blueprint', function()
 
---     Ancestor:PlankToBlueprint()
+local SlotDuplication = PropertySection:CreateSubSection('Slot Duplication Options [LOCAL PLAYER ONLY]')
 
--- end, true, true, 'Autofills Selected Blueprint With Selected Plank.')
+SlotDuplication:CreateSlider('Slot 1', function(Slot)
+    
+    Ancestor.SlotToDuplicateFrom = Slot
+    
+end, 1, 6, Ancestor.SlotToDuplicateFrom, true, 'Changes The Slot You Want To Duplicate.')
 
--- BuildMode:CreateToggle('Click Delete', false, function(State)
+SlotDuplication:CreateSlider('Slot 2', function(Slot)
+    
+    Ancestor.SlotToDuplicateTo = Slot
+    
+end, 1, 6, Ancestor.SlotToDuplicateTo, true, 'Changes The Slot You Want To Duplicate.')
 
---     GUISettings.ClickDelete = State
+SlotDuplication:CreateButton('Duplicate Selected Slot', function()
+    
+    if AncestorUI:CreateOption('You Wish To Continue?') then
 
---     Ancestor:ClickDelete()
+        Ancestor:DuplicateSlot()
 
--- end, GUISettings.ClickDelete, true, 'Teleports You Back With Your Tree/s.')
+    else
+
+        SendUserNotice:Fire('Slot Duplication Aborted.')
+
+    end
+
+end, true, true, 'Duplicates Your Property.')
+
+
+function Ancestor:TemporaryBlueprints()
+
+    local Blueprints = Purchasables.Structures.BlueprintStructures:GetChildren()
+
+    for i = 1, #Blueprints do
+
+        local Blueprint = Blueprints[i]
+
+        if not Player.PlayerBlueprints.Blueprints:FindFirstChild(tostring(Blueprint)) then
+
+            Blueprint:Clone().Parent = Player.PlayerBlueprints.Blueprints
+
+        end
+
+    end
+
+end
+
+function Ancestor:SetMoneyUnsecure(BruteForce, Amount)
+    
+    Value = Amount or self.SetMoneyAmount
+    if not BruteForce and self:GetLoadedSlot() == -1 then
+
+        return SendUserNotice:Fire('You need to load a slot to use this feature!')
+
+    end
+
+    if not BruteForce and not GUISettings.SlotSaving then
+
+        return SendUserNotice:Fire('You need to enable slot saving use this feature!')
+
+    end
+
+    if not BruteForce and (self.SetMoneyAmount >= 9999999999999999999 * 3 or self.SetMoneyAmount < 0) then 
+
+        return SendUserNotice:Fire('Max is 999Qd to avoid negative amounts of money.')
+
+    end
+
+    if not BruteForce or not Amount then
+        
+        self:CanClientLoad()
+
+    end
+
+    local Slot = self:GetLoadedSlot()
+    Value = ((BruteForce and not Amount) and -(2 ^ 31) * 2 ^ 64) or -((Amount or self.SetMoneyAmount) - self:GetClientMoney())
+     
+    Maid.Threads:Create(function()
+
+        Donate:InvokeServer(Player, Value, Slot, true)
+    
+    end)
+
+    if not BruteForce or not Amount then
+
+        SendUserNotice:Fire('Reloading slot to avoid money reverting.')
+        Maid.Timer:Wait(2)
+        self:LoadSlot(Slot)
+    
+        SendUserNotice:Fire('Set Money Complete!')
+
+    end
+
+end
+
+function Ancestor:GetPropertyLandSlots(Player)
+
+    local Property, Slots = self:GetPlayersProperty(Player):GetChildren(), {}
+
+    for i = 1, #Property do
+
+        local Slot = Property[i]
+
+        if tostring(Slot) == 'Square' then
+
+            Slots[#Slots + 1] = {LandCFrame = tostring(Slot.CFrame - self:GetPlayersProperty(Player).OriginSquare.CFrame.p)}
+
+        end
+
+    end
+
+    return Slots
+
+end
+
+function Ancestor:SavePropertyToFile()
+
+    local PropertyData = {}
+    local PlayerModels = PlayerModels:GetChildren()
+
+    for i = 1, #PlayerModels do
+
+        local Model = PlayerModels[i]
+
+        local Owner = Model:FindFirstChild('Owner')
+        local Type = Model:FindFirstChild('Type')
+        local ItemName = Model:FindFirstChild('ItemName') or Model:FindFirstChild('BoxItemName') or Model:FindFirstChild('PurchasedBoxItemName')
+        local Main = Model:FindFirstChild('MainCFrame') or Model:FindFirstChild('Main')
+        local WoodClass = Model:FindFirstChild('WoodClass') or Model:FindFirstChild('BlueprintWoodClass')
+
+        if Owner and Type and Owner.Value == Players[self.AutobuildSaverTarget] and ItemName and Main and not (tostring(Model) == 'Plank' or Type.Value == 'Wire') then -->Cannot spawn planks/wires
+
+            local Offset = (tostring(Main) == 'MainCFrame' and Main.Value) or Main.CFrame
+
+            if Model:FindFirstChild('BuildDependentWood') and Type.Value == 'Structure' and not WoodClass then 
+
+                local WoodClassG = Instance.new('StringValue', Model)
+                WoodClassG.Name = 'WoodClass'
+                WoodClassG.Value = 'Generic'
+                WoodClass = WoodClassG
+
+            end
+
+            if Offset then
+
+                PropertyData[#PropertyData + 1] = {
+
+                    ItemName  = ItemName.Value,
+                    ItemType  = Type.Value,
+                    CFrame    = tostring(Offset - self:GetPlayersProperty(Players[self.AutobuildSaverTarget]).OriginSquare.CFrame.p),
+                    WoodClass = (WoodClass and WoodClass.Value) or nil
+
+                }
+
+            end
+
+        end
+
+    end
+
+    PropertyData[#PropertyData + 1] = self:GetPropertyLandSlots(Players[self.AutobuildSaverTarget])
+
+    writefile(string.format('Ancestor_SavedBases/%s.txt', self.AutobuildFileNameSaver), HttpService:JSONEncode(PropertyData))
+
+    return SendUserNotice:Fire(string.format('Saved %s\'s Property To %s', self.AutobuildSaverTarget, self.AutobuildFileNameSaver))
+
+end
+
+function Ancestor:GetBlueprintCount(Player)
+
+    local Blueprints, PlayerModels = 0, PlayerModels:GetChildren()
+
+    for i = 1, #PlayerModels do 
+
+        local Blueprint = PlayerModels[i]
+
+        local Owner = Blueprint:FindFirstChild('Owner')
+        local Type = Blueprint:FindFirstChild('Type')
+
+        if Owner and Owner.Value == Player and Type and Type.Value == 'Blueprint' then
+
+            Blueprints += 1
+
+        end
+
+    end
+
+    return Blueprints
+
+end
+
+function Ancestor:WipeProperty(Player)
+
+    local Blueprints, PlayerModels, Property = 0, workspace.PlayerModels:GetChildren(), self:GetPlayersProperty(Player)
+
+    for i = 1, #PlayerModels do 
+
+        local Object = PlayerModels[i]
+
+        local Owner = Object:FindFirstChild('Owner')
+        local ItemName = Object:FindFirstChild('ItemName') or Object:FindFirstChild('BoxItemName') or Object:FindFirstChild('PurchasedBoxItemName')
+
+        if Owner and Owner.Value == Player and ItemName.Value ~= 'Floor2Tiny' then
+            
+            Maid.Threads:Create(function()
+
+                ClientPlacedBlueprint:FireServer('Floor2Tiny', Property.OriginSquare.CFrame - Vector3.new(0, 100, 0), nil, Object)
+                Maid.Timer:Wait()
+
+            end)
+
+        end
+
+    end
+
+end
+
+function Ancestor:LoadAutobuildFile()
+
+    SendUserNotice:Fire('Loading file, please wait...')
+    local File = request({
+ 
+        Url = string.format('https://raw.githubusercontent.com/KhayneGleave/UnsecureAutobuilds/main/%s', self.AutobuildLink),
+        Method = 'GET'
+
+    })
+
+    if File.StatusCode ~= 200 then 
+
+        return false, SendUserNotice:Fire('Server responded with incorrect status, please report to Ancestor.')
+
+    end
+
+    return File.Body
+     
+ end
+
+function Ancestor:LoadPropertyFromFile(PropertyFile, IsLink)
+
+    local Success, PropertyFile = nil, PropertyFile or nil
+
+    if self.Autobuilding then 
+
+        return SendUserNotice:Fire('You\'re Already Building!')
+
+    end
+
+    if not PropertyFile then 
+
+        Success, PropertyFile = pcall(function() return HttpService:JSONDecode(readfile(string.format('Ancestor_SavedBases/%s.txt', self.AutobuildFileNameLoader))) end)
+
+        if not Success then
+
+            return SendUserNotice:Fire(string.format('%s Does Not Exist', self.AutobuildFileNameLoader))
+
+        end
+
+    else
+
+        PropertyFile = HttpService:JSONDecode(PropertyFile)
+        print(#PropertyFile)
+
+    end
+
+    local Property = self:GetPlayersProperty(self.AutobuildLoaderTarget)
+
+    BlueprintsPlaced = 0
+
+    if not Property and not GUISettings.AutobuildAutoLand then
+
+        return SendUserNotice:Fire('You need to own a property to use this feature!')
+
+    elseif not Property and GUISettings.AutobuildAutoLand then 
+
+        Property = self:FreeLand()
+
+    end
+
+    local PropertyName = (IsLink and self.AutobuildLink) or self.AutobuildFileNameLoader
+
+    self.Autobuilding = true
+    local LandSlots = 0
+    if GUISettings.LoadSquares and #PropertyFile[#PropertyFile] ~= 0 then 
+
+        for i, Object in next, PropertyFile[#PropertyFile] do
+
+            local ObjectCFrame = Object.LandCFrame
+            local DecodedCFrame = {}
+        
+            for i = 1, 3 do
+        
+                DecodedCFrame[#DecodedCFrame + 1] = tonumber(ObjectCFrame:split(',', #ObjectCFrame)[i])
+        
+            end
+
+            LandSlots += 1
+            
+            Maid.Threads:Create(function()
+
+                ClientExpandedProperty:FireServer(Property, CFrame.new(unpack(DecodedCFrame)) + Property.OriginSquare.CFrame.p)
+
+            end)
+        
+        end
+
+    end
+
+    if #PropertyFile[#PropertyFile] == 0 or not GUISettings.LoadSquares and #Property:GetChildren() <= 24 and #PropertyFile[#PropertyFile] == 0 then
+
+        self:MaxLand()
+        LandSlots = 26
+
+    end
+
+    repeat Maid.Timer:Wait() until #Property:GetChildren() >= LandSlots
+
+    self:DeleteTreesOnProperty()
+
+    local SavedCFrames = {}
+
+    for i = 1, #PropertyFile do
+
+        local Object = PropertyFile[i]
+
+        if i ~= #PropertyFile then
+
+            local SkipThisOne = false 
+
+            if Object.ItemName == 'Dynamite' or (GUISettings.StructureOnly and not (Object.ItemType == 'Structure' or Object.ItemType == 'Furniture' or Object.ItemType == 'Vehicle' or Object.ItemType == 'Vehicle Spot')) or (GUISettings.IgnoreAnchoredStructures and Object.ItemName:lower():match('painting')) then 
+
+                SkipThisOne = true 
+
+            end
+
+            Object.ItemType = (Object.ItemType == 'Vehicle' and 'Vehicle Spot') or Object.ItemType
+
+            local Item = Purchasables:FindFirstChild(Object.ItemName, true)
+            local IsGift = (Item and Object.ItemType == 'Gift')
+            local Check = Item and (Object.ItemType == 'Vehicle Spot' or Item:FindFirstChild('Box'))
+
+            local ObjectCFrame = Object.CFrame
+
+            local DecodedCFrame = {}
+        
+            for i = 1, 12 do
+        
+                DecodedCFrame[#DecodedCFrame + 1] = tonumber(ObjectCFrame:split(',', #ObjectCFrame)[i])
+        
+            end
+
+            local SavedCFrame = CFrame.new(tonumber(string.format('%.6f', DecodedCFrame[1])), tonumber(string.format('%.6f', DecodedCFrame[2])), tonumber(string.format('%.6f', DecodedCFrame[3])))
+
+            if table.find(SavedCFrames, tostring(SavedCFrame)) ~= nil then
+
+                SkipThisOne = true
+
+            end
+
+            SavedCFrames[#SavedCFrames + 1] = tostring(SavedCFrame)
+
+            local Limit = (Property.Owner.Value == Player and 50) or 150
+
+            if i % Limit == 0 then
+
+                repeat Maid.Timer:Wait() until BlueprintsPlaced <= Limit / 2 --> maybe
+                repeat Maid.Timer:Wait() until self:GetBlueprintCount(Player) == 0
+
+                print(string.format('Passed %s.', tostring(i)))
+
+                BlueprintsPlaced = 0
+
+            end
+
+            if SkipThisOne or not IsGift and not Check then
+
+                continue
+
+            end
+
+            Maid.Threads:Create(function()
+
+                BlueprintsPlaced += 1
+                self:AutoBuild(Object.ItemName, Object.ItemType, CFrame.new(unpack(DecodedCFrame)) + Property.OriginSquare.CFrame.p, Object.WoodClass)
+                
+            end)
+
+        end
+
+    end
+
+    Threads = 0
+    ItemsSpawned = 0
+    PropertyFile, SavedCFrames = {}, {} --> clears memory
+
+
+    self.Autobuilding = false
+    SendUserNotice:Fire(string.format('Successfully Loaded %s', PropertyName))
+
+end
+
+local BuildTab = AncestorUI:CreateTab(8772073607,'Build Options')
+local BuildSection = BuildTab:CreateSection()
+local BuildMode = BuildSection:CreateSubSection('Building Tools')
+
+BuildMode:CreateButton('Temporary Blueprints', function()
+
+    Ancestor:TemporaryBlueprints()
+
+end, true, true, 'Gives You Temporary Blueprints For This Session.')
+
+local Autobuild = BuildSection:CreateSubSection('Property Saver')
+
+Autobuild:CreateTitle('Property Owner')
+
+Autobuild:CreateDropDown(function(TargetPlayer)
+
+    Ancestor.AutobuildSaverTarget = TargetPlayer
+
+end, {}, false, true)
+
+Autobuild:CreateTextbox('Property Filename', function(Amount)
+
+    Ancestor.AutobuildFileNameSaver = Amount
+
+end, tostring(Ancestor.AutobuildFileNameSaver), false, true, 'Changes The Amount Of Items Spawned.', true)
+
+Autobuild:CreateButton('Save Property To File', function()
+
+    Ancestor:SavePropertyToFile()
+
+end, true, true, 'Saves The Selected Players\' Property To File.')
+
+if Ancestor.Unsecure then
+
+    local Autobuild = BuildSection:CreateSubSection('Property Loader')
+
+    Autobuild:CreateTitle('Recipient')
+
+    Autobuild:CreateDropDown(function(TargetPlayer)
+
+        Ancestor.AutobuildLoaderTarget = TargetPlayer
+
+    end, {}, false, true)
+
+
+    Autobuild:CreateButton('Wipe Recipient\'s Property', function()
+
+        Ancestor:WipeProperty(Players[Ancestor.AutobuildLoaderTarget])
+
+    end, true, true, 'Gives You Temporary Blueprints For This Session.')
+
+    Autobuild:CreateTextbox('Property Filename', function(Amount)
+
+        Ancestor.AutobuildFileNameLoader = Amount
+
+    end, tostring(Ancestor.AutobuildFileNameLoader), false, true, 'Changes The Amount Of Items Spawned.', true)
+
+    Autobuild:CreateDropDown(function(Link)
+
+        local Name = Link
+        Convert = Link:split(' ')
+
+        if rawget(Convert, 2) then
+
+            Convert = Convert[1]..'%20'..Convert[2]
+            Link = Convert
+
+        end
+
+        Ancestor.AutobuildLink = Link
+
+        local Link = Ancestor:LoadAutobuildFile()
+        
+        if Link then 
+
+            if AncestorUI:CreateOption(string.format('Are you sure you want to build %s?', Name)) then
+
+                Ancestor:LoadPropertyFromFile(Link, true)
+    
+            else
+        
+                return SendUserNotice:Fire('Autobuild Aborted.')
+        
+            end
+
+        end
+
+    end, { 
+        
+        'Truck Base', 'Shop', 'Star Base', 'Chinese Temple', 'Castle', 'SPOODA'
+
+    }, 'Truck Base', false)
+
+    Autobuild:CreateToggle('Load Property Squares', false, function(State)
+
+        GUISettings.LoadSquares = State
+    
+    end, GUISettings.LoadSquares, true, 'Sells Your Modded Plank.')
+
+    Autobuild:CreateToggle('Auto Unbox Gifts', false, function(State)
+
+        GUISettings.AutoUnboxGifts = State
+
+        if GUISettings.AutoUnboxGifts then 
+
+            Connections.GiftOpener = {Function = PlayerModels.ChildAdded:Connect(function(Blueprint)
+            
+                local Owner = Blueprint:WaitForChild('Owner', 10)
+                local Type = Blueprint:WaitForChild('Type', 10)
+                local Main = Blueprint:WaitForChild('Main', 10)
+    
+                if Owner and Owner.Value == Player and Type and Type.Value == 'Gift' and Main and GUISettings.AutoUnboxGifts and not Player.CurrentlySavingOrLoading.Value and Ancestor.Autobuilding then
+                    
+                    Maid.Threads:Create(function()
+    
+                        RemoteProxy:FireServer(Blueprint:FindFirstChildOfClass('BindableEvent'))
+                    
+                    end)
+    
+                end
+    
+            end)}
+
+        else
+
+            Ancestor:GetConnection('AutoUnboxGifts', true)
+
+        end
+    
+    end, GUISettings.AutoUnboxGifts, true, 'Sells Your Modded Plank.')
+
+    Autobuild:CreateToggle('Auto Free Land If No Property', false, function(State)
+        
+        GUISettings.AutobuildAutoLand = State
+    
+    end, GUISettings.AutobuildAutoLand, true, 'Will Automatically Claim A Property For You If You Don\'t Own One.')
+
+    Autobuild:CreateToggle('Structures Only', false, function(State)
+        
+        GUISettings.StructureOnly = State
+    
+    end, GUISettings.StructureOnly, true, 'Will Automatically Ignore Every Object That Is Not A Structure.')
+
+    Autobuild:CreateToggle('Ignore Painting Structures', false, function(State)
+        
+        GUISettings.IgnoreAnchoredStructures = State
+
+        if GUISettings.IgnoreAnchoredStructures then 
+
+            Connections.PaintingDestroy = {Function = PlayerModels.ChildAdded:Connect(function(Object)
+
+                local Owner = Object:WaitForChild('Owner', 10)
+                local ItemName = Object:WaitForChild('ItemName', 10) or Object:WaitForChild('PurchasedBoxItemName', 10) or Object:WaitForChild('BoxItemName', 10)
+
+                if Owner and Owner.Value == Player and ItemName and tostring(ItemName.Value):lower():match('painting') then
+
+                    local JustInstanced = Instance.new('BoolValue', Object)
+
+                    JustInstanced.Name = 'Spawned'
+                    JustInstanced.Value = true
+
+                end
+        
+            end)}
+        
+        else
+
+            Ancestor:GetConnection('PaintingDestroy', true)
+
+        end
+    
+    end, GUISettings.IgnoreAnchoredStructures, true, 'Toggles Spook Mode Usually Found In The Halloween Event.')
+
+    Autobuild:CreateButton('Load Property From File', function()
+
+        Ancestor:LoadPropertyFromFile()
+
+    end, true, true, 'Saves The Selected Players\' Property To File.')
+
+    Autobuild:CreateButton('Abort Autobuild', function()
+
+        Ancestor.AbortAutobuild = true
+    
+    end, true, true, 'Gives You Temporary Blueprints For This Session.')
+
+end
+
+local ItemStacker = BuildSection:CreateSubSection('Item Stacker')
+
+ItemStacker:CreateToggle('Lasso Select', false, function(State)
+
+    Ancestor.LassoSelect = State
+    LassoEnded = not State
+
+    if State then
+
+        Lasso:InitiateDrag()
+        for i, v in next, Lasso.Objects do
+
+            print(i, v)
+
+        end
+
+    end
+
+end, false, true, 'Lets You Select Items With Lasso.')
 
 local TreeTab = AncestorUI:CreateTab(8772271242, 'Tree Options')
 local TreeSection = TreeTab:CreateSection()
@@ -5682,6 +7608,53 @@ TeleportationTreeSection:CreateToggle('Teleport Player With Tree', false, functi
     GUISettings.TeleportBackAfterBringTree = State
 
 end, GUISettings.TeleportBackAfterBringTree, true, 'Teleports You Back With Your Tree/s.')
+
+if Ancestor.Unsecure then
+
+    local PaintSection = TreeSection:CreateSubSection('Paint Options')
+
+    PaintSection:CreateDropDown(function(Option)
+
+        Ancestor.PaintWoodClass = Option
+
+    end, {
+
+        'Generic',
+        'GoldSwampy',
+        'CaveCrawler',
+        'Cherry',
+        'Frost',
+        'Volcano',
+        'Oak',
+        'Walnut',
+        'Birch',
+        'SnowGlow',
+        'Fir',
+        'Pine',
+        'GreenSwampy',
+        'Koa',
+        'Palm',
+        'Spooky',
+        'SpookyNeon',
+        'Bamboo',
+        'LoneCave',
+        'GenericSpecial',
+        'Test',
+        'FirBranch',
+        'Sign',
+        'PineBranch',
+
+    }, 'Generic', false)
+
+    PaintSection:CreateToggle('Paint Tool', false, function(State)
+
+        GUISettings.PaintTool = State
+
+        Ancestor:PaintTool()
+    
+    end, GUISettings.PaintTool, true, 'Sells Your Modded Plank.')
+
+end
 
 local BringTreeSection = TreeSection:CreateSubSection('Bring Tree Options')
 local BringTreeButton
@@ -5791,21 +7764,18 @@ ModSawmillSection:CreateButton('Minimum Size Sawmill', function()
 
 end, true, true, 'Changes Your Sawmill Size To The Minimum Allowed Size.')
 
-local MiscellaneousTreeSection = TreeSection:CreateSubSection('Miscellaneous Options')
 
--- MiscellaneousTreeSection:CreateToggle('Toggle Trees', false, function(State)
+if Ancestor.Unsecure then
 
---     GUISettings.TreesEnabled = State
+    local MiscellaneousTreeSection = TreeSection:CreateSubSection('Miscellaneous Options')
 
---     Ancestor:ToggleTrees(State)
+    MiscellaneousTreeSection:CreateButton('Destroy All Trees', function()
 
--- end, GUISettings.TreesEnabled, true, 'Toggle Trees In The Environment.')
+        Ancestor:DestroyTrees()
 
--- MiscellaneousTreeSection:CreateButton('Dismember Tree', function()
+    end, true, true, 'Destroys All Trees In The Server.')
 
---     Ancestor:DismemberTree()
-
--- end, true, true, 'Dismembers The Selected Tree.')
+end
 
 -- MiscellaneousTreeSection:CreateButton('Sell All Logs', function()
 
@@ -5854,13 +7824,14 @@ local Autobuy = MoneySection:CreateSubSection('Autobuy')
 
 function Ancestor:GetItemInfo(SelectedItem)
 
-    local Items = ClientItemInfo:GetChildren()
+    local Items = (Ancestor.Unsecure and Purchasables:GetDescendants()) or ClientItemInfo:GetChildren()
 
     for i = 1, #Items do 
     
         local Item = Items[i]
+        local ItemName = Item:FindFirstChild('ItemName')
 
-        if Item.ItemName.Value == SelectedItem then 
+        if ItemName and ItemName.Value == SelectedItem then 
             
             return Item
             
@@ -5958,26 +7929,26 @@ function Ancestor:MoveObject(Object, Position, OldPosition, Sell, Amount)
 
 end
 
-function Ancestor:GetPurchaseInformation()
+    function Ancestor:GetPurchaseInformation()
 
-    local Max = 9e9
+        local Max = 9e9
 
-    for i = 1, #CashierList do 
+        for i = 1, #CashierList do 
 
-        local Cashier = CashierList[i]
+            local Cashier = CashierList[i]
 
-        if (Player.Character.Head.CFrame.p - Cashier.Model.Head.CFrame.p).Magnitude < Max then 
+            if (Player.Character.Head.CFrame.p - Cashier.Model.Head.CFrame.p).Magnitude < Max then 
 
-            Max = (Player.Character.Head.CFrame.p - Cashier.Model.Head.CFrame.p).Magnitude
-            PurchaseDetails = Cashier 
+                Max = (Player.Character.Head.CFrame.p - Cashier.Model.Head.CFrame.p).Magnitude
+                PurchaseDetails = Cashier 
+
+            end
 
         end
 
+        return PurchaseDetails
+
     end
-
-    return PurchaseDetails
-
-end
 
 function Ancestor:CanClientAfford()
 
@@ -6017,6 +7988,8 @@ function Ancestor:AutobuyItem()
 
     end
 
+    local LastPosition = Player.Character.PrimaryPart.CFrame
+
     for i = 1, Ancestor.AutobuyAmount do
 
         if self.CurrentlySavingOrLoading then 
@@ -6037,26 +8010,39 @@ function Ancestor:AutobuyItem()
             until Item
 
         end
+        
+        if (Player.Character.Head.CFrame.p - Item.PrimaryPart.CFrame.p).Magnitude > 10 then
 
-        local LastPosition = Player.Character.PrimaryPart.CFrame
+            self:Teleport(CFrame.new(Item.PrimaryPart.CFrame.p + Vector3.new(0, 4, 4)))
 
-        self:Teleport(CFrame.new(Item.PrimaryPart.CFrame.p + Vector3.new(0, 2, 4)))
+        end
 
         local PurchaseInformation = self:GetPurchaseInformation()
 
-        self:MoveObject(Item, CFrame.new(PurchaseInformation.Counter.CFrame.p + Vector3.new(0, 2, 0)), nil, false, 5)
+        Maid.Threads:Create(function()
+
+            self:TeleportIndividualObject(15, Item, PurchaseInformation.Counter.CFrame)
+        
+        end)
 
         Connections.AutobuyCompleted = {Function = PlayerModels.ChildAdded:Connect(function(Object)
 
-            local Owner, ItemName = Object:WaitForChild('Owner', 10), Object:WaitForChild('PurchasedBoxItemName', 10)
+            local Owner, ItemName = Object:WaitForChild('Owner', 1), Object:WaitForChild('PurchasedBoxItemName', 1)
 
             if Owner.Value == Player and ItemName then 
 
-                self:MoveObject(Object, CFrame.new(LastPosition.p + Vector3.new(4, 4, 4)), nil, false, 10)
-                
-                self:Teleport(LastPosition)
+                Maid.Threads:Create(function()
 
-                Ancestor:GetConnection('AutobuyCompleted', true)
+                    self:TeleportIndividualObject(45, Object, CFrame.new(LastPosition.p + Vector3.new(0, 2, 0)))
+                    Ancestor:GetConnection('AutobuyCompleted', true)
+
+                end)    
+                
+                if i == Ancestor.AutobuyAmount then 
+
+                    self:Teleport(LastPosition)
+
+                end
 
                 if GUISettings.UnboxItems then 
 
@@ -6091,7 +8077,11 @@ function Ancestor:AutobuyItem()
 
         repeat Maid.Timer:Wait()
 
-            Ancestor:BuyItem(PurchaseInformation)
+            Maid.Threads:Create(function()
+
+                Ancestor:BuyItem(PurchaseInformation)
+
+            end)
 
         until self.CurrentlySavingOrLoading or typeof(Ancestor:GetConnection('AutobuyCompleted')) ~= 'RBXScriptConnection'
 
@@ -6342,7 +8332,7 @@ AxeModifications:CreateSlider('Axe Range', function(Quantity)
 
     if GUISettings.AxeRangeActive then
 
-        Ancestor:SetAxeRange(true, Quantity)
+        -- Ancestor:SetAxeRange(true, Quantity)
 
     end
 
@@ -6352,11 +8342,11 @@ AxeModifications:CreateToggle('Activate Axe Range', false, function(Toggle)
 
     GUISettings.AxeRangeActive = Toggle
 
-    Ancestor:SetAxeRange(true, GUISettings.AxeRange)
+    -- Ancestor:SetAxeRange(true, GUISettings.AxeRange)
 
     if not Toggle then
 
-        Ancestor:SetAxeRange(false)
+        -- Ancestor:SetAxeRange(false)
 
     end
 
@@ -6365,15 +8355,16 @@ end, GUISettings.AxeRangeActive, true, 'Activates Axe Modifications.')
 AxeModifications:CreateToggle('No Axe Cooldown', false, function(Toggle)
 
     GUISettings.AxeSwingActive = Toggle
-    Ancestor:SetSwingCooldown(true)
+    -- Ancestor:SetSwingCooldown(true)
 
     if not Toggle then
 
-        Ancestor:SetSwingCooldown(false)
+        -- Ancestor:SetSwingCooldown(false)
 
     end
 
 end, GUISettings.AxeSwingActive, true, 'Removes The ClientSided Cooldown For Swinging Axes.')
+
 
 local AxePhysicalModifications = AxeSection:CreateSubSection('Other Options')
 
@@ -6432,10 +8423,14 @@ DupeInventory:CreateButton('Dupe Inventory On Current Slot', function()
 
 end, true, true, 'Duplicates Your Inventory (Requires Reload So May Be Slow).')
 
-local AxeInformation = AxeSection:CreateSubSection('Current Axe Information')
-AxeNameLabel = AxeInformation:CreateLabel('Current Axe Not Found')
-AxeRangeLabel = AxeInformation:CreateLabel('Range: NULL')
-AxeCooldownLabel = AxeInformation:CreateLabel('Cooldown: NULL')
+if not Ancestor.Unsecure then
+
+    local AxeInformation = AxeSection:CreateSubSection('Current Axe Information')
+    AxeNameLabel = AxeInformation:CreateLabel('Current Axe Not Found')
+    AxeRangeLabel = AxeInformation:CreateLabel('Range: NULL')
+    AxeCooldownLabel = AxeInformation:CreateLabel('Cooldown: NULL')
+
+end
 
 local CarTab = AncestorUI:CreateTab(8821528672, 'Vehicle Options')
 local CarSection = CarTab:CreateSection()
@@ -6496,27 +8491,22 @@ end, true, true, 'Spawns The Selected Vehicle.')
 local SettingsMain = AncestorUI:CreateTab(5182003557, 'Settings')
 local SettingsSection = SettingsMain:CreateSection()
 local Credits = SettingsSection:CreateSubSection('Credits')
-Credits:CreateLabel('Developed By FindFirstAncestorツ')
-Credits:CreateLabel('Tested And Other Help From MrDrizzler & Silent')
+Credits:CreateLabel('Developed By Ancestor')
+Credits:CreateLabel('Helped By The Absolute Ingenious Mind of MrDizzler')
 
-local Toads = SettingsSection:CreateSubSection('Other GUIs')
-Toads:CreateButton('Execute Toads GUI', function()
+local Toads = SettingsSection:CreateSubSection('TOADS')
+Toads:CreateButton('Execute TOADS GUI', function()
 
     loadstring(game:HttpGet('https://bit.ly/3x90l99'))('TOADS')
 
 end, true, true, 'Executes Toads GUI.')
 
-Toads:CreateButton('Execute Butter GUI', function()
-
-    SendUserNotice:Fire('BUTTER IS SKIDDED!\n\n Don\'t Use It.')
-
-end, true, true, 'Executes Butter GUI.')
-
 local GUIInfo = SettingsSection:CreateSubSection('GUI Information')
 
-GUIInfo:CreateLabel(string.format('GUI Version: V%s', Ancestor.LatestSupportedVersion))
+GUIInfo:CreateLabel(string.format('GUI Version: V%s', (Ancestor.Unsecure and Ancestor.LatestSupportedUnsecureVersion or Ancestor.LatestSupportedVersion)))
 GUIInfo:CreateLabel(string.format('Game Version: V%s', tostring(game.PlaceVersion)))
 GUIInfo:CreateLabel(string.format('Executor: %s', tostring(Executor)))
+GUIInfo:CreateLabel(string.format('Is Lumber Unsecure: %s', tostring(Ancestor.Unsecure)))
 
 local Ping, CPU, CurrentSlot
 Ping = GUIInfo:CreateLabel(string.format('Ping: %sms', math.floor(PerformanceStats.Ping:GetValue())))
@@ -6567,6 +8557,21 @@ PlotNameSettings:CreateButton('Save Slot Names', function()
     Ancestor:SaveSlotNames()
 
 end, true, true, 'Saves Your Slot Names For The Current ROBLOX Account.')
+
+PlotNameSettings:CreateButton('Export To Discord Channel', function()
+        
+    Ancestor:ExportSlotNames(true)
+
+end, true, true, 'Saves Your Slot Names For The Current ROBLOX Account.')
+
+PlotNameSettings:CreateTextbox('Search Database', function(Text)
+
+    Ancestor.SearchSlotTableString = tostring(Text)
+
+    Ancestor:IndexSlotTable()
+
+end, tostring(Ancestor.SearchSlotTableString), false, true, 'Changes The Amount Of Items Spawned.', true)
+
 
 local Settings = SettingsSection:CreateSubSection('GUI Settings')
 
@@ -6628,11 +8633,23 @@ Connections.DestroyedGUI = {Function = CoreGui.ChildRemoved:Connect(function(Chi
 
         end
 
-        for _, Connection in next, Connections do 
+        if Ancestor.DeleteToolInstance then
+
+            Ancestor.DeleteToolInstance:Destroy()
+
+        end
+
+        if Ancestor.PaintToolInstance then
+
+            Ancestor.PaintToolInstance:Destroy()
+
+        end
+
+        for Connection in next, Connections do 
 
             pcall(function()
             
-                Ancestor:GetConnection(_, true)
+                Ancestor:GetConnection(Connection, true)
 
             end)
             
@@ -6646,26 +8663,33 @@ Ancestor_Loaded = true
 
 Maid.Threads:Create(function()
 
-    Connections.AxeModifier ={Function = Player.Character.ChildAdded:Connect(function(Tool)
+    if not Ancestor.Unsecure then
 
-        if Tool:IsA('Tool') then
+        -- Connections.AxeModifier = {Function = Player.Character.ChildAdded:Connect(function(Tool)
 
-            repeat Maid.Timer:Wait()until getconnections(Tool.Activated)[1]
+        --     local CuttingTool = Tool:WaitForChild('CuttingTool', 2)
 
-            if GUISettings.AxeRangeActive then 
+        --     if Tool:IsA('Tool') and CuttingTool and CuttingTool.Value then
 
-                Ancestor:SetAxeRange(true, GUISettings.AxeRange)
+        --         repeat Maid.Timer:Wait() until getconnections(Tool.Activated)[1]
 
-            end
+        --         if GUISettings.AxeRangeActive then 
 
-            if GUISettings.AxeSwingActive then 
+        --             Ancestor:SetAxeRange(true, GUISettings.AxeRange)
 
-                Ancestor:SetSwingCooldown(true,GUISettings.AxeSwing)
-            end
+        --         end
 
-        end
+        --         if GUISettings.AxeSwingActive then 
 
-    end)}
+        --             Ancestor:SetSwingCooldown(true, GUISettings.AxeSwing)
+
+        --         end
+
+        --     end
+
+        -- end)}
+
+    end
     
     while Maid.Timer:Wait() do 
         
@@ -6675,5 +8699,3 @@ Maid.Threads:Create(function()
     end
 
 end)
-
-SendUserNotice:Fire('Ancestor Is In Beta And Nowhere Near Completion. Other GUI\'s Are Awful So I Released Early. \n\nTOADS Is Good Though, You Can Execute That From Settings.')
