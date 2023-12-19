@@ -1,7 +1,7 @@
 local Executor = identifyexecutor()
 
 getgenv().Ancestor_Loaded = false
-getgenv().DEBUG_MODE = true 
+
 
 local SupportedExecutors = {'Synapse X', 'ScriptWare', 'Krnl', 'Valyse', 'Fluxus', 'Electron'}
 local Supported = table.find(SupportedExecutors, Executor) ~= nil
