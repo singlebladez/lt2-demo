@@ -5,33 +5,7 @@
 --    return
 --end
 
-hookfunction(rconsoleprint, function()
-    return game:GetService"Players".LocalPlayer:Kick("Stop Using HTTP SPY")
-end)
 
-------------------------------------
--- Key System | Month * 1432436
--- Current key is: _G.Key = "Nightfall_71621802004"
-------------------------------------
--- Get New Monthly Key
--- string.format("Nightfall%s2004", tostring(os.date"%m" * 1432436))
-------------------------------------
-_G.Key = "Nightfall_71621802004"
-
-if typeof(_G.Key) == "string" then
-    if _G.Key == string.format("Nightfall_%s2004", tostring(os.date"%m" * 1432436)) then
-        CorrectKey = "CanProceed"
-    else
-        CorrectKey = "Inccorect"
-    end
-end
-
-repeat task.wait() until tostring(CorrectKey) ~= "nil"
-
-if CorrectKey ~= "CanProceed" then
-    game:GetService"Players".LocalPlayer:kick("Incorrect Key Check The Discord Server For The New One")
-    return 
-end
 
 repeat task.wait() until game:IsLoaded() and game:GetService"Players".LocalPlayer.Character
 local library = loadstring(game:HttpGet("https://gist.githubusercontent.com/ItsEcstasy/f8acbb072fedcb91e576545ed140de94/raw/870bc0ab2c0a106e9ba9177c09a53c71cc1b9704/UI-Library"))()
