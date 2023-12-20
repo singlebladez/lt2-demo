@@ -1,9 +1,4 @@
---local Current, Supported, CorrectKey = identifyexecutor(), {"Synapse X", "ScriptWare", "Krnl", "Hydrogen"}, nil
 
---if not table.find(Supported, Current) then
---    game:GetService"Players".LocalPlayer:Kick("Executor Not Supported")
---    return
---end
 
 
 
