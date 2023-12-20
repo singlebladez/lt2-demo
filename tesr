@@ -1,12 +1,7 @@
-queue_on_teleport([[
-	repeat
-	task.wait()
-	until game:IsLoaded()
-    print("Nice Source")
-	loadstring(game:HttpGet"https://raw.githubusercontent.com/666TranZit666/Interject/main/silent%20spook%20wood%20finder")()
-]])
+
 local Tree
-local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua")()
+local module =local currentPlace = game.PlaceId -- rejoin new game
+game:GetService("TeleportService"):Teleport(currentPlace)
 
 for i, v in pairs(workspace:GetChildren()) do
     if v.Name == "TreeRegion" then
@@ -21,7 +16,7 @@ for i, v in pairs(workspace:GetChildren()) do
 end
 
 if Tree == nil then
-    game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found")
+    game.ReplicatedStorage.Notices.SendUserNotice:Fire("No bluespurce Wood Found")
     wait(2)
     return
     module:Teleport(game.PlaceId)
