@@ -4459,7 +4459,7 @@ local Label = Sorter1:Label("if you want the better version please buy synapse X
 
  --#region wood
  
-Woodtab1:Dropdown("Select Item", "Select...", {"Generic", "Walnut", "Cherry", "SnowGlow", "Oak", "Birch", "Koa", "Fir", "Volcano", "GreenSwampy", "CaveCrawler", "Palm", "GoldSwampy", "Frost", "Spooky", "LoneCave",}, function(Value)
+Woodtab1:Dropdown("Select Item", "Select...", {"Generic", "Walnut", "Cherry", "SnowGlow", "Oak", "Birch", "Koa", "Fir", "Volcano", "GreenSwampy", "CaveCrawler", "Palm", "GoldSwampy", "BlueSpruce" ,"Frost", "Spooky", "LoneCave",}, function(Value)
   getTree = Value
 end)
 
