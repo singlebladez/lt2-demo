@@ -2074,7 +2074,7 @@ function Ancestor:ModWood(BruteForce)
 
         local WoodSection = WoodSections[i]
 
-        if (self.ModWoodTree.TreeClass.Value == ' BlueSpruce' or self.ModWoodTree.TreeClass.Value == ' BlueSpruce') then 
+        if (self.ModWoodTree.TreeClass.Value == ' Pine' or self.ModWoodTree.TreeClass.Value == ' BlueSpruce') then 
 
             if tostring(WoodSection):match('WoodSection') and WoodSection.Size.X <= Size and WoodSection.Size.X >= .5 then 
 
@@ -2083,7 +2083,7 @@ function Ancestor:ModWood(BruteForce)
 
             end
 
-        elseif not (self.ModWoodTree.TreeClass.Value == ' BlueSpruce' or self.ModWoodTree.TreeClass.Value == ' BlueSpruce') and tostring(WoodSection):match('WoodSection') and WoodSection.ID.Value >= 3 and WoodSection:FindFirstChild('ParentID') then  
+        elseif not (self.ModWoodTree.TreeClass.Value == ' Pine' or self.ModWoodTree.TreeClass.Value == ' BlueSpruce') and tostring(WoodSection):match('WoodSection') and WoodSection.ID.Value >= 3 and WoodSection:FindFirstChild('ParentID') then  
 
             Size = WoodSection.Size.X
             SmallestWoodSection = WoodSection
