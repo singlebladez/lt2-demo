@@ -2076,7 +2076,7 @@ function Ancestor:ModWood(BruteForce)
 
         if (self.ModWoodTree.TreeClass.Value == 'pine' or self.ModWoodTree.TreeClass.Value == 'BlueSpruce') then 
 
-            if tostring(WoodSection):match('WoodSection') and WoodSection.Size.X <= Size and WoodSection.Size.X >= .5 then 
+            if tostring(WoodSection):match('WoodSection') and WoodSection.Size.X <= Size and WoodSection.Size.X >= .4 then 
 
                 Size = WoodSection.Size.X
                 SmallestWoodSection = WoodSection
