@@ -5695,7 +5695,7 @@ BringTreeSection:CreateDropDown(function(Option)
     BringTreeButton:UpdateHeader(string.format('Bring %s %s %s', Ancestor.BringTreeAmount, Ancestor.SelectedTreeType, Title))
 
 end, {
-
+    'BlueSpurce'
     'Generic',
     'GoldSwampy',
     'CaveCrawler',
