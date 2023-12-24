@@ -6105,7 +6105,7 @@ end
 function Ancestor:GetStoreItems()
 
     return {
-        '2023CGift_Wobble - $434',
+        'Wobbly Gift of Shock and Awe - $434',
         '2023CGift_Green - $',
         '2022CGift_Heavy - $',
         '2023CGift_Pixelated - $',
