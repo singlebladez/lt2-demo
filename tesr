@@ -2,7 +2,7 @@ local Executor = identifyexecutor()
 
 getgenv().Ancestor_Loaded = false
 
-local SupportedExecutors = {'Synapse X', 'ScriptWare', 'Krnl', 'Valyse', 'Fluxus'}
+local SupportedExecutors = {'Synapse X', 'ScriptWare', 'Krnl', 'Valyse', 'Hydrogen'}
 local Supported = table.find(SupportedExecutors, Executor) ~= nil
 
 assert(Supported, 'Executor Not Supported')
