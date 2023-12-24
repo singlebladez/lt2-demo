@@ -6105,7 +6105,13 @@ end
 function Ancestor:GetStoreItems()
 
     return {
-    
+        '2023CGift_Wobble - $434',
+        '2023CGift_Green - $',
+        '2022CGift_Heavy - $',
+        '2023CGift_Pixelated - $',
+        '2023CGift_LT2 - $',
+        '2023CGift_LT2 - $',
+        '2023CGift_Dice - $',
         'Basic Hatchet - $12', 
         -- 'Rukiryaxe - $7400', 
         'Switch Conveyor - $320', 
