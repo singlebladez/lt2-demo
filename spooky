@@ -6,61 +6,63 @@ queue_on_teleport([[
     loadstring(game:HttpGet('https://raw.githubusercontent.com/singlebladez/lt2-demo/main/spooky'))()
 ]])
 
-local Tree
-local module = loadstring(game:HttpGet('https://raw.githubusercontent.com/singlebladez/lt2-demo/main/serverhop'))()
+local Http = game:GetService("HttpService")
+local TPS = game:GetService("TeleportService")
+local Api = "https://games.roblox.com/v1/games/"
+local _place = game.PlaceId
+local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
 
--- Function to find the tree
+function ListServers(cursor)
+    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+    return Http:JSONDecode(Raw)
+end
+
+function TeleportToNewServer()
+    local Server, Next
+    repeat
+        local Servers = ListServers(Next)
+        Server = Servers.data[1]
+        Next = Servers.nextPageCursor
+    until Server
+
+    TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+end
+
 local function findSpookyTree()
     for i, v in pairs(workspace:GetChildren()) do
         if v.Name == "TreeRegion" then
             for k, l in pairs(v:GetChildren()) do
                 if l:FindFirstChild("TreeClass") and l:FindFirstChild("WoodSection") and l:FindFirstChild("Owner") then
                     if (l.TreeClass.Value == "Spooky" or l.TreeClass.Value == "SpookyNeon") and l.Owner.Value == nil then
-                        return l  -- Return the tree if found
+                        return l
                     end
                 end
             end
         end
     end
-    return nil  -- No tree found
+    return nil
 end
 
--- Search for the tree
-Tree = findSpookyTree()
+while true do
+    local Tree = findSpookyTree()
 
--- Handle no tree found
-if Tree == nil then
-    game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found")
-    wait(2)
-    module:Teleport(game.PlaceId)  -- Server-hop if no tree is found
-    return
-end
+    if Tree == nil then
+        game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found, hopping to a new server...")
+        wait(2)
+        TeleportToNewServer()
+        wait(5)
+    else
+        repeat
+            wait()
+            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Tree["WoodSection"].CFrame
+                game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(Tree)
+            end
+        until Tree["Owner"].Value == game.Players.LocalPlayer
 
--- If the tree is found, stop server hop and handle teleportation/interactions
-if Tree ~= nil then
-    -- Notify the user that spooky wood is found and stop server hopping
-    game.ReplicatedStorage.Notices.SendUserNotice:Fire("Spooky Wood Found! Stopping Server Hop.")
-    
-    -- Stop the server hop module here (if there's a specific function to stop it, you would call it here)
-    if module.Stop then
-        module:Stop()  -- Ensure there's a stop method in your server hop script
+        game.ReplicatedStorage.Notices.SendUserNotice:Fire("Claimed "..Tree.TreeClass.Value.." Tree")
+        break
     end
 
-    repeat
-        wait()
-
-        -- Ensure character is loaded before teleportation
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            -- Teleport to the tree's WoodSection
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Tree["WoodSection"].CFrame
-
-            -- Interact with the tree
-            game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(Tree)
-        end
-
-    -- Continue until the tree's ownership is updated
-    until Tree["Owner"].Value == game.Players.LocalPlayer
-
-    -- Notify the user that the tree has been claimed
-    game.ReplicatedStorage.Notices.SendUserNotice:Fire("Claimed "..Tree.TreeClass.Value.." Tree")
+    wait(1)
 end
