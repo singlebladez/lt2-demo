@@ -3,7 +3,7 @@ queue_on_teleport([[
         task.wait()
     until game:IsLoaded()
     print("Nice Cock")
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/singlebladez/lt2-demo/main/spooky'))()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/singlebladez/lt2-demo/main/neon'))()
 ]])
 
 local function CalculateTreeUnits(Tree)
