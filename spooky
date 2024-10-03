@@ -2,7 +2,8 @@ queue_on_teleport([[
 	repeat
 	task.wait()
 	until game:IsLoaded()
-    print("Nice Cock")
+    print("Nice Source")
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/666TranZit666/Interject/main/silent%20spook%20wood%20finder")()
 ]])
 local Tree
 local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua")()
