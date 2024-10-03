@@ -2,6 +2,8 @@ queue_on_teleport([[
     repeat
         task.wait()
     until game:IsLoaded()
+    print("Nice Cock")
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/singlebladez/lt2-demo/main/spooky'))()
 ]])
 
 local Tree
@@ -23,6 +25,7 @@ local function findSpookyTree()
     return nil  -- No tree found
 end
 
+-- Search for the tree
 Tree = findSpookyTree()
 
 -- Handle no tree found
@@ -33,8 +36,16 @@ if Tree == nil then
     return
 end
 
--- If the tree is found, handle teleportation and interaction
+-- If the tree is found, stop server hop and handle teleportation/interactions
 if Tree ~= nil then
+    -- Notify the user that spooky wood is found and stop server hopping
+    game.ReplicatedStorage.Notices.SendUserNotice:Fire("Spooky Wood Found! Stopping Server Hop.")
+    
+    -- Stop the server hop module here (if there's a specific function to stop it, you would call it here)
+    if module.Stop then
+        module:Stop()  -- Ensure there's a stop method in your server hop script
+    end
+
     repeat
         wait()
 
