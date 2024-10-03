@@ -5,41 +5,47 @@ queue_on_teleport([[
     print("Nice Cock")
     loadstring(game:HttpGet('https://raw.githubusercontent.com/singlebladez/lt2-demo/main/spooky'))()
 ]])
-
 local Tree
 local module = loadstring(game:HttpGet('https://raw.githubusercontent.com/singlebladez/lt2-demo/main/serverhop'))()
 
+-- Searching for the tree
 for i, v in pairs(workspace:GetChildren()) do
     if v.Name == "TreeRegion" then
         for k, l in pairs(v:GetChildren()) do
             if l:FindFirstChild("TreeClass") and l:FindFirstChild("WoodSection") and l:FindFirstChild("Owner") then
                 if (l.TreeClass.Value == "Spooky" or l.TreeClass.Value == "SpookyNeon") and l.Owner.Value == nil then
-                    Tree = l
+                    Tree = l  -- Tree found, assign it to the variable
+                    break  -- Exit the loop once tree is found
                 end
             end
         end
     end
 end
 
+-- If no tree is found, initiate the server hop
 if Tree == nil then
     game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found")
     wait(2)
     
-    -- Move the teleport here so it's executed before the return
+    -- Initiate server-hop
     module:Teleport(game.PlaceId)
-    
-    return  -- Exit the script after teleporting
+    return  -- Exit the script after initiating teleport
 end
 
+-- If a tree is found, handle teleportation to it and interaction
 if Tree ~= nil then
     repeat
         wait()
 
+        -- Teleport the player to the tree's WoodSection
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Tree["WoodSection"].CFrame
 
+        -- Interact with the tree
         game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(Tree)
 
+    -- Continue looping until the tree's owner is updated
     until Tree["Owner"].Value == game.Players.LocalPlayer
 
+    -- Notify the player that they have claimed the tree
     game.ReplicatedStorage.Notices.SendUserNotice:Fire("Claimed "..Tree.TreeClass.Value.." Tree")
 end
