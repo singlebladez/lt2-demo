@@ -40,34 +40,38 @@ local function findSpookyTree()
     return nil  -- No tree found
 end
 
--- Find the tree
-Tree = findSpookyTree()
+-- Main logic
+while true do  -- Keep looping to continue teleporting if no tree is found
+    Tree = findSpookyTree()
 
--- If no tree is found, teleport to a new server
-if Tree == nil then
-    game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found")
-    wait(2)
-    TeleportToNewServer()  -- Hop to a new server
-    return
+    -- If no tree is found, teleport to a new server
+    if Tree == nil then
+        game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found, Teleporting to New Server...")
+        wait(2)
+        TeleportToNewServer()  -- Hop to a new server
+        break  -- Exit the loop since teleportation will happen
+    end
+
+    -- If tree is found, handle teleportation and interaction
+    if Tree ~= nil then
+        repeat
+            wait()
+
+            -- Ensure character is loaded before teleportation
+            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                -- Teleport to the tree's WoodSection
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Tree["WoodSection"].CFrame
+
+                -- Interact with the tree
+                game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(Tree)
+            end
+
+        -- Continue until the tree's ownership is updated
+        until Tree["Owner"].Value == game.Players.LocalPlayer
+
+        -- Notify the user that the tree has been claimed
+        game.ReplicatedStorage.Notices.SendUserNotice:Fire("Claimed "..Tree.TreeClass.Value.." Tree")
+        break  -- Exit the loop once a tree is found and claimed
+    end
 end
 
--- If tree is found, handle teleportation and interaction
-if Tree ~= nil then
-    repeat
-        wait()
-
-        -- Ensure character is loaded before teleportation
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            -- Teleport to the tree's WoodSection
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Tree["WoodSection"].CFrame
-
-            -- Interact with the tree
-            game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(Tree)
-        end
-
-    -- Continue until the tree's ownership is updated
-    until Tree["Owner"].Value == game.Players.LocalPlayer
-
-    -- Notify the user that the tree has been claimed
-    game.ReplicatedStorage.Notices.SendUserNotice:Fire("Claimed "..Tree.TreeClass.Value.." Tree")
-end
