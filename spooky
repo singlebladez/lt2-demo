@@ -37,41 +37,41 @@ local function CalculateTreeUnits(Tree)
     return math.round(math.floor(Units * 100) / 100)
 end
 
-local function findSpookyTree()
-    for i, v in pairs(workspace:GetChildren()) do
-        if v.Name == "TreeRegion" then
-            for k, l in pairs(v:GetChildren()) do
-                if l:FindFirstChild("TreeClass") and l:FindFirstChild("WoodSection") and l:FindFirstChild("Owner") then
-                    if (l.TreeClass.Value == "Spooky" or l.TreeClass.Value == "SpookyNeon") and l.Owner.Value == nil then
-                        return l
-                    end
+for i, v in pairs(workspace:GetChildren()) do
+    if v.Name == "TreeRegion" then
+        for k, l in pairs(v:GetChildren()) do
+            if l:FindFirstChild("TreeClass") and l:FindFirstChild("WoodSection") and l:FindFirstChild("Owner") then
+                if (l.TreeClass.Value == "Spooky" or l.TreeClass.Value == "SpookyNeon") and l.Owner.Value == nil then
+                    Tree = l
                 end
             end
         end
     end
-    return nil
 end
 
-while true do
-    local Tree = findSpookyTree()
+if Tree == nil then
+    game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found")
+    wait(2)
+    module:Teleport(game.PlaceId)
+    return
+end
 
-    if Tree == nil then
-        game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found, hopping to a new server...")
-        wait(2)
-        TeleportToNewServer()
-        wait(5)
-    else
-        repeat
-            wait()
-            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Tree["WoodSection"].CFrame
-                game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(Tree)
-            end
-        until Tree["Owner"].Value == game.Players.LocalPlayer
+if Tree ~= nil then
+    local treeUnits = CalculateTreeUnits(Tree)
+    game.ReplicatedStorage.Notices.SendUserNotice:Fire("Spooky Tree Found with " .. treeUnits .. " units!")
 
-        game.ReplicatedStorage.Notices.SendUserNotice:Fire("Claimed "..Tree.TreeClass.Value.." Tree")
-        break
-    end
+    repeat
+        wait()
+
+        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Tree["WoodSection"].CFrame
+            game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(Tree)
+        end
+
+    until Tree["Owner"].Value == game.Players.LocalPlayer
+
+    game.ReplicatedStorage.Notices.SendUserNotice:Fire("Claimed " .. Tree.TreeClass.Value .. " Tree with " .. treeUnits .. " units!")
+end
 
     wait(1)
 end
