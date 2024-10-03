@@ -1,0 +1,9 @@
+function Aurora:CalculateTreeUnits(Tree)
+    local Units = 0
+    for _, WoodSection in next, Tree:GetChildren() do
+        if tostring(WoodSection) == "WoodSection" then
+            Units += (WoodSection.Size.X * WoodSection.Size.Y * WoodSection.Size.Z)
+        end
+    end
+    return math.round(math.floor(Units * 100) / 100)
+end
