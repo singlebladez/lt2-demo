@@ -2,8 +2,6 @@ queue_on_teleport([[
     repeat
         task.wait()
     until game:IsLoaded()
-    print("Nice Cock")
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/singlebladez/lt2-demo/main/spooky'))()
 ]])
 
 local Tree
