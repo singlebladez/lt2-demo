@@ -4,15 +4,38 @@ local Api = "https://games.roblox.com/v1/games/"
 
 local _place = game.PlaceId
 local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-function ListServers(cursor)
-   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-   return Http:JSONDecode(Raw)
+
+-- Stop flag to control whether the script continues or not
+local stopFlag = false
+
+-- Function to set stop flag (this can be called from the main script)
+function StopServerHop()
+    stopFlag = true
 end
 
-local Server, Next; repeat
-   local Servers = ListServers(Next)
-   Server = Servers.data[1]
-   Next = Servers.nextPageCursor
-until Server
+-- Function to list servers
+function ListServers(cursor)
+    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+    return Http:JSONDecode(Raw)
+end
 
-TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
+-- Function to handle server hop
+function ServerHop()
+    local Server, Next
+    repeat
+        if stopFlag then
+            print("Server hopping stopped.")
+            return  -- Exit the loop if stop flag is set
+        end
+
+        local Servers = ListServers(Next)
+        Server = Servers.data[1]
+        Next = Servers.nextPageCursor
+    until Server
+
+    -- Teleport to the found server
+    TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+end
+
+-- Call the ServerHop function to start server hopping
+ServerHop()
