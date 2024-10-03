@@ -27,6 +27,7 @@ function TeleportToNewServer()
 
     TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
 end
+
 local function CalculateTreeUnits(Tree)
     local Units = 0
     for _, WoodSection in next, Tree:GetChildren() do
@@ -36,6 +37,8 @@ local function CalculateTreeUnits(Tree)
     end
     return math.round(math.floor(Units * 100) / 100)
 end
+
+local Tree
 
 for i, v in pairs(workspace:GetChildren()) do
     if v.Name == "TreeRegion" then
@@ -50,9 +53,9 @@ for i, v in pairs(workspace:GetChildren()) do
 end
 
 if Tree == nil then
-    game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found")
+    game.ReplicatedStorage.Notices.SendUserNotice:Fire("No Spooky Wood Found, hopping to a new server...")
     wait(2)
-    module:Teleport(game.PlaceId)
+    TeleportToNewServer()  -- Server hopping if no tree found
     return
 end
 
@@ -71,7 +74,4 @@ if Tree ~= nil then
     until Tree["Owner"].Value == game.Players.LocalPlayer
 
     game.ReplicatedStorage.Notices.SendUserNotice:Fire("Claimed " .. Tree.TreeClass.Value .. " Tree with " .. treeUnits .. " units!")
-end
-
-    wait(1)
 end
