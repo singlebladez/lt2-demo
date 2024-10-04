@@ -17,7 +17,7 @@ local function CalculateTreeUnits(Tree)
 end
 
 local Tree
-local unitThreshold = 20
+local unitThreshold = 1
 
 function TPReturner()
     local PlaceID = game.PlaceId
