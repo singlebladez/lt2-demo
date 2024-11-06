@@ -69,5 +69,4 @@ local function PickupAxe()
     end
 end
 
--- Execute function directly (without button)
 PickupAxe()
